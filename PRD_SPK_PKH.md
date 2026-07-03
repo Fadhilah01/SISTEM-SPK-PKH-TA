@@ -18,19 +18,19 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 ## 3. Fitur & Fungsionalitas
 
 ### 3.1 Fitur Wajib (MVP)
-| Fitur | Deskripsi | Prioritas |
-|-------|-----------|-----------|
-| Manajemen Data Calon Penerima | CRUD data calon penerima bantuan | P0 |
-| Klasifikasi SVM | Prediksi layak/tidak layak berdasarkan model SVM | P0 |
-| Dashboard SPK | Tampilan hasil keputusan + ringkasan data | P0 |
-| Riwayat Keputusan | History prediksi + detail input | P0 |
-| Export Laporan | Export hasil keputusan (PDF/Excel) | P1 |
+| Fitur | Deskripsi | Prioritas | Status |
+|-------|-----------|-----------|--------|
+| Manajemen Data Calon Penerima | CRUD data calon penerima bantuan | P0 | ✅ Selesai |
+| Klasifikasi SVM | Prediksi layak/tidak layak berdasarkan model SVM | P0 | ⚠️ Perlu retrain (lihat Bab 10) |
+| Dashboard SPK | Tampilan hasil keputusan + ringkasan data | P0 | ✅ Selesai |
+| Riwayat Keputusan | History prediksi + detail input | P0 | ✅ Selesai |
+| Export Laporan | Export hasil keputusan (PDF/Excel) | P1 | ⏳ Pending |
 
 ### 3.2 Fitur Tambahan
-| Fitur | Deskripsi | Prioritas |
-|-------|-----------|-----------|
-| Manajemen Pengguna | Login multi-level (admin, pendamping) | P1 |
-| Re-training Model | Update model jika dataset baru tersedia | P2 |
+| Fitur | Deskripsi | Prioritas | Status |
+|-------|-----------|-----------|--------|
+| Manajemen Pengguna | Login multi-level (admin, pendamping) | P1 | ⏳ Pending |
+| Re-training Model | Update model jika dataset baru tersedia | P2 | ⏳ Pending |
 
 ## 4. Pengguna Sistem
 
@@ -42,10 +42,11 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 
 ```
 1. Pendamping PKH mengumpulkan data calon penerima
-2. Data dimasukkan ke sistem (form input)
-3. Sistem memproses data melalui model SVM yang sudah dilatih
-4. Sistem menampilkan status: LAYAK / TIDAK LAYAK
-5. Pendamping PKH menggunakan hasil sebagai rekomendasi keputusan
+2. Data dimasukkan ke sistem melalui form input (pilihan kategori)
+3. Sistem mengkonversi kategori menjadi skor ordinal (1-5 atau 0/1)
+4. Sistem memproses skor melalui model SVM yang sudah dilatih
+5. Sistem menampilkan status: LAYAK / TIDAK LAYAK
+6. Pendamping PKH menggunakan hasil sebagai rekomendasi keputusan
 ```
 
 ## 6. Atribut/Kriteria Penilaian
@@ -70,7 +71,7 @@ Berdasarkan dokumen resmi dari **Zainal — Ketua Tim SDM PKH Provinsi Sulawesi 
 | Skor | Kategori | Rentang |
 |------|----------|---------|
 | 5 | Desil 1 | < Rp.500.000 |
-| 4 | Desil 4 | ± Rp.600.000 – Rp.700.000 |
+| 4 | Desil 2 | ± Rp.600.000 – Rp.700.000 |
 | 3 | Desil 3 | ± Rp.800.000 – Rp.900.000 |
 | 2 | Desil 4 | ± Rp.1.000.000 – Rp.1.200.000 |
 | 1 | Desil 5 | ± Rp.1.300.000 – Rp.1.500.000 |
@@ -102,12 +103,14 @@ Berdasarkan dokumen resmi dari **Zainal — Ketua Tim SDM PKH Provinsi Sulawesi 
 
 ## 7. Metrik Evaluasi Model
 
-| Metrik | Target | Benchmark |
-|--------|--------|-----------|
-| Akurasi | ≥ 85% | Hasil uji Pak Yazdi: 88.57% |
-| Presisi | ≥ 85% | Hasil uji Pak Yazdi: 86.49% |
-| Recall | ≥ 85% | Hasil uji Pak Yazdi: 91.43% |
-| F1-Score | ≥ 85% | Hasil uji Pak Yazdi: 88.89% |
+| Metrik | Target | Hasil Prototype (Sintetis) | Benchmark Pak Yazdi |
+|--------|--------|---------------------------|---------------------|
+| Akurasi | ≥ 85% | 89% | 88.57% |
+| Presisi | ≥ 85% | 90% | 86.49% |
+| Recall | ≥ 85% | 88% | 91.43% |
+| F1-Score | ≥ 85% | 0.89 | 88.89% |
+
+> **Catatan:** Hasil prototype masih menggunakan dataset sintetis dan encoding LabelEncoder. Saat retrain dengan data real dan encoding ordinal 1-5, angka-angka ini akan berubah. Target minimal tetap ≥ 85%.
 
 ## 8. Dataset & Skenario
 
@@ -120,8 +123,35 @@ Berdasarkan dokumen resmi dari **Zainal — Ketua Tim SDM PKH Provinsi Sulawesi 
 
 ## 9. Kendala & Asumsi
 
-- Dataset real ±350 data dari pendamping PKH
+- Dataset real ±350 data dari pendamping PKH — **masih ditunggu**
 - Model akan di-retrain saat dataset real tersedia (encoding sudah fix berdasarkan indikator resmi)
 - Sistem berjalan di lingkungan lokal/web hosting sederhana
 - Output klasifikasi: **Layak** atau **Tidak Layak** (binary, tidak ada kelas "Sedang")
 - SVM tetap bisa mengklasifikasikan data di area perbatasan (margin decision)
+
+## 10. Gap Analisis & Rencana Perbaikan
+
+> **Diidentifikasi:** 3 Juli 2026, setelah menerima dokumen resmi dari Tim PKH Sulteng
+
+### 10.1 Daftar Gap
+
+| No | Gap | Dampak | Prioritas |
+|----|-----|--------|-----------|
+| 1 | Encoding pakai LabelEncoder, seharusnya Ordinal 1-5 | Model belajar pola yang salah | **Kritis** |
+| 2 | Scaler pakai StandardScaler, seharusnya MinMaxScaler | Normalisasi tidak sesuai skala data ordinal | **Kritis** |
+| 3 | Kategori form web tidak cocok dengan kategori resmi | User input tidak valid | **Kritis** |
+| 4 | Format .pkl tidak konsisten (class vs dictionary) | Web error saat load model | **Tinggi** |
+| 5 | anak_usia_dini, anak_sekolah, lansia harusnya biner | Data yang disimpan tidak sesuai format resmi | **Sedang** |
+
+### 10.2 Rencana Perbaikan
+
+Semua gap akan diperbaiki **bersamaan** saat dataset real datang, karena:
+1. Model harus di-retrain dari awal (SVM bukan incremental learner)
+2. Perubahan encoding otomatis mengharuskan perubahan form web
+3. Lebih efisien mengubah semuanya sekaligus daripada bertahap
+
+### 10.3 Penjelasan untuk Sidang
+
+Jika ditanya penguji tentang perubahan encoding:
+
+> "Pada tahap awal, saya menggunakan LabelEncoder karena data masih sintetis dan belum ada panduan resmi. Setelah menerima dokumen dari Ketua Tim SDM PKH Sulteng (Keputusan Dirjen Linjamsos No. 9/3/HK.01.1/2025), encoding diubah menjadi ordinal 1-5 agar model SVM dapat memahami urutan tingkat kelayakan — skor 5 berarti paling layak, skor 1 paling tidak layak. Perubahan ini membuat model lebih akurat karena SVM bisa menangkap jarak antar kategori secara bermakna."

@@ -31,16 +31,16 @@
 │  │  ┌──────────────────────────────────────┐                │      │
 │  │  │  Load Model (joblib) → SVM Classifier│                │      │
 │  │  │  Preprocessing Pipeline               │                │      │
-│  │  │  (Encoder + Scaler + Feature Select)  │                │      │
+│  │  │  (MinMaxScaler → SVM Predict)         │                │      │
 │  │  └──────────────────────────────────────┘                │      │
 │  └──────────────────────────────────────────────────────────┘      │
 │                                                                     │
 │  ┌──────────────────────────────────────────────────────────┐      │
-│  │              DATABASE (SQLite/PostgreSQL)                  │      │
-│  │  ┌──────────┐ ┌──────────┐ ┌───────────────┐            │      │
-│  │  │ Calon    │ │ Keputusan│ │ Prediksi Log  │            │      │
-│  │  │ Penerima │ │          │ │               │            │      │
-│  │  └──────────┘ └──────────┘ └───────────────┘            │      │
+│  │              DATABASE (SQLite)                             │      │
+│  │  ┌──────────┐ ┌──────────┐                               │      │
+│  │  │ Calon    │ │ Keputusan│                               │      │
+│  │  │ Penerima │ │          │                               │      │
+│  │  └──────────┘ └──────────┘                               │      │
 │  └──────────────────────────────────────────────────────────┘      │
 └─────────────────────────────────────────────────────────────────────┘
                             │
@@ -50,8 +50,10 @@
 │                     KAGGLE NOTEBOOK (Python)                        │
 │  ┌──────────┐  ┌──────────┐  ┌──────────┐  ┌──────────────────┐  │
 │  │ Dataset  │→ │Preprocess│→ │Train SVM │→ │Evaluate (Conf.   │  │
-│  │          │  │(Encode,  │  │(Grid     │  │Matrix, Akurasi,  │  │
-│  │          │  │Scale,    │  │Search CV)│  │Presisi, Recall)  │  │
+│  │          │  │(Ordinal  │  │(Grid     │  │Matrix, Akurasi,  │  │
+│  │          │  │Encode,   │  │Search CV)│  │Presisi, Recall)  │  │
+│  │          │  │MinMax    │  │          │  │                  │  │
+│  │          │  │Scale,    │  │          │  │                  │  │
 │  │          │  │Split)    │  │          │  │                  │  │
 │  └──────────┘  └──────────┘  └──────────┘  └────────┬─────────┘  │
 │                                                      │             │
@@ -63,18 +65,28 @@
 └─────────────────────────────────────────────────────────────────────┘
 ```
 
+### Penjelasan Arsitektur
+
+Sistem ini terdiri dari dua komponen utama yang saling terhubung:
+
+1. **Kaggle Notebook** — tempat model SVM dilatih. Di sini saya melakukan preprocessing data (encoding ordinal, normalisasi Min-Max), training model dengan GridSearchCV, evaluasi performa, dan mengekspor model dalam format `.pkl`.
+
+2. **Web Application Flask** — tempat model digunakan untuk prediksi. Web ini menyediakan form input bagi pendamping PKH, memproses input melalui model SVM, dan menampilkan hasil klasifikasi (Layak/Tidak Layak).
+
+Kedua komponen terhubung melalui file `.pkl` — model yang sudah dilatih di Kaggle diunduh dan diletakkan di folder `web/models/` untuk digunakan oleh Flask.
+
 ## 2. Tech Stack
 
 ### Web Application
 | Komponen | Teknologi | Alasan |
 |----------|-----------|--------|
-| **Framework** | Python Flask | Ringan, mudah integrasi ML model, client familiar Python ecosystem |
-| **Database** | SQLite (dev) / PostgreSQL (prod) | SQLite untuk portabel, PostgreSQL untuk production |
-| **ORM** | SQLAlchemy | Standar Python ORM |
-| **Frontend** | Bootstrap 5 + Jinja2 | Responsif, skripsi-standard |
-| **Template Engine** | Jinja2 | Default Flask |
+| **Framework** | Python Flask | Ringan, mudah integrasi ML model, Python ecosystem |
+| **Database** | SQLite | Portabel, zero config, cocok untuk skala kecil |
+| **ORM** | SQLAlchemy | Standar Python ORM, abstraksi query database |
+| **Frontend** | Bootstrap 5 + Jinja2 | Responsif, komponen siap pakai |
+| **Template Engine** | Jinja2 | Default Flask, mendukung inheritance template |
 | **ML Integration** | joblib + scikit-learn | Load model SVM .pkl langsung dari Python |
-| **Charts** | Chart.js | Visualisasi hasil evaluasi |
+| **Charts** | Chart.js | Visualisasi hasil evaluasi di browser |
 
 ### Machine Learning (Kaggle)
 | Komponen | Teknologi |
@@ -83,11 +95,12 @@
 | **Runtime** | Python 3.x |
 | **ML Library** | scikit-learn (SVC) |
 | **Data Processing** | pandas, numpy |
-| **Preprocessing** | Ordinal Encoding (manual mapping 1-5), MinMaxScaler (bukan StandardScaler) |
+| **Preprocessing** | Ordinal Encoding manual (mapping dictionary 1-5), MinMaxScaler |
 | **Evaluation** | accuracy_score, precision_score, recall_score, f1_score, confusion_matrix, classification_report |
 
 ### Skema Encoding (Berdasarkan Dokumen Tim PKH Sulteng)
-Preprocessing menggunakan **Ordinal Encoding** manual sesuai indikator resmi, bukan LabelEncoder otomatis:
+
+Preprocessing menggunakan **Ordinal Encoding** manual sesuai indikator resmi, bukan LabelEncoder otomatis. Alasan utamanya: ordinal encoding mempertahankan **urutan tingkat kelayakan** — skor 5 berarti paling layak (paling miskin/rentan), skor 1 berarti paling tidak layak. SVM bisa memahami bahwa jarak antara skor 5 dan 1 itu jauh, sedangkan jarak antara 5 dan 4 itu dekat.
 
 | Fitur | Skema Encoding | Rentang |
 |-------|---------------|---------|
@@ -100,7 +113,30 @@ Preprocessing menggunakan **Ordinal Encoding** manual sesuai indikator resmi, bu
 | Disabilitas | Tidak=0, Ada=1 | 0-1 |
 | Lansia | Tidak=0, Ada=1 | 0-1 |
 
-Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — sesuai dokumen revisi Pak Yazdi.
+Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — menjaga rentang data antara 0 dan 1 tanpa mengubah distribusi, lebih cocok untuk data ordinal.
+
+> **Catatan Historis:** Pada prototype awal (data sintetis), saya menggunakan LabelEncoder dan StandardScaler. Setelah menerima dokumen resmi dari Tim PKH Sulteng pada 3 Juli 2026, skema encoding diubah menjadi ordinal manual 1-5 dan normalisasi diubah ke MinMaxScaler. Lihat `docs/04-integrasi/sesi-2026-07-03-audit-gap-analisis.md` untuk detail gap analisis.
+
+### Format Pipeline .pkl
+
+Model diekspor dalam format **dictionary** (bukan class) agar mudah di-load di web tanpa perlu definisi class terpisah:
+
+```python
+pipeline = {
+    'model': best_svm,           # SVM classifier (scikit-learn SVC)
+    'scaler': scaler,            # MinMaxScaler (fitted)
+    'feature_cols': [...],       # List nama fitur
+    'results': {                 # Metrik evaluasi
+        'accuracy': ...,
+        'precision': ...,
+        'recall': ...,
+        'f1': ...,
+        'best_params': {...}
+    }
+}
+```
+
+> **Catatan Historis:** Prototype awal menyimpan class `SVMPipeline` sebagai .pkl. Format ini diubah ke dictionary karena lebih sederhana dan tidak bergantung pada definisi class.
 
 ### Tools Development
 | Tool | Kegunaan |
@@ -130,6 +166,8 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                     └────────────────────┘
 ```
 
+**Penjelasan:** Pendamping PKH berinteraksi dengan sistem SPK melalui web. Sistem menggunakan model SVM yang sudah dilatih di Kaggle untuk mengklasifikasikan data. Pendamping memasukkan data calon penerima dan menerima hasil klasifikasi.
+
 ### DFD Level 1
 ```
                     ┌────────────────────┐
@@ -139,9 +177,9 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                     ┌────────▼────────────────┐
                     │   1.0                   │
                     │   Input Data Calon      │
-                    │   Penerima              │
+                    │   Penerima (Kategori)   │
                     └────────┬────────────────┘
-                             │ Data Calon
+                             │ Data Calon (skor ordinal)
                              ▼
                     ┌────────────────┐
                     │  Database      │
@@ -153,6 +191,7 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                     │   2.0                   │
                     │   Preprocessing &       │
                     │   Klasifikasi SVM       │
+                    │   (MinMax → Predict)    │
                     └────────┬────────────────┘
                              │ Hasil Prediksi
                              ▼
@@ -167,17 +206,18 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                     └────────────────────┘
 ```
 
+**Penjelasan:** Data calon penerima dimasukkan dalam bentuk kategori (dropdown), sistem mengkonversi ke skor ordinal, menyimpan ke database, lalu memproses melalui MinMaxScaler dan model SVM untuk menghasilkan klasifikasi Layak/Tidak Layak.
+
 ## 4. Entity Relationship Diagram (ERD)
 
 ```
 ┌──────────────────────┐
 │   Calon Penerima     │
 ├──────────────────────┤
-│ PK id_calon (int)    │──────────┐
+│ PK id (int)          │──────────┐
 │    nama (string)     │          │
 │    alamat (text)     │          │
-│    penghasilan (int) │          │
-│    penghasilan_skor │          │
+│    penghasilan_skor  │          │
 │    (int, 1-5)        │          │
 │    pekerjaan_skor    │          │
 │    (int, 1-5)        │          │
@@ -185,17 +225,18 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
 │    (int, 1-5)        │          │
 │    ibu_hamil (bool)  │          │
 │    anak_usia_dini    │          │
-│    (bool)            │          │
-│    anak_sekolah (bool)│         │
+│    (bool, 0/1)       │          │
+│    anak_sekolah      │          │
+│    (bool, 0/1)       │          │
 │    disabilitas (bool)│          │
-│    lansia (bool)     │          │
+│    lansia (bool, 0/1)│          │
 │    created_at        │          │
 └──────────────────────┘          │
                                   │
 ┌──────────────────────┐          │
 │   Hasil Keputusan    │          │
 ├──────────────────────┤          │
-│ PK id_keputusan(int) │<─────────┘
+│ PK id (int)          │◄─────────┘
 │ FK id_calon (int)    │
 │    hasil_prediksi    │
 │    (bool)            │
@@ -208,6 +249,10 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
 └──────────────────────┘
 ```
 
+**Penjelasan:** Tabel `Calon Penerima` menyimpan data input dengan skor ordinal (1-5 untuk penghasilan, pekerjaan, aset; 0/1 untuk komponen sosial). Tabel `Hasil Keputusan` menyimpan output prediksi SVM, terhubung one-to-one melalui `id_calon`.
+
+> **Catatan Historis:** ERD awal menyimpan penghasilan sebagai float (rupiah) dan anak_usia_dini, anak_sekolah, lansia sebagai integer (jumlah). Setelah menerima dokumen resmi PKH, semua diubah menjadi skor ordinal/biner sesuai indikator resmi.
+
 ## 5. Flowchart Sistem
 
 ```
@@ -217,8 +262,17 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                           │
                           ▼
               ┌───────────────────────┐
-              │ Pendamping input data  │
-              │ calon penerima         │
+              │ Pendamping pilih      │
+              │ kategori dari dropdown│
+              │ (penghasilan, kerja,  │
+              │  aset, komponen sosial)│
+              └──────────┬────────────┘
+                         │
+                         ▼
+              ┌───────────────────────┐
+              │ Sistem konversi       │
+              │ kategori → skor      │
+              │ ordinal (1-5 / 0-1)  │
               └──────────┬────────────┘
                          │
                          ▼
@@ -229,9 +283,8 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                          │
                          ▼
               ┌───────────────────────┐
-              │ Preprocessing Data    │
-              │ - Encode kategorikal  │
-              │ - Normalisasi numerik │
+              │ Normalisasi (MinMax)  │
+              │ → Skala 0 sampai 1   │
               └──────────┬────────────┘
                          │
                          ▼
@@ -248,6 +301,7 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
               ┌───────────────────────┐
               │   Hasil:              │
               │ Layak / Tidak Layak   │
+              │ + Probabilitas (%)    │
               └──────────┬────────────┘
                          │
                          ▼
@@ -279,10 +333,13 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
               ┌──────────────────────────┐
               │ 2. Data Preprocessing    │
               │    - Handle missing vals │
-              │    - Encoding kategori   │
-              │    - Normalisasi         │
+              │    - Ordinal Encoding    │
+              │      (mapping manual     │
+              │       1-5 sesuai         │
+              │       dokumen resmi)     │
+              │    - MinMax Normalisasi  │
               │    - Train/Test Split    │
-              │      (80/20)             │
+              │      (80/20, stratified) │
               └──────────┬───────────────┘
                          │
                          ▼
@@ -292,6 +349,7 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
               │      RBF, polynomial     │
               │    - GridSearchCV utk    │
               │      parameter terbaik   │
+              │      (C, gamma)          │
               └──────────┬───────────────┘
                          │
                          ▼
@@ -305,7 +363,10 @@ Normalisasi menggunakan **Min-Max Normalization** (bukan StandardScaler) — ses
                          ▼
               ┌──────────────────────────┐
               │ 5. Export Model (.pkl)   │
-              │    + Pipeline lengkap    │
+              │    - Dictionary format   │
+              │    - model + scaler +    │
+              │      feature_cols +      │
+              │      results             │
               └──────────┬───────────────┘
                          │
                          ▼
