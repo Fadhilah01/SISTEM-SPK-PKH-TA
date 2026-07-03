@@ -1,0 +1,175 @@
+{% extends 'base.html' %}
+{% block title %}Tentang Sistem{% endblock %}
+
+{% block content %}
+<h4 class="mb-4"><i class="bi bi-info-circle"></i> Tentang Sistem</h4>
+
+<div class="row g-4">
+    <!-- Info Sistem -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h6 class="mb-0"><i class="bi bi-gear"></i> Informasi Sistem</h6>
+            </div>
+            <div class="card-body">
+                <table class="table table-borderless mb-0">
+                    <tr>
+                        <td class="text-muted">Nama Sistem</td>
+                        <td><strong>SPK PKH - SVM</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Algoritma</td>
+                        <td><strong>Support Vector Machine (SVM)</strong></td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Kernel</td>
+                        <td><strong>RBF</strong> (Radial Basis Function)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Framework Web</td>
+                        <td>Flask (Python)</td>
+                    </tr>
+                    <tr>
+                        <td class="text-muted">Status Model</td>
+                        <td>
+                            {% if model_loaded %}
+                            <span class="badge bg-success">Aktif ✅</span>
+                            {% else %}
+                            <span class="badge bg-danger">Tidak Ada ❌</span>
+                            {% endif %}
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Model Metrics -->
+    <div class="col-md-6">
+        <div class="card h-100">
+            <div class="card-header bg-white">
+                <h6 class="mb-0"><i class="bi bi-bar-chart"></i> Detail Performa Model</h6>
+            </div>
+            <div class="card-body">
+                {% if metrics %}
+                <div class="row g-2 mb-3">
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-muted d-block">Akurasi</small>
+                            <span class="fs-4 fw-bold">{{ "%.1f"|format(metrics.accuracy * 100) }}%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-muted d-block">Presisi</small>
+                            <span class="fs-4 fw-bold">{{ "%.1f"|format(metrics.precision * 100) }}%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-muted d-block">Recall</small>
+                            <span class="fs-4 fw-bold">{{ "%.1f"|format(metrics.recall * 100) }}%</span>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="p-3 bg-light rounded">
+                            <small class="text-muted d-block">F1-Score</small>
+                            <span class="fs-4 fw-bold">{{ "%.3f"|format(metrics.f1) }}</span>
+                        </div>
+                    </div>
+                </div>
+                <h6>Parameter Terbaik (GridSearchCV)</h6>
+                <table class="table table-sm">
+                    <tr><td>C (Regularisasi)</td><td><strong>{{ metrics.best_params.C }}</strong></td></tr>
+                    <tr><td>Gamma</td><td><strong>{{ metrics.best_params.gamma }}</strong></td></tr>
+                    <tr><td>Kernel</td><td><strong>{{ metrics.best_params.kernel }}</strong></td></tr>
+                </table>
+                {% else %}
+                <div class="text-center py-4 text-muted">
+                    <i class="bi bi-graph-up" style="font-size: 2rem;"></i>
+                    <p class="mt-2">Metrik tidak tersedia.</p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+    <!-- Penjelasan Model -->
+    <div class="col-12">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h6 class="mb-0"><i class="bi bi-book"></i> Penjelasan untuk Sidang</h6>
+            </div>
+            <div class="card-body">
+                <div class="row g-4">
+                    <div class="col-md-6">
+                        <h6>Kenapa SVM?</h6>
+                        <p class="text-muted small">
+                            SVM dipilih karena: (1) performa baik pada dataset dengan jumlah fitur sedang,
+                            (2) mampu menangani data non-linear dengan kernel trick,
+                            (3) memiliki dasar matematis yang kuat (mencari hyperplane optimal).
+                            Dibanding SAW/TOPSIS (SPK konvensional), SVM belajar dari data historis
+                            sehingga lebih objektif dan konsisten.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Kenapa Kernel RBF?</h6>
+                        <p class="text-muted small">
+                            Data PKH memiliki hubungan non-linear antar variabel — tidak bisa dipisahkan
+                            dengan garis lurus. RBF memetakan data ke dimensi lebih tinggi sehingga
+                            hyperplane bisa memisahkan kelas Layak vs Tidak Layak dengan lebih baik.
+                            Dari 4 kernel yang diuji, RBF memberikan F1-Score tertinggi (0.89).
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Arti Confusion Matrix</h6>
+                        <p class="text-muted small">
+                            <strong>True Positive (TP):</strong> Diprediksi Layak, benar layak.<br>
+                            <strong>True Negative (TN):</strong> Diprediksi Tidak Layak, benar tidak layak.<br>
+                            <strong>False Positive (FP):</strong> Diprediksi Layak tapi tidak layak (kesalahan Tipe I).<br>
+                            <strong>False Negative (FN):</strong> Diprediksi Tidak Layak tapi layak (kesalahan Tipe II).<br>
+                            Model kita punya FN=12, FP=10 dari 200 data uji — cukup baik.
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>C=10 dan gamma=0.1 Artinya Apa?</h6>
+                        <p class="text-muted small">
+                            <strong>C=10:</strong> Tingkat regularisasi sedang — tidak terlalu strict (overfit)
+                            maupun terlalu longgar (underfit).<br>
+                            <strong>gamma=0.1:</strong> Pengaruh satu sampel training cukup luas — model fokus
+                            ke pola umum, bukan detail noise. Nilai ini ditemukan melalui GridSearchCV
+                            dengan 5-fold cross validation.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Confusion Matrix -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Confusion Matrix</h6>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename='img/confusion_matrix.png') }}"
+                     alt="Confusion Matrix" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+
+    <!-- EDA -->
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h6 class="mb-0">Visualisasi EDA</h6>
+            </div>
+            <div class="card-body text-center">
+                <img src="{{ url_for('static', filename='img/eda_visualizations.png') }}"
+                     alt="EDA Visualizations" class="img-fluid rounded">
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

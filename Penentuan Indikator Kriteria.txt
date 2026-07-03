@@ -1,0 +1,63 @@
+# Penentuan Indikator (Sub-Kriteria) — PKH Sulteng
+**Sumber:** Zainal, Ketua Tim SDM PKH Provinsi Sulawesi Tengah
+
+---
+
+## 1. Penghasilan (Bobot 25%)
+Diukur berdasarkan kategori desil:
+
+| Kategori | Rentang | Skor |
+|----------|---------|------|
+| Desil 1 | < Rp.500.000 | **5** |
+| Desil 4 | ± Rp.600.000 – Rp.700.000 | **4** |
+| Desil 3 | ± Rp.800.000 – Rp.900.000 | **3** |
+| Desil 4 (ulang?) | ± Rp.1.000.000 – Rp.1.200.000 | **2** |
+| Desil 5 | ± Rp.1.300.000 – Rp.1.500.000 | **1** |
+
+## 2. Pekerjaan (Bobot 20%)
+| Kategori | Skor |
+|----------|------|
+| Tidak Bekerja | **5** |
+| Pekerja Bebas | **4** |
+| Petani/Nelayan | **3** |
+| Wiraswasta | **2** |
+| PNS/Pegawai Tetap | **1** |
+
+## 3. Kepemilikan Aset (Bobot 15%)
+| Kategori | Skor |
+|----------|------|
+| Tidak Memiliki Aset | **5** |
+| Memiliki Motor (harga jual rendah) | **4** |
+| Memiliki Motor (harga jual tinggi) | **3** |
+| Memiliki Mobil atau Tanah/Kebun | **2** |
+| Memiliki Mobil dan Tanah/Kebun | **1** |
+
+## 4. Ibu Hamil (Bobot 10%)
+| Kategori | Skor |
+|----------|------|
+| Ada | **1** |
+| Tidak Ada | **0** |
+
+## 5. Anak Usia Dini (Bobot 10%)
+| Kategori | Skor |
+|----------|------|
+| Ada | **1** |
+| Tidak Ada | **0** |
+
+## 6. Anak Sekolah (Bobot 10%)
+| Kategori | Skor |
+|----------|------|
+| Ada | **1** |
+| Tidak Ada | **0** |
+
+## 7. Penyandang Disabilitas (Bobot 5%)
+| Kategori | Skor |
+|----------|------|
+| Ada | **1** |
+| Tidak Ada | **0** |
+
+## 8. Lansia (Bobot 5%)
+| Kategori | Skor |
+|----------|------|
+| Ada | **1** |
+| Tidak Ada | **0** |

@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+{% block title %}{% if calon %}Edit{% else %}Tambah{% endif %} Calon Penerima{% endblock %}
+
+{% block content %}
+<h4 class="mb-4">
+    <i class="bi bi-{% if calon %}pencil-square{% else %}person-plus{% endif %}"></i>
+    {% if calon %}Edit{% else %}Tambah{% endif %} Data Calon Penerima
+</h4>
+
+<div class="row">
+    <div class="col-lg-8">
+        <div class="card">
+            <div class="card-body">
+                <form method="POST" class="row g-3">
+                    <!-- Nama -->
+                    <div class="col-md-6">
+                        <label class="form-label">Nama Kepala Keluarga <span class="text-danger">*</span></label>
+                        <input type="text" name="nama" class="form-control" required
+                               value="{{ calon.nama if calon else '' }}" placeholder="Nama lengkap">
+                    </div>
+
+                    <!-- Alamat -->
+                    <div class="col-md-6">
+                        <label class="form-label">Alamat <span class="text-danger">*</span></label>
+                        <input type="text" name="alamat" class="form-control" required
+                               value="{{ calon.alamat if calon else '' }}" placeholder="Desa/Kelurahan">
+                    </div>
+
+                    <!-- Penghasilan -->
+                    <div class="col-md-4">
+                        <label class="form-label">Penghasilan per Bulan <span class="text-danger">*</span></label>
+                        <div class="input-group">
+                            <span class="input-group-text">Rp</span>
+                            <input type="number" name="penghasilan" class="form-control" required min="0" step="50000"
+                                   value="{{ calon.penghasilan|int if calon else '' }}" placeholder="1000000">
+                        </div>
+                    </div>
+
+                    <!-- Pekerjaan -->
+                    <div class="col-md-4">
+                        <label class="form-label">Pekerjaan <span class="text-danger">*</span></label>
+                        <select name="pekerjaan" class="form-select" required>
+                            <option value="">-- Pilih --</option>
+                            {% for p in pekerjaan_list %}
+                            <option value="{{ p }}" {% if calon and calon.pekerjaan == p %}selected{% endif %}>{{ p }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Kepemilikan Aset -->
+                    <div class="col-md-4">
+                        <label class="form-label">Kepemilikan Aset <span class="text-danger">*</span></label>
+                        <select name="kepemilikan_aset" class="form-select" required>
+                            <option value="">-- Pilih --</option>
+                            {% for a in aset_list %}
+                            <option value="{{ a }}" {% if calon and calon.kepemilikan_aset == a %}selected{% endif %}>{{ a }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Checkbox row -->
+                    <div class="col-12"><hr class="my-2"></div>
+                    <div class="col-12">
+                        <p class="mb-2 fw-medium">Komponen Keluarga:</p>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="ibu_hamil"
+                                   id="ibu_hamil" {% if calon and calon.ibu_hamil %}checked{% endif %}>
+                            <label class="form-check-label" for="ibu_hamil">Ibu Hamil</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" name="disabilitas"
+                                   id="disabilitas" {% if calon and calon.disabilitas %}checked{% endif %}>
+                            <label class="form-check-label" for="disabilitas">Penyandang Disabilitas</label>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Jml Anak Usia Dini (0-6 th)</label>
+                        <input type="number" name="anak_usia_dini" class="form-control" min="0" max="10"
+                               value="{{ calon.anak_usia_dini if calon else 0 }}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Jml Anak Sekolah (7-18 th)</label>
+                        <input type="number" name="anak_sekolah" class="form-control" min="0" max="10"
+                               value="{{ calon.anak_sekolah if calon else 0 }}">
+                    </div>
+
+                    <div class="col-md-3">
+                        <label class="form-label">Jml Lansia (>60 th)</label>
+                        <input type="number" name="lansia" class="form-control" min="0" max="10"
+                               value="{{ calon.lansia if calon else 0 }}">
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <hr class="my-2">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="bi bi-{% if calon %}check-circle{% else %}save{% endif %}"></i>
+                            {% if calon %}Simpan Perubahan{% else %}Simpan & Prediksi{% endif %}
+                        </button>
+                        <a href="{{ url_for('daftar_calon') }}" class="btn btn-secondary">
+                            Batal
+                        </a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Info Panel -->
+    <div class="col-lg-4">
+        <div class="card">
+            <div class="card-header bg-white">
+                <h6 class="mb-0"><i class="bi bi-info-circle"></i> Panduan Input</h6>
+            </div>
+            <div class="card-body small">
+                <p class="mb-2"><strong>Atribut yang digunakan:</strong></p>
+                <ul class="list-unstyled mb-3">
+                    <li><i class="bi bi-check2 text-success"></i> Penghasilan</li>
+                    <li><i class="bi bi-check2 text-success"></i> Pekerjaan</li>
+                    <li><i class="bi bi-check2 text-success"></i> Kepemilikan Aset</li>
+                    <li><i class="bi bi-check2 text-success"></i> Ibu Hamil</li>
+                    <li><i class="bi bi-check2 text-success"></i> Anak Usia Dini</li>
+                    <li><i class="bi bi-check2 text-success"></i> Anak Sekolah</li>
+                    <li><i class="bi bi-check2 text-success"></i> Disabilitas</li>
+                    <li><i class="bi bi-check2 text-success"></i> Lansia</li>
+                </ul>
+                <p class="mb-0 text-muted">
+                    Sistem akan otomatis memproses dengan model SVM
+                    dan menampilkan hasil keputusan.
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

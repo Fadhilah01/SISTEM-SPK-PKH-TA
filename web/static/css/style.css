@@ -1,0 +1,70 @@
+/* SPK PKH - Custom Styles */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: #f5f7fa;
+}
+main {
+    flex: 1;
+}
+
+/* Card hover */
+.card {
+    transition: transform 0.1s ease, box-shadow 0.15s ease;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0,0,0,.08);
+}
+.card:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,.1);
+}
+
+/* Stat cards */
+.stat-card {
+    border-radius: 12px;
+    overflow: hidden;
+}
+.stat-card .card-body {
+    padding: 1.5rem;
+}
+.stat-card .stat-icon {
+    font-size: 2rem;
+    opacity: 0.8;
+}
+.stat-card .stat-number {
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+/* Badge hasil */
+.badge-layak {
+    background: #d1fae5;
+    color: #065f46;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+}
+.badge-tidak-layak {
+    background: #fee2e2;
+    color: #991b1b;
+    font-weight: 600;
+    padding: 0.4rem 0.8rem;
+}
+
+/* Table */
+.table th {
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #6b7280;
+}
+.table td {
+    vertical-align: middle;
+}
+
+/* Footer */
+.footer {
+    font-size: 0.85rem;
+}

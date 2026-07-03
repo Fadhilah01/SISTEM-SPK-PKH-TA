@@ -1,0 +1,19 @@
+# Penentuan Kriteria — PKH Sulteng
+**Sumber:** Zainal, Ketua Tim SDM PKH Provinsi Sulawesi Tengah (NIP: 19840324 202521 1 056)
+**Dasar:** Keputusan Dirjen Perlindungan dan Jaminan Sosial No. 9/3/HK.01.1/2025
+
+---
+
+## Kriteria & Bobot
+
+| No | Kriteria | Bobot | Keterangan |
+|----|----------|-------|------------|
+| 1 | Penghasilan | **25%** | Tidak memiliki penghasilan rutin dari APBN dan tidak memiliki penghasilan di atas UMP |
+| 2 | Pekerjaan | **20%** | Tidak bekerja sebagai ASN/TNI/Polri/Pensiunan/Guru Sertifikasi |
+| 3 | Kepemilikan Aset | **15%** | Penghasilan rendah tapi aset banyak → dianggap kurang layak |
+| 4 | Ibu Hamil | **10%** | Kehamilan dibatasi sampai kelahiran anak kedua |
+| 5 | Anak Usia Dini (0-6 th) | **10%** | Belum bersekolah di sekolah terdaftar Dapodik |
+| 6 | Anak Sekolah | **10%** | SD/SMP/SMA terdaftar di Dapodik |
+| 7 | Penyandang Disabilitas | **5%** | Dalam satu Kartu Keluarga |
+| 8 | Lansia | **5%** | Dalam satu Kartu Keluarga |
+| | **Total** | **100%** | |
