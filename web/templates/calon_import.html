@@ -1,0 +1,125 @@
+{% extends 'base.html' %}
+{% block title %}Import Data Calon{% endblock %}
+
+{% block content %}
+<div class="stagger-container">
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h4 class="mb-0"><i class="bi bi-upload"></i> Import Data Calon Penerima PKH</h4>
+        <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+            <i class="bi bi-arrow-left"></i> Kembali
+        </a>
+    </div>
+
+    <div class="row g-4">
+        <!-- Form Upload -->
+        <div class="col-lg-7">
+            <div class="card">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-file-earmark-spreadsheet"></i> Upload File Data</h6>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" class="row g-3" id="importForm">
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+
+                        <!-- File Input -->
+                        <div class="col-12">
+                            <label for="file" class="form-label">Pilih File Excel (.xlsx) atau CSV</label>
+                            <input type="file" name="file" id="file" class="form-control"
+                                   accept=".xlsx,.xls,.csv" required>
+                            <div class="form-text text-muted">
+                                Format yang didukung: .xlsx, .xls, .csv.
+                                Gunakan template yang disediakan untuk format kolom yang benar.
+                            </div>
+                        </div>
+
+                        <!-- Download Template Link -->
+                        <div class="col-12">
+                            <a href="{{ url_for('calon.download_template') }}" class="btn btn-outline-primary btn-sm" target="_blank">
+                                <i class="bi bi-download"></i> Download Template Excel
+                            </a>
+                        </div>
+
+                        <!-- Info -->
+                        <div class="col-12 mt-3 pt-3 border-top border-light border-opacity-10">
+                            <div class="alert alert-info py-2 px-3 mb-0" role="alert">
+                                <div class="d-flex align-items-start gap-2">
+                                    <i class="bi bi-info-circle fs-5 flex-shrink-0 mt-1"></i>
+                                    <div class="small">
+                                        <strong>Proses import:</strong>
+                                        <ol class="mb-0 ps-3 mt-1">
+                                            <li>Sistem akan membaca dan memvalidasi setiap baris data.</li>
+                                            <li>Baris yang valid akan langsung disimpan ke database.</li>
+                                            <li>Setiap data yang berhasil di-import akan otomatis diprediksi kelayakannya oleh model SVM.</li>
+                                            <li>Baris yang gagal validasi akan dilewati dan ditampilkan daftar errornya.</li>
+                                            <li>Import akan menambah data baru — tidak ada pengecekan duplikat.</li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Submit -->
+                        <div class="col-12 mt-3 pt-3 border-top border-light border-opacity-10">
+                            <button type="button" class="btn btn-primary px-4 me-2" id="btnImport">
+                                <i class="bi bi-cloud-upload"></i> Import & Prediksi Sekarang
+                            </button>
+                            <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-secondary px-4">Batal</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Informasi Panel -->
+        <div class="col-lg-5">
+            <div class="card h-100">
+                <div class="card-header">
+                    <h6 class="mb-0"><i class="bi bi-info-circle"></i> Panduan Import</h6>
+                </div>
+                <div class="card-body small text-muted">
+                    <p class="fw-medium text-dark-emphasis">Persyaratan File:</p>
+                    <ul class="list-unstyled mb-4">
+                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i> Baris pertama HARUS header (nama kolom)</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i> Kolom wajib: nama, alamat, penghasilan, pekerjaan, kepemilikan_aset</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i> Kolom boolean diisi: YA/TIDAK, 1/0, Ada/Tidak</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-primary me-2"></i> Kategori harus sesuai dengan yang didaftarkan sistem</li>
+                    </ul>
+
+                    <p class="fw-medium text-dark-emphasis">Yang Terjadi Setelah Import:</p>
+                    <ul class="list-unstyled mb-0">
+                        <li class="mb-2"><i class="bi bi-1-circle text-primary me-2"></i> Data tersimpan di database</li>
+                        <li class="mb-2"><i class="bi bi-2-circle text-primary me-2"></i> Skor ordinal dihitung otomatis</li>
+                        <li class="mb-2"><i class="bi bi-3-circle text-primary me-2"></i> Model SVM RBF memprediksi kelayakan</li>
+                        <li class="mb-2"><i class="bi bi-4-circle text-primary me-2"></i> Hasil (Layak/Tidak) tersimpan</li>
+                        <li><i class="bi bi-5-circle text-primary me-2"></i> Siap dilihat di Dashboard & Data Calon</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi Import -->
+<div class="modal fade" id="importConfirmModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body text-center p-4">
+                <i class="bi bi-cloud-upload text-primary" style="font-size: 2.5rem;"></i>
+                <h6 class="mt-3 fw-semibold">Konfirmasi Import</h6>
+                <p class="small text-muted mb-3" id="importModalBody"></p>
+                <div class="d-flex gap-2 justify-content-center">
+                    <button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal">Batal</button>
+                    <button type="button" class="btn btn-primary btn-sm" id="confirmImport">
+                        <i class="bi bi-check-lg"></i> Ya, Import
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/import.js') }}"></script>
+{% endblock %}

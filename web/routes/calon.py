@@ -1,10 +1,11 @@
-"""Blueprint — CRUD Calon Penerima + Prediksi SVM."""
-from flask import Blueprint, render_template, request, redirect, url_for, flash, session
+"""Blueprint — CRUD Calon Penerima + Prediksi SVM + Bulk Import/Export."""
+from flask import Blueprint, render_template, request, redirect, url_for, flash, session, send_file
 from models_db import db, CalonPenerima, HasilKeputusan
 from core.auth import login_required, csrf_required
 from core.constants import PENGHASILAN_MAPPING, PEKERJAAN_MAPPING, ASET_MAPPING
 from core.scoring import compute_scores, predict_single, create_hasil_keputusan
 from core.predictor import predictor, model_loaded
+from core.data_io import import_from_file, export_data, generate_template, get_column_options
 
 calon_bp = Blueprint('calon', __name__)
 
@@ -189,6 +190,120 @@ def hapus_calon(id):
         db.session.rollback()
         flash(f'Error: {str(e)}', 'danger')
     return redirect(url_for('calon.daftar_calon'))
+
+
+# ─── BULK IMPORT ───
+
+
+@calon_bp.route('/calon/import', methods=['GET', 'POST'])
+@csrf_required
+@login_required
+def import_calon():
+    """Import bulk dari file Excel/CSV."""
+    if request.method == 'POST':
+        file = request.files.get('file')
+        if not file or file.filename == '':
+            flash('Silakan pilih file Excel atau CSV untuk di-upload.', 'danger')
+            return redirect(url_for('calon.import_calon'))
+
+        allowed = ('.xlsx', '.xls', '.csv')
+        if not file.filename.lower().endswith(allowed):
+            flash(f'Format file tidak didukung. Gunakan: {", ".join(allowed)}', 'danger')
+            return redirect(url_for('calon.import_calon'))
+
+        try:
+            hasil = import_from_file(file, predictor)
+            if hasil['success'] > 0:
+                flash(
+                    f"✅ Import berhasil: {hasil['success']} data tersimpan "
+                    f"dan diprediksi otomatis.",
+                    'success'
+                )
+            if hasil['failed'] > 0:
+                # Tampilkan maks 5 error pertama
+                err_preview = hasil['errors'][:5]
+                for err in err_preview:
+                    flash(f'⚠️ {err}', 'warning')
+                if len(hasil['errors']) > 5:
+                    flash(f'... dan {len(hasil["errors"]) - 5} error lainnya. Perbaiki data dan coba lagi.', 'warning')
+
+            if hasil['success'] == 0 and hasil['failed'] == 0:
+                flash('File kosong atau tidak ada data yang diproses.', 'info')
+
+        except Exception as e:
+            flash(f'Error saat memproses file: {str(e)}', 'danger')
+
+        return redirect(url_for('calon.daftar_calon'))
+
+    return render_template('calon_import.html')
+
+
+@calon_bp.route('/calon/import/template')
+@login_required
+def download_template():
+    """Download template Excel untuk import bulk."""
+    buf = generate_template()
+    return send_file(
+        buf,
+        mimetype='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+        as_attachment=True,
+        download_name='template_import_pkh.xlsx',
+    )
+
+
+# ─── BULK EXPORT ───
+
+
+@calon_bp.route('/calon/export', methods=['GET', 'POST'])
+@login_required
+@csrf_required
+def export_calon():
+    """Export data ke Excel/CSV dengan filter dinamis."""
+    if request.method == 'POST':
+        format_type = request.form.get('format', 'excel')
+        date_from = request.form.get('date_from', '')
+        date_to = request.form.get('date_to', '')
+        hasil_filter = request.form.get('hasil_filter', '')
+        q = request.form.get('q', '')
+        selected_columns = request.form.getlist('columns')
+
+        # Kirim semua kolom jika tidak ada yang dipilih
+        if not selected_columns:
+            selected_columns = [
+                'id', 'nama', 'alamat', 'penghasilan', 'pekerjaan',
+                'kepemilikan_aset', 'ibu_hamil', 'anak_usia_dini',
+                'anak_sekolah', 'disabilitas', 'lansia',
+                'skor_penghasilan', 'skor_pekerjaan', 'skor_kepemilikan_aset',
+                'skor_ibu_hamil', 'skor_anak_usia_dini', 'skor_anak_sekolah',
+                'skor_disabilitas', 'skor_lansia',
+                'hasil_prediksi', 'probabilitas', 'tanggal_input',
+                'tanggal_prediksi', 'oleh',
+            ]
+
+        filters = {
+            'date_from': date_from,
+            'date_to': date_to,
+            'hasil': hasil_filter,
+            'q': q,
+            'columns': selected_columns,
+        }
+
+        try:
+            buf, filename, mime_type = export_data(format_type=format_type, filters=filters)
+            return send_file(
+                buf,
+                mimetype=mime_type,
+                as_attachment=True,
+                download_name=filename,
+            )
+        except Exception as e:
+            flash(f'Error saat export: {str(e)}', 'danger')
+            return redirect(url_for('calon.export_calon'))
+
+    # GET — tampilkan form filter
+    column_options = get_column_options()
+    return render_template('calon_export.html',
+                           column_options=column_options)
 
 
 @calon_bp.route('/calon/<int:id>/prediksi-ulang', methods=['POST'])

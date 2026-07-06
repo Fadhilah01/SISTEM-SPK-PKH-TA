@@ -27,13 +27,18 @@
                     </a>
                 </li>
                 <li>
-                    <a class="sidebar-link {% if request.endpoint in ('calon.daftar_calon', 'calon.tambah_calon', 'calon.edit_calon', 'calon.prediksi_ulang') %}active{% endif %}" href="{{ url_for('calon.daftar_calon') }}">
+                    <a class="sidebar-link {% if request.endpoint in ('calon.daftar_calon', 'calon.edit_calon', 'calon.prediksi_ulang', 'calon.export_calon') %}active{% endif %}" href="{{ url_for('calon.daftar_calon') }}">
                         <i class="bi bi-people"></i> Data Calon
                     </a>
                 </li>
                 <li>
-                    <a class="sidebar-link {% if request.endpoint == 'calon.tambah_calon' %}active{% endif %}" href="{{ url_for('calon.tambah_calon') }}">
+                    <a class="sidebar-link {% if request.endpoint in ('calon.tambah_calon', 'calon.import_calon') %}active{% endif %}" href="{{ url_for('calon.tambah_calon') }}">
                         <i class="bi bi-person-plus"></i> Tambah Calon
+                    </a>
+                </li>
+                <li>
+                    <a class="sidebar-link {% if request.endpoint == 'calon.export_calon' %}active{% endif %}" href="{{ url_for('calon.export_calon') }}">
+                        <i class="bi bi-download"></i> Export Data
                     </a>
                 </li>
                 {% if current_user.role == 'superadmin' %}

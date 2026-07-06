@@ -11,8 +11,8 @@
 | **1. Training Model SVM** | 1 Juli 2026 | ✅ Selesai (prototype) | Data sintetis, akurasi 89% |
 | **2. Pembuatan Web SPK** | 2 Juli 2026 | ✅ Selesai | CRUD, dashboard, prediksi |
 | **3. Audit & Gap Analisis** | 3 Juli 2026 | ✅ Selesai | 5 gap kritis teridentifikasi |
-| **4. Perbaikan & Retrain** | 4-6 Juli 2026 | ⏳ Sebagian Selesai | Refactoring Web & Login Selesai. Retrain menunggu CSV |
-| **5. Dokumentasi Laporan** | 5-6 Juli 2026 | ⏳ | Bab IV dicicil (Log harian sesi 5 terbit) |
+| **4. Perbaikan & Retrain** | 4-7 Juli 2026 | ⏳ Sebagian Selesai | Refactoring Web, Login, Import/Export Selesai. Retrain menunggu CSV |
+| **5. Dokumentasi Laporan** | 5-7 Juli 2026 | ⏳ | Dicicil — log harian sesi 5 & sesi 9 terbit |
 | **6. Buffer & Revisi** | 6-7 Juli 2026 | ⏳ | |
 
 ---
@@ -88,6 +88,11 @@
 - [x] Fitur mandiri ganti password admin
 - [x] Otorisasi hak akses multi-role (Superadmin/Admin) berbasis RBAC
 - [x] Modul CRUD manajemen pengguna admin (Superadmin only)
+- [x] Import data massal dari file Excel/CSV dengan validasi per baris + batch prediksi SVM
+- [x] Export data ke Excel/CSV dengan filter dinamis (waktu, hasil keputusan, kolom, format)
+- [x] Template Excel untuk panduan import lengkap dengan daftar kategori valid
+- [x] Navigasi import dari halaman Tambah Calon (banner info)
+- [x] Modal konfirmasi Bootstrap untuk semua aksi destruktif (hapus, import)
 
 #### 4.3 Verifikasi (⏳ Menunggu Model Final)
 - [ ] Tes 5-10 kasus prediksi manual dengan model final

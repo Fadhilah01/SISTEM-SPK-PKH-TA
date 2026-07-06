@@ -25,7 +25,8 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 | Dashboard SPK | Ringkasan data + visualisasi diagram interaktif (Chart.js) | P0 | ✅ Selesai (6 Juli 2026) |
 | Riwayat Keputusan | History prediksi + detail input | P0 | ✅ Selesai |
 | Pencarian & Paginasi | Menyaring dan membatasi data calon penerima di tabel | P1 | ✅ Selesai (6 Juli 2026) |
-| Export Laporan | Export hasil keputusan (PDF/Excel) | P1 | ⏳ Pending |
+| Import Data (Excel/CSV) | Import massal data calon dari file Excel/CSV dengan validasi otomatis dan batch prediksi SVM | P1 | ✅ Selesai (6 Juli 2026) |
+| Export Laporan (Excel/CSV) | Export data dengan filter dinamis (waktu, hasil, kolom, format) ke Excel/CSV | P1 | ✅ Selesai (6 Juli 2026) |
 
 ### 3.2 Fitur Tambahan
 | Fitur | Deskripsi | Prioritas | Status |
