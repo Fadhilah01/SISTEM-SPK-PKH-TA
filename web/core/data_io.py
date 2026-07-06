@@ -406,7 +406,7 @@ def export_data(format_type='excel', filters=None):
         filter_tag = f'_{hasil_filter}'
 
     if format_type == 'csv':
-        buf = io.StringIO()
+        buf = io.BytesIO()
         df_export.to_csv(buf, index=False, encoding='utf-8-sig')
         buf.seek(0)
         filename = f'data_pkh{filter_tag}_{now_str}.csv'

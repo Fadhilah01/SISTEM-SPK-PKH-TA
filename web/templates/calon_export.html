@@ -156,7 +156,7 @@
                             <button type="submit" class="btn btn-success px-4 me-2" id="btnExport">
                                 <i class="bi bi-download"></i> Download Data
                             </button>
-                            <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-secondary px-4">Batal</a>
+                            <button type="button" class="btn btn-secondary px-4" onclick="handleCancel()" data-cancel-url="{{ url_for('calon.daftar_calon') }}">Batal</button>
                         </div>
                     </form>
                 </div>

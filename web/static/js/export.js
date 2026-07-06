@@ -2,14 +2,30 @@
  * Export Data — Filter controls & form handling
  *
  * Manages quick date range buttons, select/deselect all columns,
- * form validation with Bootstrap modal, and submission state.
+ * form validation with Bootstrap modal, and loading overlay.
+ *
+ * CATATAN: Jangan pernah men-disable tombol submit di event click!
+ * Browser membatalkan form submission jika tombol submit di-disable
+ * sebelum event submit sempat di-fire. Gunakan loading overlay sebagai gantinya.
  */
 
 document.addEventListener('DOMContentLoaded', function () {
     initDateRangeButtons();
     initColumnSelectors();
     initExportForm();
+    initCancelButton();
 });
+
+/**
+ * Simpan URL redirect untuk tombol Batal.
+ * Dibaca dari data attribute halaman agar tidak hardcode.
+ */
+function initCancelButton() {
+    var batalBtn = document.querySelector('[data-cancel-url]');
+    if (batalBtn) {
+        window._cancelRedirectUrl = batalBtn.dataset.cancelUrl;
+    }
+}
 
 function initDateRangeButtons() {
     document.querySelectorAll('.set-date-range').forEach(function (btn) {
@@ -54,21 +70,89 @@ function initColumnSelectors() {
 }
 
 function initExportForm() {
-    var exportBtn = document.getElementById('btnExport');
-    if (!exportBtn) return;
+    var form = document.getElementById('exportForm');
+    if (!form) return;
 
-    exportBtn.addEventListener('click', function (e) {
+    form.addEventListener('submit', function (e) {
         var checked = document.querySelectorAll('.column-checkbox:checked');
         if (checked.length === 0) {
             e.preventDefault();
-            // Show Bootstrap modal warning
             var warningModal = new bootstrap.Modal(document.getElementById('exportWarningModal'));
             warningModal.show();
             return;
         }
 
-        // Disable button to prevent double click
-        this.disabled = true;
-        this.innerHTML = '<span class="spinner-border spinner-border-sm"></span> Memproses Export...';
+        // JANGAN disable tombol submit — itu mencegah form submission!
+        // Sebagai gantinya, tampilkan overlay loading.
+        // Overlay akan otomatis hilang setelah download selesai
+        // (atau user bisa klik overlay untuk menutupnya).
+        showLoadingOverlay();
     });
+}
+
+/**
+ * handleCancel — fungsi global untuk tombol Batal.
+ * - Jika overlay loading sedang tampil, tutup saja overlay-nya.
+ * - Jika tidak ada overlay, redirect ke daftar calon.
+ */
+function handleCancel() {
+    var overlay = document.getElementById('exportLoadingOverlay');
+    if (overlay) {
+        overlay.remove();
+    } else {
+        window.location.href = window._cancelRedirectUrl || '/calon';
+    }
+}
+
+
+function showLoadingOverlay() {
+    // Cegah duplikasi overlay
+    if (document.getElementById('exportLoadingOverlay')) return;
+
+    var overlay = document.createElement('div');
+    overlay.id = 'exportLoadingOverlay';
+    overlay.style.cssText = [
+        'position: fixed',
+        'top: 0',
+        'left: 0',
+        'width: 100%',
+        'height: 100%',
+        'background: rgba(0, 0, 0, 0.5)',
+        'z-index: 9999',
+        'display: flex',
+        'align-items: center',
+        'justify-content: center',
+    ].join(';');
+
+    overlay.innerHTML = [
+        '<div class="bg-white rounded-3 p-4 text-center shadow-lg" style="min-width: 280px;">',
+        '  <div class="spinner-border text-primary mb-3" role="status"></div>',
+        '  <p class="mb-1 fw-semibold">Sedang memproses export...</p>',
+        '  <small class="text-muted">File akan terdownload secara otomatis.</small>',
+        '  <hr>',
+        '  <button type="button" class="btn btn-sm btn-outline-secondary" id="btnCloseOverlay">',
+        '    Tutup (jika download sudah selesai)',
+        '  </button>',
+        '</div>',
+    ].join('');
+
+    document.body.appendChild(overlay);
+
+    // Klik overlay (di luar card) untuk menutup
+    overlay.addEventListener('click', function (e) {
+        if (e.target === this) {
+            this.remove();
+        }
+    });
+
+    // Tombol tutup
+    document.getElementById('btnCloseOverlay').addEventListener('click', function () {
+        overlay.remove();
+    });
+
+    // Auto-hide setelah 15 detik (fallback — file kecil harusnya < 1 detik)
+    setTimeout(function () {
+        var el = document.getElementById('exportLoadingOverlay');
+        if (el) el.remove();
+    }, 15000);
 }
