@@ -54,7 +54,7 @@
             <div class="card h-100">
                 <div class="card-header d-flex justify-content-between align-items-center">
                     <h6 class="mb-0"><i class="bi bi-clock-history"></i> Hasil Keputusan Terbaru</h6>
-                    <a href="{{ url_for('daftar_calon') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+                    <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
                 </div>
                 <div class="card-body p-0">
                     {% if recent %}
@@ -74,7 +74,7 @@
                                 <tr>
                                     <td class="font-monospace text-muted small">{{ loop.index }}</td>
                                     <td>
-                                        <a href="{{ url_for('daftar_calon') }}" class="text-decoration-none fw-medium text-dark-emphasis">
+                                        <a href="{{ url_for('calon.daftar_calon') }}" class="text-decoration-none fw-medium text-dark-emphasis">
                                             {{ r.calon.nama }}
                                         </a>
                                     </td>
@@ -96,7 +96,7 @@
                     <div class="text-center py-5 text-muted">
                         <i class="bi bi-inbox" style="font-size: 2rem;"></i>
                         <p class="mt-2 small">Belum ada data keputusan.</p>
-                        <a href="{{ url_for('tambah_calon') }}" class="btn btn-primary btn-sm">Tambah Data Calon</a>
+                        <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-primary btn-sm">Tambah Data Calon</a>
                     </div>
                     {% endif %}
                 </div>
@@ -148,118 +148,7 @@
 
 {% block scripts %}
 {% if total_calon > 0 %}
-<script>
-    document.addEventListener('DOMContentLoaded', function() {
-        // Ambil elemen canvas
-        const canvasKelayakan = document.getElementById('chartKelayakan');
-        const canvasDesa = document.getElementById('chartDesa');
-
-        if (!canvasKelayakan || !canvasDesa) return;
-
-        // Ambil data dari atribut dataset
-        const layak = Number(canvasKelayakan.dataset.layak) || 0;
-        const tidak = Number(canvasKelayakan.dataset.tidak) || 0;
-        
-        const posona = Number(canvasDesa.dataset.posona) || 0;
-        const palapi = Number(canvasDesa.dataset.palapi) || 0;
-        const posonaAtas = Number(canvasDesa.dataset.posonaAtas) || 0;
-
-        // Cek jika tema gelap aktif untuk warna teks legenda
-        const isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
-        const textColor = isDark ? '#a1a1aa' : '#71717a';
-        const primaryColor = isDark ? '#f4f4f5' : '#09090b';
-        const secondaryColor = isDark ? '#27272a' : '#e4e4e7';
-        const gridColor = isDark ? 'rgba(255, 255, 255, 0.05)' : 'rgba(0, 0, 0, 0.05)';
-
-        // Chart 1: Kelayakan Doughnut Chart
-        const ctxKelayakan = canvasKelayakan.getContext('2d');
-        new Chart(ctxKelayakan, {
-            type: 'doughnut',
-            data: {
-                labels: ['Layak', 'Tidak Layak'],
-                datasets: [{
-                    data: [layak, tidak],
-                    backgroundColor: [primaryColor, secondaryColor],
-                    borderColor: isDark ? '#121214' : '#ffffff',
-                    borderWidth: 2
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        position: 'bottom',
-                        labels: {
-                            font: {
-                                family: 'Inter',
-                                size: 12,
-                                weight: '500'
-                            },
-                            color: textColor,
-                            padding: 15,
-                            usePointStyle: true,
-                            pointStyle: 'circle'
-                        }
-                    }
-                },
-                cutout: '72%'
-            }
-        });
-
-        // Chart 2: Distribusi Desa Bar Chart
-        const ctxDesa = canvasDesa.getContext('2d');
-        new Chart(ctxDesa, {
-            type: 'bar',
-            data: {
-                labels: ['Posona', 'Palapi', 'Posona Atas'],
-                datasets: [{
-                    label: 'Calon Penerima',
-                    data: [posona, palapi, posonaAtas],
-                    backgroundColor: primaryColor,
-                    borderRadius: 6,
-                    barThickness: 28
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                },
-                scales: {
-                    x: {
-                        grid: {
-                            display: false
-                        },
-                        ticks: {
-                            font: {
-                                family: 'Inter',
-                                size: 11
-                            },
-                            color: textColor
-                        }
-                    },
-                    y: {
-                        beginAtZero: true,
-                        grid: {
-                            color: gridColor
-                        },
-                        ticks: {
-                            precision: 0,
-                            font: {
-                                family: 'Inter',
-                                size: 11
-                            },
-                            color: textColor
-                        }
-                    }
-                }
-            }
-        });
-    });
-</script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+<script src="{{ url_for('static', filename='js/dashboard.js') }}"></script>
 {% endif %}
 {% endblock %}

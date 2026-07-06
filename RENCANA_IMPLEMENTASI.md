@@ -82,6 +82,9 @@
 - [x] Generate mock model pipeline `.pkl` tiruan untuk verifikasi fungsionalitas
 - [x] Reset database (menghapus data dummy model lama)
 - [x] Test prediksi end-to-end (Dodi - Hasil: Layak, confidence 97.8%)
+- [x] Refaktorisasi modular dengan Flask Blueprints (auth, dashboard, calon, tentang)
+- [x] Implementasi sistem proteksi serangan CSRF kustom
+- [x] Pembuatan penangan error terpusat (403, 404, 500)
 
 #### 4.3 Verifikasi (⏳ Menunggu Model Final)
 - [ ] Tes 5-10 kasus prediksi manual dengan model final

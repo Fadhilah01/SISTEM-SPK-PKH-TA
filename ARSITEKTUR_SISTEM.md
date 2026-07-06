@@ -71,9 +71,18 @@ Sistem ini terdiri dari dua komponen utama yang saling terhubung:
 
 1. **Kaggle Notebook** — tempat model SVM dilatih. Di sini saya melakukan preprocessing data (encoding ordinal, normalisasi Min-Max), training model dengan GridSearchCV, evaluasi performa, dan mengekspor model dalam format `.pkl`.
 
-2. **Web Application Flask** — tempat model digunakan untuk prediksi. Web ini menyediakan form input bagi pendamping PKH, memproses input melalui model SVM, dan menampilkan hasil klasifikasi (Layak/Tidak Layak).
+2. **Web Application Flask** — tempat model digunakan untuk prediksi. Arsitektur web dirancang secara modular menggunakan pola **Application Factory** dan **Flask Blueprints** untuk memisahkan domain fungsionalitas secara clean, serta diperkuat oleh **Proteksi CSRF Kustom** untuk menangkal serangan Cross-Site Request Forgery.
 
 Kedua komponen terhubung melalui file `.pkl` — model yang sudah dilatih di Kaggle diunduh dan diletakkan di folder `web/models/` untuk digunakan oleh Flask.
+
+### Pembagian Modul (Blueprints)
+- **auth_bp** (`routes/auth.py`): Mengatur proses login & logout admin pendamping.
+- **dashboard_bp** (`routes/dashboard.py`): Mengatur ringkasan statistik dan sebaran data calon penerima di beranda.
+- **calon_bp** (`routes/calon.py`): Mengatur manajemen CRUD data calon penerima serta pemicuan klasifikasi ulang SVM.
+- **about_bp** (`routes/about.py`): Mengatur detail metrik evaluasi model SVM, visualisasi confusion matrix, dan modul FAQ.
+
+### Keamanan Web & Proteksi CSRF
+Sistem mengimplementasikan pengaman serangan CSRF kustom. Token acak 32-byte dihasilkan secara kriptografis via modul `secrets` Python dan disimpan dalam session user. Setiap request bermetode `POST` (seperti form submit data, hapus data, login, dan logout) wajib menyertakan token tersembunyi `_csrf_token` yang akan divalidasi oleh dekorator `@csrf_required` di backend. Jika token tidak valid atau hilang, server akan otomatis menolak request dan mengembalikan status **403 Forbidden**.
 
 ## 2. Tech Stack
 

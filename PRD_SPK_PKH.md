@@ -31,6 +31,7 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 | Fitur | Deskripsi | Prioritas | Status |
 |-------|-----------|-----------|--------|
 | Manajemen Pengguna | Login admin pendamping terproteksi session & layout Sidebar | P1 | ✅ Selesai (6 Juli 2026) |
+| Keamanan Sistem | Proteksi serangan CSRF kustom & penanganan error global (403, 404, 500) | P1 | ✅ Selesai (6 Juli 2026) |
 | Re-training Model | Update model jika dataset baru tersedia | P2 | ⏳ Pending |
 
 ## 4. Pengguna Sistem
