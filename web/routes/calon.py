@@ -64,7 +64,7 @@ def daftar_calon():
     for h in HasilKeputusan.query.all():
         hasil_map[h.id_calon] = h
 
-    return render_template('calon.html',
+    return render_template('calon/list.html',
                            calon_list=calon_list,
                            hasil_map=hasil_map,
                            pagination=pagination,
@@ -136,7 +136,7 @@ def tambah_calon():
         return redirect(url_for('dashboard.index'))
 
     # GET — tampilkan form
-    return render_template('calon_form.html',
+    return render_template('calon/form.html',
                            calon=None,
                            penghasilan_list=list(PENGHASILAN_MAPPING.keys()),
                            pekerjaan_list=list(PEKERJAAN_MAPPING.keys()),
@@ -200,7 +200,7 @@ def edit_calon(id):
 
         return redirect(url_for('dashboard.index'))
 
-    return render_template('calon_form.html',
+    return render_template('calon/form.html',
                            calon=calon,
                            penghasilan_list=list(PENGHASILAN_MAPPING.keys()),
                            pekerjaan_list=list(PEKERJAAN_MAPPING.keys()),
@@ -268,7 +268,7 @@ def import_calon():
 
         return redirect(url_for('calon.daftar_calon'))
 
-    return render_template('calon_import.html')
+    return render_template('calon/import.html')
 
 
 @calon_bp.route('/calon/import/template')
@@ -335,7 +335,7 @@ def export_calon():
 
     # GET — tampilkan form filter
     column_options = get_column_options()
-    return render_template('calon_export.html',
+    return render_template('calon/export.html',
                            column_options=column_options)
 
 

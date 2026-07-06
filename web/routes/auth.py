@@ -27,7 +27,7 @@ def login():
         else:
             flash("Username atau password salah.", 'danger')
 
-    return render_template('login.html')
+    return render_template('auth/login.html')
 
 
 @auth_bp.route('/logout', methods=['POST'])
@@ -68,5 +68,5 @@ def change_password():
         flash("Password Anda berhasil diperbarui.", 'success')
         return redirect(url_for('dashboard.index'))
 
-    return render_template('change_password.html')
+    return render_template('auth/change_password.html')
 
