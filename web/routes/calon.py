@@ -1,4 +1,5 @@
 """Blueprint — CRUD Calon Penerima + Prediksi SVM + Bulk Import/Export."""
+from datetime import datetime, timezone
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, send_file
 from models_db import db, CalonPenerima, HasilKeputusan
 from core.auth import login_required, csrf_required
@@ -13,16 +14,45 @@ calon_bp = Blueprint('calon', __name__)
 @calon_bp.route('/calon')
 @login_required
 def daftar_calon():
-    """Daftar semua calon penerima dengan pencarian dan paginasi."""
+    """Daftar semua calon penerima dengan pencarian, filter, dan paginasi."""
     page = request.args.get('page', 1, type=int)
     q = request.args.get('q', '', type=str)
+    date_from = request.args.get('date_from', '', type=str)
+    date_to = request.args.get('date_to', '', type=str)
+    hasil_filter = request.args.get('hasil_filter', '', type=str)
 
     query = CalonPenerima.query
+
+    # Filter pencarian nama/alamat
     if q:
         query = query.filter(
             (CalonPenerima.nama.like(f"%{q}%"))
             | (CalonPenerima.alamat.like(f"%{q}%"))
         )
+
+    # Filter tanggal input
+    if date_from:
+        try:
+            dt_from = datetime.strptime(date_from, '%Y-%m-%d').replace(tzinfo=timezone.utc)
+            query = query.filter(CalonPenerima.created_at >= dt_from)
+        except (ValueError, TypeError):
+            pass
+
+    if date_to:
+        try:
+            dt_to = datetime.strptime(date_to, '%Y-%m-%d').replace(
+                hour=23, minute=59, second=59, tzinfo=timezone.utc
+            )
+            query = query.filter(CalonPenerima.created_at <= dt_to)
+        except (ValueError, TypeError):
+            pass
+
+    # Filter hasil prediksi — perlu join ke HasilKeputusan
+    if hasil_filter:
+        if hasil_filter == 'layak':
+            query = query.join(HasilKeputusan).filter(HasilKeputusan.hasil_prediksi == True)
+        elif hasil_filter == 'tidak_layak':
+            query = query.join(HasilKeputusan).filter(HasilKeputusan.hasil_prediksi == False)
 
     pagination = query.order_by(
         CalonPenerima.id.asc()
@@ -38,7 +68,10 @@ def daftar_calon():
                            calon_list=calon_list,
                            hasil_map=hasil_map,
                            pagination=pagination,
-                           q=q)
+                           q=q,
+                           date_from=date_from,
+                           date_to=date_to,
+                           hasil_filter=hasil_filter)
 
 
 @calon_bp.route('/calon/tambah', methods=['GET', 'POST'])

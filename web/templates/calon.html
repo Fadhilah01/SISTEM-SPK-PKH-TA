@@ -4,23 +4,9 @@
 {% block content %}
 <div class="stagger-container">
     <!-- Header -->
-    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
         <h4 class="mb-0"><i class="bi bi-people"></i> Data Calon Penerima PKH</h4>
         <div class="d-flex gap-2">
-            <!-- Search Form -->
-            <form method="GET" action="{{ url_for('calon.daftar_calon') }}" class="d-flex gap-1" style="max-width: 320px;">
-                <div class="input-group">
-                    <input type="text" name="q" class="form-control" placeholder="Cari nama/alamat..." value="{{ q or '' }}" style="font-size: 0.85rem; padding: 0.35rem 0.75rem;">
-                    {% if q %}
-                    <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-outline-secondary d-flex align-items-center justify-content-center px-2" title="Clear search">
-                        <i class="bi bi-x-lg"></i>
-                    </a>
-                    {% endif %}
-                    <button class="btn btn-primary btn-sm px-3" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
-                </div>
-            </form>
             <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-primary btn-sm d-flex align-items-center gap-1">
                 <i class="bi bi-person-plus"></i> Tambah
             </a>
@@ -30,6 +16,56 @@
             <a href="{{ url_for('calon.export_calon') }}" class="btn btn-info btn-sm d-flex align-items-center gap-1 text-white">
                 <i class="bi bi-download"></i> Export
             </a>
+        </div>
+    </div>
+
+    <!-- Filter & Search Panel -->
+    <div class="card mb-3">
+        <div class="card-body py-3">
+            <form method="GET" action="{{ url_for('calon.daftar_calon') }}" class="row g-2 align-items-end">
+                <!-- Search -->
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Cari Nama/Alamat</label>
+                    <div class="input-group input-group-sm">
+                        <input type="text" name="q" class="form-control" placeholder="Ketik nama atau desa..." value="{{ q or '' }}">
+                        {% if q %}
+                        <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-outline-secondary" title="Hapus pencarian">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <!-- Date Range -->
+                <div class="col-md-3">
+                    <label class="form-label small text-muted mb-1">Dari Tanggal</label>
+                    <input type="date" name="date_from" class="form-control form-control-sm" value="{{ date_from or '' }}">
+                </div>
+                <div class="col-md-2">
+                    <label class="form-label small text-muted mb-1">Sampai Tanggal</label>
+                    <input type="date" name="date_to" class="form-control form-control-sm" value="{{ date_to or '' }}">
+                </div>
+
+                <!-- Hasil Filter -->
+                <div class="col-md-2">
+                    <label class="form-label small text-muted mb-1">Hasil Keputusan</label>
+                    <select name="hasil_filter" class="form-select form-select-sm">
+                        <option value="">Semua</option>
+                        <option value="layak" {% if hasil_filter == 'layak' %}selected{% endif %}>Layak</option>
+                        <option value="tidak_layak" {% if hasil_filter == 'tidak_layak' %}selected{% endif %}>Tidak Layak</option>
+                    </select>
+                </div>
+
+                <!-- Buttons -->
+                <div class="col-md-2 d-flex gap-1">
+                    <button type="submit" class="btn btn-primary btn-sm flex-fill">
+                        <i class="bi bi-funnel"></i> Filter
+                    </button>
+                    <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-outline-secondary btn-sm flex-fill">
+                        <i class="bi bi-arrow-counterclockwise"></i> Reset
+                    </a>
+                </div>
+            </form>
         </div>
     </div>
 
@@ -111,19 +147,19 @@
                 <ul class="pagination pagination-sm m-0 gap-1">
                     <!-- Previous Page -->
                     <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
-                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center" 
-                           href="{{ url_for('calon.daftar_calon', page=pagination.prev_num, q=q) if pagination.has_prev else '#' }}"
+                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center"
+                           href="{{ url_for('calon.daftar_calon', page=pagination.prev_num, q=q, date_from=date_from, date_to=date_to, hasil_filter=hasil_filter) if pagination.has_prev else '#' }}"
                            style="width: 32px; height: 32px;" title="Sebelumnya">
                             <i class="bi bi-chevron-left"></i>
                         </a>
                     </li>
-                    
+
                     <!-- Page Numbers -->
                     {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
                         {% if p %}
                             <li class="page-item {% if pagination.page == p %}active{% endif %}">
-                                <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center fw-medium" 
-                                   href="{{ url_for('calon.daftar_calon', page=p, q=q) }}" 
+                                <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center fw-medium"
+                                   href="{{ url_for('calon.daftar_calon', page=p, q=q, date_from=date_from, date_to=date_to, hasil_filter=hasil_filter) }}"
                                    style="width: 32px; height: 32px;">{{ p }}</a>
                             </li>
                         {% else %}
@@ -132,11 +168,11 @@
                             </li>
                         {% endif %}
                     {% endfor %}
-                    
+
                     <!-- Next Page -->
                     <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
-                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center" 
-                           href="{{ url_for('calon.daftar_calon', page=pagination.next_num, q=q) if pagination.has_next else '#' }}" 
+                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center"
+                           href="{{ url_for('calon.daftar_calon', page=pagination.next_num, q=q, date_from=date_from, date_to=date_to, hasil_filter=hasil_filter) if pagination.has_next else '#' }}"
                            style="width: 32px; height: 32px;" title="Berikutnya">
                             <i class="bi bi-chevron-right"></i>
                         </a>
