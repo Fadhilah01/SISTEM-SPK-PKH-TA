@@ -11,7 +11,7 @@
 | **1. Training Model SVM** | 1 Juli 2026 | ✅ Selesai (prototype) | Data sintetis, akurasi 89% |
 | **2. Pembuatan Web SPK** | 2 Juli 2026 | ✅ Selesai | CRUD, dashboard, prediksi |
 | **3. Audit & Gap Analisis** | 3 Juli 2026 | ✅ Selesai | 5 gap kritis teridentifikasi |
-| **4. Perbaikan & Retrain** | 4-7 Juli 2026 | ⏳ Sebagian Selesai | Refactoring Web, Login, Import/Export Selesai. Retrain menunggu CSV |
+| **4. Perbaikan & Retrain** | 4-7 Juli 2026 | ⏳ Sebagian Selesai | Refactoring Web, Login, Import/Export, Security Hardening (10 lapisan) Selesai. Retrain menunggu CSV |
 | **5. Dokumentasi Laporan** | 5-7 Juli 2026 | ⏳ | Dicicil — log harian sesi 5 & sesi 9 terbit |
 | **6. Buffer & Revisi** | 6-7 Juli 2026 | ⏳ | |
 

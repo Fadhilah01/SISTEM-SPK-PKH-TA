@@ -4,6 +4,7 @@ from flask import Blueprint, render_template, request, redirect, url_for, flash,
 from models_db import db, CalonPenerima, HasilKeputusan
 from core.auth import login_required, csrf_required
 from core.constants import PENGHASILAN_MAPPING, PEKERJAAN_MAPPING, ASET_MAPPING, KOMPONEN_SOSIAL, LABEL_SINGKAT
+from core.security import validate_file_upload, validate_text_length, sanitize_html
 from core.scoring import compute_scores, predict_single, create_hasil_keputusan
 from core.predictor import predictor, model_loaded
 from core.data_io import import_from_file, export_data, generate_template, get_column_options
@@ -85,6 +86,19 @@ def tambah_calon():
     """Tambah calon penerima baru + langsung prediksi."""
     if request.method == 'POST':
         try:
+            nama = sanitize_html(request.form['nama'].strip())
+            alamat = sanitize_html(request.form['alamat'].strip())
+
+            # Validasi panjang input
+            valid, msg = validate_text_length(nama, 'Nama', 100)
+            if not valid:
+                flash(msg, 'danger')
+                return redirect(url_for('calon.tambah_calon'))
+            valid, msg = validate_text_length(alamat, 'Alamat', 255)
+            if not valid:
+                flash(msg, 'danger')
+                return redirect(url_for('calon.tambah_calon'))
+
             penghasilan_val = request.form['penghasilan']
             pekerjaan_val = request.form['pekerjaan']
             aset_val = request.form['kepemilikan_aset']
@@ -100,8 +114,8 @@ def tambah_calon():
             )
 
             calon = CalonPenerima(
-                nama=request.form['nama'],
-                alamat=request.form['alamat'],
+                nama=nama,
+                alamat=alamat,
                 provinsi=request.form.get('provinsi') or None,
                 kabupaten=request.form.get('kabupaten') or None,
                 kecamatan=request.form.get('kecamatan') or None,
@@ -164,9 +178,23 @@ def edit_calon(id):
             pekerjaan_val = request.form['pekerjaan']
             aset_val = request.form['kepemilikan_aset']
 
+            # Sanitasi input teks
+            nama = sanitize_html(request.form['nama'].strip())
+            alamat = sanitize_html(request.form['alamat'].strip())
+
+            # Validasi panjang input
+            valid, msg = validate_text_length(nama, 'Nama', 100)
+            if not valid:
+                flash(msg, 'danger')
+                return redirect(url_for('calon.edit_calon', id=id))
+            valid, msg = validate_text_length(alamat, 'Alamat', 255)
+            if not valid:
+                flash(msg, 'danger')
+                return redirect(url_for('calon.edit_calon', id=id))
+
             # Update field teks
-            calon.nama = request.form['nama']
-            calon.alamat = request.form['alamat']
+            calon.nama = nama
+            calon.alamat = alamat
             calon.provinsi = request.form.get('provinsi') or None
             calon.kabupaten = request.form.get('kabupaten') or None
             calon.kecamatan = request.form.get('kecamatan') or None
@@ -247,13 +275,11 @@ def import_calon():
     """Import bulk dari file Excel/CSV."""
     if request.method == 'POST':
         file = request.files.get('file')
-        if not file or file.filename == '':
-            flash('Silakan pilih file Excel atau CSV untuk di-upload.', 'danger')
-            return redirect(url_for('calon.import_calon'))
 
-        allowed = ('.xlsx', '.xls', '.csv')
-        if not file.filename.lower().endswith(allowed):
-            flash(f'Format file tidak didukung. Gunakan: {", ".join(allowed)}', 'danger')
+        # Validasi file upload (ekstensi, MIME, magic bytes)
+        is_valid, err_msg = validate_file_upload(file)
+        if not is_valid:
+            flash(err_msg, 'danger')
             return redirect(url_for('calon.import_calon'))
 
         try:

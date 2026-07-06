@@ -20,6 +20,13 @@ def login_required(f):
         if 'user_id' not in session:
             flash('Silakan login terlebih dahulu untuk mengakses sistem.', 'warning')
             return redirect(url_for('auth.login'))
+        # Cek apakah user harus ganti password (kecuali di halaman change_password sendiri)
+        from flask import request as _req
+        if _req.endpoint != 'auth.change_password':
+            user = User.query.get(session['user_id'])
+            if user and user.must_change_password:
+                flash('Anda harus mengganti password sebelum dapat mengakses sistem.', 'warning')
+                return redirect(url_for('auth.change_password', force=True))
         return f(*args, **kwargs)
     return decorated_function
 
@@ -62,6 +69,20 @@ def inject_csrf():
     return dict(csrf_token=generate_csrf_token())
 
 
+def validate_password_strength(password):
+    """
+    Validasi kekuatan password.
+    Returns (is_valid: bool, message: str)
+    """
+    if len(password) < 8:
+        return False, "Password minimal harus 8 karakter."
+    if not any(c.isalpha() for c in password):
+        return False, "Password harus mengandung minimal 1 huruf."
+    if not any(c.isdigit() for c in password):
+        return False, "Password harus mengandung minimal 1 angka."
+    return True, ""
+
+
 def csrf_required(f):
     """Dekorator — validasi CSRF token di setiap POST request."""
     @wraps(f)
@@ -71,5 +92,18 @@ def csrf_required(f):
             stored = session.get('_csrf_token')
             if not token or not stored or not secrets.compare_digest(token, stored):
                 abort(403)
+        return f(*args, **kwargs)
+    return decorated_function
+
+
+def force_password_change(f):
+    """Dekorator — redirect ke change password jika must_change_password."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' in session:
+            user = User.query.get(session['user_id'])
+            if user and user.must_change_password:
+                flash('Anda harus mengganti password sebelum dapat mengakses sistem.', 'warning')
+                return redirect(url_for('auth.change_password', force=True))
         return f(*args, **kwargs)
     return decorated_function

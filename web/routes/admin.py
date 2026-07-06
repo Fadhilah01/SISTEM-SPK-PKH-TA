@@ -2,7 +2,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session
 from werkzeug.security import generate_password_hash
 from models_db import User, db
-from core.auth import login_required, superadmin_required, csrf_required
+from core.auth import login_required, superadmin_required, csrf_required, validate_password_strength
 
 admin_bp = Blueprint('admin', __name__, url_prefix='/admin')
 
@@ -34,8 +34,10 @@ def tambah_user():
             flash(f"Username '{username}' sudah terdaftar.", 'danger')
             return redirect(url_for('admin.tambah_user'))
 
-        if len(password) < 6:
-            flash("Password minimal harus 6 karakter.", 'danger')
+        # Validasi kekuatan password
+        is_valid, msg = validate_password_strength(password)
+        if not is_valid:
+            flash(msg, 'danger')
             return redirect(url_for('admin.tambah_user'))
 
         if role not in ('superadmin', 'admin'):
@@ -47,7 +49,8 @@ def tambah_user():
                 username=username,
                 nama_lengkap=nama_lengkap,
                 password_hash=generate_password_hash(password),
-                role=role
+                role=role,
+                must_change_password=True
             )
             db.session.add(new_user)
             db.session.commit()

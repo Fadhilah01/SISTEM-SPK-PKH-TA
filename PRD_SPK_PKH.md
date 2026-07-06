@@ -32,7 +32,9 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 | Fitur | Deskripsi | Prioritas | Status |
 |-------|-----------|-----------|--------|
 | Manajemen Pengguna | Login terproteksi session, Sidebar, Ganti Password mandiri, dan multi-role (Superadmin/Admin) via RBAC | P1 | ✅ Selesai (6 Juli 2026) |
-| Keamanan Sistem | Proteksi serangan CSRF kustom & penanganan error global (403, 404, 500) | P1 | ✅ Selesai (6 Juli 2026) |
+| **Keamanan Sistem** | Proteksi CSRF, Rate Limit Login (5/menit), Auto-lock 10 gagal login, Force Password Change, Security Headers (CSP, XFO DENY, HSTS, nosniff, Permissions-Policy), XSS Prevention (sanitasi input + escape output), Session Security (HTTPOnly, SameSite, 4 jam timeout), Validasi File Upload (ekstensi + MIME + magic bytes), Password Policy (min 8 + huruf + angka) | P1 | ✅ Selesai (7 Juli 2026) |
+| Autocomplete Wilayah | Pencarian dan autocomplete wilayah bertingkat (Provinsi s.d. Desa) dari data referensi geospasial | P1 | ✅ Selesai (7 Juli 2026) |
+| Grafiks Dinamis Dashboard | Visualisasi analitik interaktif dengan Chart.js: sebaran wilayah, tren waktu, komparasi periode | P1 | ✅ Selesai (7 Juli 2026) |
 | Re-training Model | Update model jika dataset baru tersedia | P2 | ⏳ Pending |
 
 ## 4. Pengguna Sistem

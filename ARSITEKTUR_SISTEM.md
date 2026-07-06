@@ -84,6 +84,22 @@ Kedua komponen terhubung melalui file `.pkl` — model yang sudah dilatih di Kag
 ### Keamanan Web & Proteksi CSRF
 Sistem mengimplementasikan pengaman serangan CSRF kustom. Token acak 32-byte dihasilkan secara kriptografis via modul `secrets` Python dan disimpan dalam session user. Setiap request bermetode `POST` (seperti form submit data, hapus data, login, dan logout) wajib menyertakan token tersembunyi `_csrf_token` yang akan divalidasi oleh dekorator `@csrf_required` di backend. Jika token tidak valid atau hilang, server akan otomatis menolak request dan mengembalikan status **403 Forbidden**.
 
+### Security Hardening (Tambahan 7 Juli 2026)
+Sistem kini dilengkapi **10 lapisan keamanan** untuk melindungi data sensitif calon penerima PKH dari cyber crime:
+
+| Lapisan | Metode | Keterangan |
+|---------|--------|------------|
+| **Rate Limiting** | Flask-Limiter (in-memory) | 5 percobaan login/menit/IP, auto-lock setelah 10 gagal |
+| **Debug Protection** | `app.debug = False` | Stack trace tidak bocor ke user, logging via file |
+| **Force Password Change** | Flag `must_change_password` + decorator | User baru/default wajib ganti password saat login pertama |
+| **XSS Prevention** | Sanitasi input (regex HTML), escape output JS, textContent | Cegah injection script berbahaya |
+| **Security Headers** | CSP, X-Frame-Options: DENY, HSTS, nosniff, Permissions-Policy | Proteksi dari clickjacking, MIME sniffing, dll |
+| **Dynamic Secret Key** | `os.environ.get()` + `os.urandom()` fallback | Tidak hardcoded, session invalid if key changes |
+| **Session Security** | HTTPOnly, SameSite=Lax, 4 jam timeout | Cegah session hijacking via JavaScript |
+| **Password Policy** | 8+ karakter, wajib huruf + angka, tdk sama dgn lama | Password kuat, cegah dictionary attack |
+| **File Upload Validation** | Cek ekstensi + MIME type + magic bytes | Cegah upload file berbahaya |
+| **Input Validation** | Panjang string (nama 100, alamat 255) + sanitasi | Cegah buffer overflow dan XSS |
+
 ## 2. Tech Stack
 
 ### Web Application

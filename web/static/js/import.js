@@ -25,7 +25,7 @@ function initImportModal() {
             return;
         }
 
-        // Set modal body text
+        // Set modal body text — GUNAKAN textContent, BUKAN innerHTML, untuk cegah XSS
         const bodyEl = modal.querySelector('#importModalBody');
         const fileName = fileInput.files[0].name;
         if (bodyEl) {
@@ -62,6 +62,9 @@ function initImportModal() {
  */
 function showToast(message, type) {
     type = type || 'danger';
+    // Sanitasi type — hanya izinkan tipe alert Bootstrap yang valid
+    var allowedTypes = ['primary', 'secondary', 'success', 'danger', 'warning', 'info', 'light', 'dark'];
+    if (allowedTypes.indexOf(type) === -1) type = 'danger';
     // Reuse the flash container at top of main content
     var container = document.querySelector('.container-fluid.p-0.mb-4');
     if (!container) {
@@ -70,7 +73,7 @@ function showToast(message, type) {
     }
     var alertHtml =
         '<div class="alert alert-' + type + ' alert-dismissible fade show small py-2 px-3 mb-0" role="alert">' +
-        message +
+        message.replace(/</g, '&lt;').replace(/>/g, '&gt;') +
         '<button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>' +
         '</div>';
     container.innerHTML = alertHtml + container.innerHTML;
