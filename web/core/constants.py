@@ -34,6 +34,29 @@ ASET_MAPPING = {
     'Memiliki Mobil dan Tanah/Kebun': 1,
 }
 
+# ─── Label Singkat untuk UI Tabel ───
+# Mapping dari teks panjang (key) ke label compact untuk badge di tabel data calon.
+LABEL_SINGKAT = {
+    # Penghasilan
+    'Desil 1 (< Rp.500.000)': 'Desil 1',
+    'Desil 2 (Rp.600.000 - Rp.700.000)': 'Desil 2',
+    'Desil 3 (Rp.800.000 - Rp.900.000)': 'Desil 3',
+    'Desil 4 (Rp.1.000.000 - Rp.1.200.000)': 'Desil 4',
+    'Desil 5 (Rp.1.300.000 - Rp.1.500.000)': 'Desil 5',
+    # Pekerjaan
+    'Tidak Bekerja': 'Tdk Bekerja',
+    'Pekerja Bebas': 'Pekerja Bebas',
+    'Petani/Nelayan': 'Petani/Nelayan',
+    'Wiraswasta': 'Wiraswasta',
+    'PNS/Pegawai Tetap': 'PNS',
+    # Aset
+    'Tidak Memiliki Aset': 'Tdk Punya',
+    'Memiliki Motor (harga jual rendah)': 'Motor Rendah',
+    'Memiliki Motor (harga jual tinggi)': 'Motor Tinggi',
+    'Memiliki Mobil atau Tanah/Kebun': 'Mobil/Tanah',
+    'Memiliki Mobil dan Tanah/Kebun': 'Mobil+Tanah',
+}
+
 # ─── Komponen Sosial (Boolean) ───
 # Daftar field boolean untuk komponen keluarga.
 # Digunakan oleh scoring.py untuk iterasi otomatis.

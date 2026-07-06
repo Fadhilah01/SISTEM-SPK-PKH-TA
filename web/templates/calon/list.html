@@ -82,7 +82,7 @@
                             <th>Alamat</th>
                             <th>Penghasilan</th>
                             <th>Pekerjaan</th>
-                            <th>Aset</th>
+                            <th>Kep. Aset</th>
                             <th>Keputusan</th>
                             <th>Aksi</th>
                         </tr>
@@ -93,9 +93,21 @@
                             <td class="font-monospace text-muted small">{{ c.id }}</td>
                             <td><strong class="text-dark-emphasis">{{ c.nama }}</strong></td>
                             <td><span class="text-muted small">{{ c.alamat[:35] }}{% if c.alamat|length > 35 %}...{% endif %}</span></td>
-                            <td>{{ c.penghasilan }}</td>
-                            <td>{{ c.pekerjaan }}</td>
-                            <td>{{ c.kepemilikan_aset }}</td>
+                            <td>
+                                <span class="badge badge-cat badge-cat-severity-{{ penghasilan_skor.get(c.penghasilan, 3) }}" title="{{ c.penghasilan }}">
+                                    <i class="bi bi-cash-stack"></i> {{ label_singkat.get(c.penghasilan, c.penghasilan) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-cat badge-cat-severity-{{ pekerjaan_skor.get(c.pekerjaan, 3) }}" title="{{ c.pekerjaan }}">
+                                    <i class="bi bi-briefcase"></i> {{ label_singkat.get(c.pekerjaan, c.pekerjaan) }}
+                                </span>
+                            </td>
+                            <td>
+                                <span class="badge badge-cat badge-cat-severity-{{ aset_skor.get(c.kepemilikan_aset, 3) }}" title="{{ c.kepemilikan_aset }}">
+                                    <i class="bi bi-house"></i> {{ label_singkat.get(c.kepemilikan_aset, c.kepemilikan_aset) }}
+                                </span>
+                            </td>
                             <td>
                                 {% if c.id in hasil_map %}
                                     {% if hasil_map[c.id].hasil_prediksi %}

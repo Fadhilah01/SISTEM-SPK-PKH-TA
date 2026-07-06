@@ -376,6 +376,50 @@ a {
     border: 1px solid var(--status-tidak-border);
 }
 
+/* ─── Category Badges — Compact labels ─── */
+.badge-cat {
+    font-size: 0.68rem;
+    font-weight: 600;
+    padding: 0.2rem 0.55rem;
+    border-radius: 5px;
+    letter-spacing: -0.01em;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    transition: opacity var(--transition-fast);
+}
+
+.badge-cat-severity-5 {
+    background-color: var(--color-primary);
+    color: var(--color-primary-text);
+    border: 1px solid var(--color-primary);
+}
+
+.badge-cat-severity-4 {
+    background-color: var(--color-text-muted);
+    color: #ffffff;
+    border: 1px solid var(--color-text-muted);
+}
+
+.badge-cat-severity-3 {
+    background-color: var(--bg-surface);
+    color: var(--color-text);
+    border: 1px solid var(--color-border-hover);
+}
+
+.badge-cat-severity-2 {
+    background-color: var(--bg-surface-hover);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-border);
+}
+
+.badge-cat-severity-1 {
+    background-color: transparent;
+    color: var(--color-text-light);
+    border: 1px solid var(--color-border);
+}
+
 /* Form Controls Redesign */
 .form-label {
     font-family: var(--font-display);

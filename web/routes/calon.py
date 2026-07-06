@@ -3,7 +3,7 @@ from datetime import datetime, timezone
 from flask import Blueprint, render_template, request, redirect, url_for, flash, session, send_file
 from models_db import db, CalonPenerima, HasilKeputusan
 from core.auth import login_required, csrf_required
-from core.constants import PENGHASILAN_MAPPING, PEKERJAAN_MAPPING, ASET_MAPPING
+from core.constants import PENGHASILAN_MAPPING, PEKERJAAN_MAPPING, ASET_MAPPING, KOMPONEN_SOSIAL, LABEL_SINGKAT
 from core.scoring import compute_scores, predict_single, create_hasil_keputusan
 from core.predictor import predictor, model_loaded
 from core.data_io import import_from_file, export_data, generate_template, get_column_options
@@ -71,7 +71,11 @@ def daftar_calon():
                            q=q,
                            date_from=date_from,
                            date_to=date_to,
-                           hasil_filter=hasil_filter)
+                           hasil_filter=hasil_filter,
+                           penghasilan_skor=PENGHASILAN_MAPPING,
+                           pekerjaan_skor=PEKERJAAN_MAPPING,
+                           aset_skor=ASET_MAPPING,
+                           label_singkat=LABEL_SINGKAT)
 
 
 @calon_bp.route('/calon/tambah', methods=['GET', 'POST'])
