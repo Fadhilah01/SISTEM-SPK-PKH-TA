@@ -20,25 +20,28 @@ def index():
         HasilKeputusan.tanggal_prediksi.desc()
     ).limit(10).all()
 
-    # Distribusi calon per desa untuk visualisasi
-    count_posona = (
-        CalonPenerima.query
-        .filter(CalonPenerima.alamat.like('%Posona%'))
-        .filter(~CalonPenerima.alamat.like('%Posona Atas%'))
-        .count()
+    # Distribusi calon per desa untuk visualisasi (Dinamis dari database)
+    from sqlalchemy import func
+    from models_db import db
+    
+    stats_query = (
+        db.session.query(
+            func.coalesce(CalonPenerima.desa_kelurahan, CalonPenerima.alamat).label('desa_name'),
+            func.count(CalonPenerima.id).label('total')
+        )
+        .group_by('desa_name')
+        .order_by(func.count(CalonPenerima.id).desc())
+        .all()
     )
-    count_posona_atas = CalonPenerima.query.filter(
-        CalonPenerima.alamat.like('%Posona Atas%')
-    ).count()
-    count_palapi = CalonPenerima.query.filter(
-        CalonPenerima.alamat.like('%Kasimbar Palapi%')
-    ).count()
 
-    desa_stats = {
-        'Posona': count_posona,
-        'Kasimbar Palapi': count_palapi,
-        'Posona Atas': count_posona_atas,
-    }
+    desa_stats = {}
+    for name, count in stats_query:
+        clean_name = str(name or 'Lainnya').strip().title()
+        # Hapus prefix "Desa " untuk mempercantik label grafik
+        if clean_name.upper().startswith("DESA "):
+            clean_name = clean_name[5:]
+        # Gabungkan jika ada yang duplikat setelah dibersihkan
+        desa_stats[clean_name] = desa_stats.get(clean_name, 0) + count
 
     return render_template('dashboard.html',
                            total_calon=total_calon,

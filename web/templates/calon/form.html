@@ -37,11 +37,29 @@
                                 value="{{ calon.nama if calon else '' }}" placeholder="Nama lengkap">
                         </div>
 
-                        <!-- Alamat -->
+                        <!-- Wilayah Autocomplete -->
+                        <div class="col-md-6 position-relative">
+                            <label class="form-label text-dark-emphasis fw-semibold">Pilih Wilayah (Desa, Kec, Kab) <span class="text-muted small">(Opsional)</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-body border-end-0 text-muted"><i class="bi bi-search"></i></span>
+                                <input type="text" id="wilayah_search" class="form-control border-start-0 ps-0" 
+                                       placeholder="Ketik minimal 2 huruf, cth: Posona..." autocomplete="off"
+                                       value="{% if calon and calon.desa_kelurahan %}{{ calon.desa_kelurahan }}, {{ calon.kecamatan }}, {{ calon.kabupaten }}{% endif %}">
+                            </div>
+                            <div id="wilayah_suggestions" class="dropdown-menu shadow w-100 mt-1" style="max-height: 250px; overflow-y: auto; z-index: 1050; display: none;"></div>
+                            
+                            <!-- Hidden Fields -->
+                            <input type="hidden" name="provinsi" id="hidden_provinsi" value="{{ calon.provinsi if calon else '' }}">
+                            <input type="hidden" name="kabupaten" id="hidden_kabupaten" value="{{ calon.kabupaten if calon else '' }}">
+                            <input type="hidden" name="kecamatan" id="hidden_kecamatan" value="{{ calon.kecamatan if calon else '' }}">
+                            <input type="hidden" name="desa_kelurahan" id="hidden_desa_kelurahan" value="{{ calon.desa_kelurahan if calon else '' }}">
+                        </div>
+
+                        <!-- Alamat Detail -->
                         <div class="col-md-6">
-                            <label class="form-label">Alamat <span class="text-danger">*</span></label>
+                            <label class="form-label text-dark-emphasis fw-semibold">Alamat Detail <span class="text-danger">*</span></label>
                             <input type="text" name="alamat" class="form-control" required
-                                value="{{ calon.alamat if calon else '' }}" placeholder="Desa/Kelurahan">
+                                value="{{ calon.alamat if calon else '' }}" placeholder="RT/RW, Jalan, atau Dusun">
                         </div>
 
                         <!-- Penghasilan -->
@@ -178,4 +196,8 @@
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/calon.js') }}"></script>
 {% endblock %}

@@ -23,9 +23,14 @@ function initDashboardCharts() {
     var layak = Number(canvasKelayakan.dataset.layak) || 0;
     var tidak = Number(canvasKelayakan.dataset.tidak) || 0;
 
-    var posona = Number(canvasDesa.dataset.posona) || 0;
-    var palapi = Number(canvasDesa.dataset.palapi) || 0;
-    var posonaAtas = Number(canvasDesa.dataset.posonaAtas) || 0;
+    var labels = [];
+    var values = [];
+    try {
+        labels = JSON.parse(canvasDesa.getAttribute('data-labels') || '[]');
+        values = JSON.parse(canvasDesa.getAttribute('data-values') || '[]').map(Number);
+    } catch (e) {
+        console.error("Error parsing dynamic desa_stats:", e);
+    }
 
     /* ── Dark-mode-aware colour palette ── */
     var isDark = document.documentElement.getAttribute('data-bs-theme') === 'dark';
@@ -72,10 +77,10 @@ function initDashboardCharts() {
     new Chart(ctx2, {
         type: 'bar',
         data: {
-            labels: ['Posona', 'Palapi', 'Posona Atas'],
+            labels: labels,
             datasets: [{
                 label: 'Calon Penerima',
-                data: [posona, palapi, posonaAtas],
+                data: values,
                 backgroundColor: primaryColor,
                 borderRadius: 6,
                 barThickness: 28

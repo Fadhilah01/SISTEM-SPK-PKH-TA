@@ -24,6 +24,13 @@ class CalonPenerima(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nama = db.Column(db.String(100), nullable=False)
     alamat = db.Column(db.Text, nullable=False)
+    
+    # Kolom Wilayah Dinamis (Nullable)
+    provinsi = db.Column(db.String(100), nullable=True)
+    kabupaten = db.Column(db.String(100), nullable=True)
+    kecamatan = db.Column(db.String(100), nullable=True)
+    desa_kelurahan = db.Column(db.String(100), nullable=True)
+
     penghasilan = db.Column(db.String(100), nullable=False)  # Kategori Desil (teks)
     pekerjaan = db.Column(db.String(100), nullable=False)    # Pekerjaan (teks)
     kepemilikan_aset = db.Column(db.String(100), nullable=False) # Aset (teks)
@@ -55,6 +62,10 @@ class CalonPenerima(db.Model):
             'id': self.id,
             'nama': self.nama,
             'alamat': self.alamat,
+            'provinsi': self.provinsi,
+            'kabupaten': self.kabupaten,
+            'kecamatan': self.kecamatan,
+            'desa_kelurahan': self.desa_kelurahan,
             'penghasilan': self.penghasilan,
             'pekerjaan': self.pekerjaan,
             'kepemilikan_aset': self.kepemilikan_aset,

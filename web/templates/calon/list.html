@@ -79,7 +79,8 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
-                            <th>Alamat</th>
+                            <th>Wilayah</th>
+                            <th>Alamat Detail</th>
                             <th>Penghasilan</th>
                             <th>Pekerjaan</th>
                             <th>Kep. Aset</th>
@@ -92,7 +93,19 @@
                         <tr>
                             <td class="font-monospace text-muted small">{{ c.id }}</td>
                             <td><strong class="text-dark-emphasis">{{ c.nama }}</strong></td>
-                            <td><span class="text-muted small">{{ c.alamat[:35] }}{% if c.alamat|length > 35 %}...{% endif %}</span></td>
+                            <td>
+                                {% if c.desa_kelurahan %}
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 small" title="{{ c.desa_kelurahan }}, {{ c.kecamatan }}, {{ c.kabupaten }}, {{ c.provinsi }}">
+                                    <i class="bi bi-geo-alt-fill"></i> {{ c.desa_kelurahan }}
+                                </span>
+                                <div class="text-muted" style="font-size: 0.65rem; margin-top: 2px;">{{ c.kecamatan }}, {{ c.kabupaten }}</div>
+                                {% else %}
+                                <span class="badge bg-light text-muted border border-light-subtle small" title="Data wilayah kosong, fallback ke alamat">
+                                    <i class="bi bi-geo"></i> Fallback
+                                </span>
+                                {% endif %}
+                            </td>
+                            <td><span class="text-muted small">{{ c.alamat[:25] }}{% if c.alamat|length > 25 %}...{% endif %}</span></td>
                             <td>
                                 <span class="badge badge-cat badge-cat-severity-{{ penghasilan_skor.get(c.penghasilan, 3) }}" title="{{ c.penghasilan }}">
                                     <i class="bi bi-cash-stack"></i> {{ label_singkat.get(c.penghasilan, c.penghasilan) }}

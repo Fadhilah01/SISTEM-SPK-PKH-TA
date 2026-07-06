@@ -130,9 +130,8 @@
                 <div class="card-body" style="height: 220px; position: relative;">
                     {% if total_calon > 0 %}
                     <canvas id="chartDesa" 
-                            data-posona="{{ desa_stats.get('Posona', 0) }}" 
-                            data-palapi="{{ desa_stats.get('Kasimbar Palapi', 0) }}" 
-                            data-posona-atas="{{ desa_stats.get('Posona Atas', 0) }}"></canvas>
+                            data-labels='{{ desa_stats.keys() | list | tojson }}'
+                            data-values='{{ desa_stats.values() | list | tojson }}'></canvas>
                     {% else %}
                     <div class="text-center py-5 text-muted">
                         <i class="bi bi-geo-alt" style="font-size: 2rem;"></i>

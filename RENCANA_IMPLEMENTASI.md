@@ -93,6 +93,11 @@
 - [x] Template Excel untuk panduan import lengkap dengan daftar kategori valid
 - [x] Navigasi import dari halaman Tambah Calon (banner info)
 - [x] Modal konfirmasi Bootstrap untuk semua aksi destruktif (hapus, import)
+- [x] Integrasi pilihan wilayah administratif bertingkat (Sulteng) via API internal dengan lazy-loading & cache 89k+ data
+- [x] Autocomplete wilayah di form input dengan tampilan nama lengkap terstruktur (fullname) untuk menghindari duplikasi
+- [x] Visualisasi diagram batang sebaran desa secara dinamis tanpa hardcode nama desa di dashboard
+- [x] Toleransi impor edge case berkas excel kuno tanpa kolom wilayah
+
 
 #### 4.3 Verifikasi (⏳ Menunggu Model Final)
 - [ ] Tes 5-10 kasus prediksi manual dengan model final

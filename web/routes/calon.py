@@ -102,6 +102,10 @@ def tambah_calon():
             calon = CalonPenerima(
                 nama=request.form['nama'],
                 alamat=request.form['alamat'],
+                provinsi=request.form.get('provinsi') or None,
+                kabupaten=request.form.get('kabupaten') or None,
+                kecamatan=request.form.get('kecamatan') or None,
+                desa_kelurahan=request.form.get('desa_kelurahan') or None,
                 penghasilan=penghasilan_val,
                 pekerjaan=pekerjaan_val,
                 kepemilikan_aset=aset_val,
@@ -163,6 +167,10 @@ def edit_calon(id):
             # Update field teks
             calon.nama = request.form['nama']
             calon.alamat = request.form['alamat']
+            calon.provinsi = request.form.get('provinsi') or None
+            calon.kabupaten = request.form.get('kabupaten') or None
+            calon.kecamatan = request.form.get('kecamatan') or None
+            calon.desa_kelurahan = request.form.get('desa_kelurahan') or None
             calon.penghasilan = penghasilan_val
             calon.pekerjaan = pekerjaan_val
             calon.kepemilikan_aset = aset_val
@@ -374,3 +382,80 @@ def prediksi_ulang(id):
         flash(f'Error: {str(e)}', 'danger')
 
     return redirect(url_for('calon.daftar_calon'))
+
+
+# ─── API INTERNAL WILAYAH ───
+
+_regions_cache = None
+_regions_by_code = None
+
+def get_regions():
+    global _regions_cache, _regions_by_code
+    if _regions_cache is None:
+        import json
+        import os
+        from flask import current_app
+        # Path relatif ke root aplikasi Flask
+        filepath = os.path.join(current_app.root_path, 'static', 'data', 'daerah_indonesia.json')
+        if os.path.exists(filepath):
+            with open(filepath, 'r', encoding='utf-8') as f:
+                _regions_cache = json.load(f)
+            _regions_by_code = {r['kode']: r for r in _regions_cache}
+        else:
+            _regions_cache = []
+            _regions_by_code = {}
+    return _regions_cache, _regions_by_code
+
+
+@calon_bp.route('/api/daerah')
+@login_required
+def get_daerah():
+    """Endpoint API Internal untuk Autocomplete daerah (Provinsi, Kabupaten, Kecamatan, Desa)."""
+    from flask import jsonify
+    q = request.args.get('q', '').strip().upper()
+    level = request.args.get('level', '').strip()
+    parent = request.args.get('parent', '').strip()
+
+    regions, regions_by_code = get_regions()
+    results = []
+
+    # Pencarian flat O(n) case-insensitive includes
+    for r in regions:
+        # Filter level jika ada
+        if level and r.get('level') != level:
+            continue
+        # Filter parent jika ada
+        if parent and r.get('parent') != parent:
+            continue
+        # Filter search query jika ada
+        if q and q not in r.get('nama', ''):
+            continue
+
+        # Susun nama lengkap bertingkat untuk memudahkan membedakan duplikat nama
+        fullname_parts = [r['nama']]
+        curr = r
+        while curr.get('parent') and curr['parent'] in regions_by_code:
+            curr = regions_by_code[curr['parent']]
+            name = curr['nama']
+            # Hapus prefix KABUPATEN atau KOTA agar tidak terlalu panjang
+            if name.startswith("KABUPATEN "):
+                name = name[10:]
+            elif name.startswith("KOTA "):
+                name = name[5:]
+            fullname_parts.append(name)
+        
+        fullname = ", ".join(fullname_parts)
+
+        results.append({
+            'kode': r['kode'],
+            'nama': r['nama'],
+            'level': r['level'],
+            'fullname': fullname
+        })
+        
+        # Batasi maksimal 20 hasil demi performa
+        if len(results) >= 20:
+            break
+
+    return jsonify(results)
+

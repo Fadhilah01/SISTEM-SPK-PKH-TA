@@ -240,6 +240,11 @@ pipeline = {
 │ PK id (int)            │──────────┐
 │    nama (string)       │          │
 │    alamat (text)       │          │
+│    provinsi (string)   │          │
+│    kabupaten (string)  │          │
+│    kecamatan (string)  │          │
+│    desa_kelurahan      │          │
+│    (string)            │          │
 │    penghasilan (string)│          │
 │    pekerjaan (string)  │          │
 │    kepemilikan_aset    │          │

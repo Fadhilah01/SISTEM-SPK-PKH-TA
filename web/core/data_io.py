@@ -30,7 +30,11 @@ from core.scoring import compute_scores, predict_single, create_hasil_keputusan
 
 TEMPLATE_COLUMNS = OrderedDict([
     ('nama', 'Nama Kepala Keluarga (wajib)'),
-    ('alamat', 'Alamat / Desa (wajib)'),
+    ('alamat', 'Alamat Lengkap / Detail (wajib)'),
+    ('provinsi', 'Provinsi (opsional)'),
+    ('kabupaten', 'Kabupaten (opsional)'),
+    ('kecamatan', 'Kecamatan (opsional)'),
+    ('desa_kelurahan', 'Desa/Kelurahan (opsional)'),
     ('penghasilan', 'Penghasilan per Bulan: ' + ', '.join(PENGHASILAN_MAPPING.keys())),
     ('pekerjaan', 'Pekerjaan: ' + ', '.join(PEKERJAAN_MAPPING.keys())),
     ('kepemilikan_aset', 'Aset: ' + ', '.join(ASET_MAPPING.keys())),
@@ -40,6 +44,8 @@ TEMPLATE_COLUMNS = OrderedDict([
     ('disabilitas', 'Disabilitas? (YA/TIDAK atau 1/0)'),
     ('lansia', 'Lansia? (YA/TIDAK atau 1/0)'),
 ])
+
+REQUIRED_COLUMNS = {'nama', 'alamat', 'penghasilan', 'pekerjaan', 'kepemilikan_aset'}
 
 # Mapping teks YA/TIDAK ke boolean
 _BOOL_MAP = {
@@ -116,6 +122,13 @@ def row_to_calon_data(row_dict, predictor):
     """
     nama = str(row_dict.get('nama', '') or '').strip()
     alamat = str(row_dict.get('alamat', '') or '').strip()
+    
+    # Pengambilan opsional kolom wilayah
+    provinsi = str(row_dict.get('provinsi', '') or '').strip() or None
+    kabupaten = str(row_dict.get('kabupaten', '') or '').strip() or None
+    kecamatan = str(row_dict.get('kecamatan', '') or '').strip() or None
+    desa_kelurahan = str(row_dict.get('desa_kelurahan', '') or '').strip() or None
+
     penghasilan = str(row_dict.get('penghasilan', '') or '').strip()
     pekerjaan = str(row_dict.get('pekerjaan', '') or '').strip()
     aset = str(row_dict.get('kepemilikan_aset', '') or '').strip()
@@ -137,6 +150,10 @@ def row_to_calon_data(row_dict, predictor):
     calon_dict = {
         'nama': nama,
         'alamat': alamat,
+        'provinsi': provinsi,
+        'kabupaten': kabupaten,
+        'kecamatan': kecamatan,
+        'desa_kelurahan': desa_kelurahan,
         'penghasilan': penghasilan,
         'pekerjaan': pekerjaan,
         'kepemilikan_aset': aset,
@@ -203,8 +220,8 @@ def import_from_file(file_storage, predictor):
         col_map[col] = col_clean
     df = df.rename(columns=col_map)
 
-    # Track columns found vs required
-    required = set(TEMPLATE_COLUMNS.keys())
+    # Track columns found vs required (Hanya yang benar-benar wajib)
+    required = REQUIRED_COLUMNS
     found = set(df.columns)
     missing = required - found
 
@@ -341,6 +358,10 @@ def export_data(format_type='excel', filters=None):
         ('ID', lambda c, h: c.id),
         ('Nama', lambda c, h: c.nama),
         ('Alamat', lambda c, h: c.alamat),
+        ('Provinsi', lambda c, h: c.provinsi or ''),
+        ('Kabupaten', lambda c, h: c.kabupaten or ''),
+        ('Kecamatan', lambda c, h: c.kecamatan or ''),
+        ('Desa', lambda c, h: c.desa_kelurahan or ''),
         ('Penghasilan', lambda c, h: c.penghasilan),
         ('Pekerjaan', lambda c, h: c.pekerjaan),
         ('Kepemilikan Aset', lambda c, h: c.kepemilikan_aset),
@@ -370,6 +391,8 @@ def export_data(format_type='excel', filters=None):
         # Map column keys to display names
         col_key_map = {
             'id': 'ID', 'nama': 'Nama', 'alamat': 'Alamat',
+            'provinsi': 'Provinsi', 'kabupaten': 'Kabupaten',
+            'kecamatan': 'Kecamatan', 'desa_kelurahan': 'Desa',
             'penghasilan': 'Penghasilan', 'pekerjaan': 'Pekerjaan',
             'kepemilikan_aset': 'Kepemilikan Aset',
             'ibu_hamil': 'Ibu Hamil', 'anak_usia_dini': 'Anak Usia Dini',
@@ -428,6 +451,10 @@ def get_column_options():
         {'key': 'id', 'label': 'ID'},
         {'key': 'nama', 'label': 'Nama'},
         {'key': 'alamat', 'label': 'Alamat'},
+        {'key': 'provinsi', 'label': 'Provinsi'},
+        {'key': 'kabupaten', 'label': 'Kabupaten'},
+        {'key': 'kecamatan', 'label': 'Kecamatan'},
+        {'key': 'desa_kelurahan', 'label': 'Desa/Kelurahan'},
         {'key': 'penghasilan', 'label': 'Penghasilan'},
         {'key': 'pekerjaan', 'label': 'Pekerjaan'},
         {'key': 'kepemilikan_aset', 'label': 'Kepemilikan Aset'},
@@ -488,7 +515,11 @@ def generate_template():
     # ── Row 2: contoh data ──
     sample = [
         'Ahmad Syahputra',      # nama
-        'Desa Posona',          # alamat
+        'Jalan Sis Aljufri No. 12', # alamat
+        'SULAWESI TENGAH',      # provinsi
+        'KOTA PALU',            # kabupaten
+        'MANTIKULORE',          # kecamatan
+        'TONDO',                # desa_kelurahan
         'Desil 1 (< Rp.500.000)',  # penghasilan
         'Tidak Bekerja',        # pekerjaan
         'Tidak Memiliki Aset',  # aset
