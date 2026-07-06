@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block title %}Login Admin{% endblock %}
+
+{% block login_content %}
+<div class="d-flex justify-content-center align-items-center" style="min-height: 60vh;">
+    <div class="card shadow-lg p-4" style="max-width: 400px; width: 100%; border-radius: var(--radius-lg); background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(10px); border: 1px solid var(--color-border);">
+        <div class="text-center mb-4">
+            <div class="d-inline-flex align-items-center justify-content-center bg-primary bg-opacity-10 text-primary rounded-circle mb-3" style="width: 60px; height: 60px;">
+                <i class="bi bi-shield-lock" style="font-size: 2rem;"></i>
+            </div>
+            <h4 class="font-display fw-bold text-dark-emphasis mb-1">Masuk Sistem</h4>
+            <p class="text-muted small">SPK Kelayakan Calon Penerima PKH - SVM</p>
+        </div>
+
+        <form method="POST">
+            <!-- Username -->
+            <div class="mb-3">
+                <label for="username" class="form-label small fw-semibold">Username</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-person"></i></span>
+                    <input type="text" name="username" id="username" class="form-control border-start-0" 
+                           placeholder="Masukkan username" required autofocus style="font-size: 0.95rem;">
+                </div>
+            </div>
+
+            <!-- Password -->
+            <div class="mb-4">
+                <div class="d-flex justify-content-between">
+                    <label for="password" class="form-label small fw-semibold">Password</label>
+                </div>
+                <div class="input-group">
+                    <span class="input-group-text bg-light text-muted border-end-0"><i class="bi bi-key"></i></span>
+                    <input type="password" name="password" id="password" class="form-control border-start-0" 
+                           placeholder="Masukkan password" required style="font-size: 0.95rem;">
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <button type="submit" class="btn btn-primary w-100 py-2 fw-semibold" style="border-radius: var(--radius-sm);">
+                <i class="bi bi-box-arrow-in-right me-1"></i> Masuk
+            </button>
+        </form>
+        
+        <div class="text-center mt-3">
+            <span class="text-muted small">Hubungi admin Dinsos jika lupa kredensial.</span>
+        </div>
+    </div>
+</div>
+{% endblock %}

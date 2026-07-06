@@ -22,14 +22,15 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 |-------|-----------|-----------|--------|
 | Manajemen Data Calon Penerima | CRUD data calon penerima bantuan | P0 | ✅ Selesai |
 | Klasifikasi SVM | Prediksi layak/tidak layak berdasarkan model SVM | P0 | ⚠️ Perlu retrain (lihat Bab 10) |
-| Dashboard SPK | Tampilan hasil keputusan + ringkasan data | P0 | ✅ Selesai |
+| Dashboard SPK | Ringkasan data + visualisasi diagram interaktif (Chart.js) | P0 | ✅ Selesai (6 Juli 2026) |
 | Riwayat Keputusan | History prediksi + detail input | P0 | ✅ Selesai |
+| Pencarian & Paginasi | Menyaring dan membatasi data calon penerima di tabel | P1 | ✅ Selesai (6 Juli 2026) |
 | Export Laporan | Export hasil keputusan (PDF/Excel) | P1 | ⏳ Pending |
 
 ### 3.2 Fitur Tambahan
 | Fitur | Deskripsi | Prioritas | Status |
 |-------|-----------|-----------|--------|
-| Manajemen Pengguna | Login multi-level (admin, pendamping) | P1 | ⏳ Pending |
+| Manajemen Pengguna | Login admin pendamping terproteksi session & layout Sidebar | P1 | ✅ Selesai (6 Juli 2026) |
 | Re-training Model | Update model jika dataset baru tersedia | P2 | ⏳ Pending |
 
 ## 4. Pengguna Sistem
@@ -133,22 +134,23 @@ Berdasarkan dokumen resmi dari **Zainal — Ketua Tim SDM PKH Provinsi Sulawesi 
 
 > **Diidentifikasi:** 3 Juli 2026, setelah menerima dokumen resmi dari Tim PKH Sulteng
 
-### 10.1 Daftar Gap
+### 10.1 Daftar Gap & Status Resolusi
 
-| No | Gap | Dampak | Prioritas |
-|----|-----|--------|-----------|
-| 1 | Encoding pakai LabelEncoder, seharusnya Ordinal 1-5 | Model belajar pola yang salah | **Kritis** |
-| 2 | Scaler pakai StandardScaler, seharusnya MinMaxScaler | Normalisasi tidak sesuai skala data ordinal | **Kritis** |
-| 3 | Kategori form web tidak cocok dengan kategori resmi | User input tidak valid | **Kritis** |
-| 4 | Format .pkl tidak konsisten (class vs dictionary) | Web error saat load model | **Tinggi** |
-| 5 | anak_usia_dini, anak_sekolah, lansia harusnya biner | Data yang disimpan tidak sesuai format resmi | **Sedang** |
+| No | Gap | Dampak | Status Per 6 Juli 2026 |
+|----|-----|--------|-------------------------|
+| 1 | Encoding pakai LabelEncoder, seharusnya Ordinal 1-5 | Model belajar pola yang salah | ✅ Selesai (Backend & Predictor siap, nunggu dataset real) |
+| 2 | Scaler pakai StandardScaler, seharusnya MinMaxScaler | Normalisasi tidak sesuai skala data ordinal | ✅ Selesai (Backend & Predictor siap, nunggu dataset real) |
+| 3 | Kategori form web tidak cocok dengan kategori resmi | User input tidak valid | ✅ Selesai (Form & model terintegrasi dropdown resmi Dinsos) |
+| 4 | Format .pkl tidak konsisten (class vs dictionary) | Web error saat load model | ✅ Selesai (Predictor diubah untuk load format dictionary) |
+| 5 | anak_usia_dini, anak_sekolah, lansia harusnya biner | Data yang disimpan tidak sesuai format resmi | ✅ Selesai (Kolom database & form diubah ke Boolean/Biner) |
 
-### 10.2 Rencana Perbaikan
+### 10.2 Rencana Perbaikan (Tahap Selanjutnya)
 
-Semua gap akan diperbaiki **bersamaan** saat dataset real datang, karena:
-1. Model harus di-retrain dari awal (SVM bukan incremental learner)
-2. Perubahan encoding otomatis mengharuskan perubahan form web
-3. Lebih efisien mengubah semuanya sekaligus daripada bertahap
+Dengan selesainya refactoring Web SPK Lokal, seluruh gap di atas telah berhasil diselesaikan di sisi aplikasi. Saat dataset riil CSV dari pendamping PKH tersedia, langkah selanjutnya adalah:
+1. Menjalankan *retraining* model SVM baru di Kaggle menggunakan skema encoding ordinal manual dan normalisasi Min-Max.
+2. Mengunduh file `.pkl` berformat dictionary baru hasil latihan.
+3. Menimpa file mock model di folder `web/models/svm_pkh_pipeline.pkl`. Aplikasi web akan langsung terintegrasi secara otomatis tanpa perlu mengubah baris kode lagi.
+
 
 ### 10.3 Penjelasan untuk Sidang
 

@@ -11,8 +11,8 @@
 | **1. Training Model SVM** | 1 Juli 2026 | ✅ Selesai (prototype) | Data sintetis, akurasi 89% |
 | **2. Pembuatan Web SPK** | 2 Juli 2026 | ✅ Selesai | CRUD, dashboard, prediksi |
 | **3. Audit & Gap Analisis** | 3 Juli 2026 | ✅ Selesai | 5 gap kritis teridentifikasi |
-| **4. Perbaikan & Retrain** | 4-5 Juli 2026 | ⏳ Menunggu dataset real | Encoding ordinal, MinMax, form baru |
-| **5. Dokumentasi Skripsi** | 5-6 Juli 2026 | ⏳ | Bab IV |
+| **4. Perbaikan & Retrain** | 4-6 Juli 2026 | ⏳ Sebagian Selesai | Refactoring Web & Login Selesai. Retrain menunggu CSV |
+| **5. Dokumentasi Laporan** | 5-6 Juli 2026 | ⏳ | Bab IV dicicil (Log harian sesi 5 terbit) |
 | **6. Buffer & Revisi** | 6-7 Juli 2026 | ⏳ | |
 
 ---
@@ -61,7 +61,7 @@
 
 **Langkah-langkah:**
 
-#### 4.1 Update Notebook Kaggle (versi 3)
+#### 4.1 Update Notebook Kaggle (versi 3) (⏳ Menunggu Dataset)
 - [ ] Ganti dataset sintetis → `pd.read_csv()` dataset real
 - [ ] Ganti LabelEncoder → mapping ordinal manual 1-5
 - [ ] Ganti StandardScaler → MinMaxScaler
@@ -73,19 +73,21 @@
 - [ ] Jalankan GridSearchCV ulang
 - [ ] Download .pkl baru
 
-#### 4.2 Update Web SPK
-- [ ] Update `models_db.py` — kolom skor ordinal, kolom sosial jadi biner
-- [ ] Update `svm_predictor.py` — load format dictionary baru, hapus LabelEncoder logic
-- [ ] Update `app.py` — terima skor kategori dari form
-- [ ] Update `calon_form.html` — dropdown 5 kategori resmi untuk penghasilan/pekerjaan/aset, checkbox biner untuk komponen sosial
-- [ ] Replace `svm_pkh_pipeline.pkl` dengan model baru
-- [ ] Reset database (belum ada data production)
-- [ ] Test prediksi end-to-end
+#### 4.2 Update Web SPK (✅ Selesai)
+- [x] Update `models_db.py` — kolom skor ordinal, kolom sosial jadi biner, tambah tabel `User`
+- [x] Update `svm_predictor.py` — load format dictionary baru, hapus LabelEncoder logic, pakai normalisasi MinMaxScaler manual
+- [x] Update `app.py` — terima skor kategori dari form, dekorator `@login_required`, rute login/logout
+- [x] Update `calon_form.html` — dropdown 5 kategori resmi untuk penghasilan/pekerjaan/aset, checkbox biner untuk komponen sosial
+- [x] Tambah template `login.html` untuk keamanan akses admin
+- [x] Generate mock model pipeline `.pkl` tiruan untuk verifikasi fungsionalitas
+- [x] Reset database (menghapus data dummy model lama)
+- [x] Test prediksi end-to-end (Dodi - Hasil: Layak, confidence 97.8%)
 
-#### 4.3 Verifikasi
-- [ ] Tes 5-10 kasus prediksi manual
-- [ ] Bandingkan hasil prediksi dengan label asli dataset
-- [ ] Screenshot semua halaman untuk dokumentasi
+#### 4.3 Verifikasi (⏳ Menunggu Model Final)
+- [ ] Tes 5-10 kasus prediksi manual dengan model final
+- [ ] Bandingkan hasil prediksi model final dengan label asli dataset
+- [ ] Screenshot semua halaman untuk dokumentasi laporan Bab IV
+
 
 ### Fase 5: Dokumentasi Skripsi ⏳
 - [ ] Kompilasi Bab IV (Hasil & Pembahasan) dari docs/

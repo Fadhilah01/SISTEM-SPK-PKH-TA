@@ -44,45 +44,36 @@ class SVMPredictor:
         pipeline = joblib.load(model_path)
         self.model = pipeline['model']
         self.scaler = pipeline['scaler']
-        self.le_pekerjaan = pipeline['le_pekerjaan']
-        self.le_aset = pipeline['le_aset']
         self.feature_cols = pipeline['feature_cols']
         self.metrics = pipeline.get('results', {})
         self.best_params = self.metrics.get('best_params', {})
 
-    def predict(self, penghasilan, pekerjaan, aset, ibu_hamil,
+    def predict(self, penghasilan_skor, pekerjaan_skor, aset_skor, ibu_hamil,
                 anak_usia_dini, anak_sekolah, disabilitas, lansia):
         """
-        Prediksi kelayakan calon penerima PKH.
+        Prediksi kelayakan calon penerima PKH menggunakan skor ordinal langsung.
 
         Returns:
             dict: { 'label': 'Layak'/'Tidak Layak',
                     'probabilitas': float,
                     'confidence_pct': float }
         """
-        # Encode kategorikal
-        try:
-            pekerjaan_enc = self.le_pekerjaan.transform([pekerjaan])[0]
-        except ValueError:
-            # Jika kategori tidak dikenal, default ke 0
-            pekerjaan_enc = 0
-
-        try:
-            aset_enc = self.le_aset.transform([aset])[0]
-        except ValueError:
-            aset_enc = 0
-
-        # Siapkan feature vector
+        # Siapkan feature vector menggunakan skor ordinal langsung
         features = np.array([[
-            penghasilan, pekerjaan_enc, aset_enc,
-            int(ibu_hamil), anak_usia_dini, anak_sekolah,
-            int(disabilitas), lansia
+            int(penghasilan_skor), 
+            int(pekerjaan_skor), 
+            int(aset_skor),
+            1 if ibu_hamil else 0, 
+            1 if anak_usia_dini else 0, 
+            1 if anak_sekolah else 0,
+            1 if disabilitas else 0, 
+            1 if lansia else 0
         ]])
 
-        # Normalisasi
+        # Normalisasi menggunakan scaler (MinMaxScaler)
         features_scaled = self.scaler.transform(features)
 
-        # Prediksi
+        # Prediksi menggunakan model SVM RBF
         pred = self.model.predict(features_scaled)[0]
         proba = self.model.predict_proba(features_scaled)[0]
 
@@ -97,3 +88,4 @@ class SVMPredictor:
 
     def get_metrics(self):
         return self.metrics
+

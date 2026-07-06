@@ -211,45 +211,67 @@ pipeline = {
 ## 4. Entity Relationship Diagram (ERD)
 
 ```
-┌──────────────────────┐
-│   Calon Penerima     │
-├──────────────────────┤
-│ PK id (int)          │──────────┐
-│    nama (string)     │          │
-│    alamat (text)     │          │
-│    penghasilan_skor  │          │
-│    (int, 1-5)        │          │
-│    pekerjaan_skor    │          │
-│    (int, 1-5)        │          │
-│    aset_skor         │          │
-│    (int, 1-5)        │          │
-│    ibu_hamil (bool)  │          │
-│    anak_usia_dini    │          │
-│    (bool, 0/1)       │          │
-│    anak_sekolah      │          │
-│    (bool, 0/1)       │          │
-│    disabilitas (bool)│          │
-│    lansia (bool, 0/1)│          │
-│    created_at        │          │
-└──────────────────────┘          │
-                                  │
-┌──────────────────────┐          │
-│   Hasil Keputusan    │          │
-├──────────────────────┤          │
-│ PK id (int)          │◄─────────┘
-│ FK id_calon (int)    │
-│    hasil_prediksi    │
-│    (bool)            │
-│    label_prediksi    │
-│    (string)          │
-│    probabilitas(float)│
-│    tanggal_prediksi  │
-│    (datetime)        │
-│    oleh (string)     │
-└──────────────────────┘
+┌────────────────────────┐
+│         User           │
+├────────────────────────┤
+│ PK id (int)            │
+│    username (string)   │
+│    password_hash       │
+│    (string)            │
+│    nama_lengkap        │
+│    (string)            │
+│    created_at          │
+│    (datetime)          │
+└────────────────────────┘
+
+┌────────────────────────┐
+│     Calon Penerima     │
+├────────────────────────┤
+│ PK id (int)            │──────────┐
+│    nama (string)       │          │
+│    alamat (text)       │          │
+│    penghasilan (string)│          │
+│    pekerjaan (string)  │          │
+│    kepemilikan_aset    │          │
+│    (string)            │          │
+│    ibu_hamil (bool)    │          │
+│    anak_usia_dini(bool)│          │
+│    anak_sekolah (bool) │          │
+│    disabilitas (bool)  │          │
+│    lansia (bool)       │          │
+│    skor_penghasilan    │          │
+│    (int, 1-5)          │          │
+│    skor_pekerjaan      │          │
+│    (int, 1-5)          │          │
+│    skor_kepemilikan_aset          │
+│    (int, 1-5)          │          │
+│    skor_ibu_hamil(int) │          │
+│    skor_anak_usia_dini            │
+│    (int, 0/1)          │          │
+│    skor_anak_sekolah   │          │
+│    (int, 0/1)          │          │
+│    skor_disabilitas(int)          │
+│    skor_lansia (int)   │          │
+│    created_at          │          │
+└────────────────────────┘          │
+                                    │
+┌────────────────────────┐          │
+│    Hasil Keputusan     │          │
+├────────────────────────┤          │
+│ PK id (int)            │◄─────────┘
+│ FK id_calon (int)      │
+│    hasil_prediksi      │
+│    (bool)              │
+│    label_prediksi      │
+│    (string)            │
+│    probabilitas(float) │
+│    tanggal_prediksi    │
+│    (datetime)          │
+│    oleh (string)       │
+└────────────────────────┘
 ```
 
-**Penjelasan:** Tabel `Calon Penerima` menyimpan data input dengan skor ordinal (1-5 untuk penghasilan, pekerjaan, aset; 0/1 untuk komponen sosial). Tabel `Hasil Keputusan` menyimpan output prediksi SVM, terhubung one-to-one melalui `id_calon`.
+**Penjelasan:** Tabel `User` menyimpan data autentikasi admin. Tabel `Calon Penerima` menyimpan data masukan teks kategori beserta nilai skor hasil pemetaan (skor 1-5 untuk kriteria ordinal, 0/1 untuk biner) secara terpisah. Tabel `Hasil Keputusan` menyimpan hasil output prediksi SVM dan terhubung one-to-one dengan tabel `Calon Penerima`. Kolom `oleh` pada `Hasil Keputusan` mencatat ID pengguna yang melakukan proses input data tersebut.
 
 > **Catatan Historis:** ERD awal menyimpan penghasilan sebagai float (rupiah) dan anak_usia_dini, anak_sekolah, lansia sebagai integer (jumlah). Setelah menerima dokumen resmi PKH, semua diubah menjadi skor ordinal/biner sesuai indikator resmi.
 
