@@ -453,8 +453,8 @@ def get_daerah():
             'fullname': fullname
         })
         
-        # Batasi maksimal 20 hasil demi performa
-        if len(results) >= 20:
+        # Batasi maksimal 20 hasil demi performa (hanya jika ada query pencarian atau me-list desa)
+        if (q or level == 'desa') and len(results) >= 20:
             break
 
     return jsonify(results)

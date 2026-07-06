@@ -97,6 +97,10 @@
 - [x] Autocomplete wilayah di form input dengan tampilan nama lengkap terstruktur (fullname) untuk menghindari duplikasi
 - [x] Visualisasi diagram batang sebaran desa secara dinamis tanpa hardcode nama desa di dashboard
 - [x] Toleransi impor edge case berkas excel kuno tanpa kolom wilayah
+- [x] Restrukturisasi layout beranda (dashboard) dengan membatasi tabel keputusan terbaru ke 3 baris terpaginasi client-side
+- [x] Implementasi pusat analisis tab visualisasi (Wilayah, Tren, Komparasi Periode & Kriteria) berbasis AJAX /api/analytics
+- [x] Seeding data historis calon penerima acak (1 tahun terakhir) untuk demonstrasi visualisasi tren
+
 
 
 #### 4.3 Verifikasi (⏳ Menunggu Model Final)

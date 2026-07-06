@@ -48,94 +48,238 @@
         </div>
     </div>
 
-    <div class="row g-4">
-        <!-- Hasil Terbaru -->
-        <div class="col-lg-7">
-            <div class="card h-100">
-                <div class="card-header d-flex justify-content-between align-items-center">
-                    <h6 class="mb-0"><i class="bi bi-clock-history"></i> Hasil Keputusan Terbaru</h6>
-                    <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-sm btn-outline-primary">Lihat Semua</a>
+    <div class="row g-4 mb-4">
+        <!-- Pusat Analisis & Visualisasi Terpadu (12 Kolom) -->
+        <div class="col-lg-12">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-white border-bottom border-light d-flex justify-content-between align-items-center py-3">
+                    <h6 class="mb-0 text-dark-emphasis fw-bold">
+                        <i class="bi bi-bar-chart-line-fill text-secondary me-2"></i> Pusat Analisis & Monitoring
+                    </h6>
+                    <!-- Nav Tabs untuk Chart -->
+                    <ul class="nav nav-pills card-header-pills" id="analyticsTabs" role="tablist">
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link active btn-sm py-1 px-3" id="tab-wilayah" data-bs-toggle="tab" data-type="wilayah" type="button" role="tab">
+                                <i class="bi bi-geo-alt"></i> Wilayah
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link btn-sm py-1 px-3" id="tab-tren" data-bs-toggle="tab" data-type="tren" type="button" role="tab">
+                                <i class="bi bi-graph-up"></i> Tren
+                            </button>
+                        </li>
+                        <li class="nav-item" role="presentation">
+                            <button class="nav-link btn-sm py-1 px-3" id="tab-komparasi" data-bs-toggle="tab" data-type="komparasi" type="button" role="tab">
+                                <i class="bi bi-arrow-left-right"></i> Komparasi
+                            </button>
+                        </li>
+                    </ul>
                 </div>
-                <div class="card-body p-0">
+                <div class="card-body p-4">
+                    <!-- Row Filter Dinamis (Monokromatis & Terpadu) -->
+                    <div class="row g-2 mb-4 p-3 bg-light rounded border border-light-subtle align-items-center" id="dynamicFilterRow">
+                        
+                        <!-- 1. Filter Spasial (Hanya Tampil di Tab Wilayah) -->
+                        <!-- 1. Filter Spasial (Hanya Tampil di Tab Wilayah - Dengan Pencarian Kustom) -->
+                        <div class="col-md-2 filter-spasial">
+                            <div class="dropdown custom-select" id="select_provinsi">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    -- Semua Provinsi --
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100" style="min-width: 220px;">
+                                    <input type="text" class="form-control form-control-sm mb-2 select-search-input" placeholder="Cari...">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="">-- Semua Provinsi --</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 filter-spasial">
+                            <div class="dropdown custom-select" id="select_kabupaten">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                                    -- Semua Kabupaten --
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100" style="min-width: 220px;">
+                                    <input type="text" class="form-control form-control-sm mb-2 select-search-input" placeholder="Cari...">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="">-- Semua Kabupaten --</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 filter-spasial">
+                            <div class="dropdown custom-select" id="select_kecamatan">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                                    -- Semua Kecamatan --
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100" style="min-width: 220px;">
+                                    <input type="text" class="form-control form-control-sm mb-2 select-search-input" placeholder="Cari...">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="">-- Semua Kecamatan --</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-2 filter-spasial">
+                            <div class="dropdown custom-select" id="select_desa">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false" disabled>
+                                    -- Semua Desa --
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100" style="min-width: 220px;">
+                                    <input type="text" class="form-control form-control-sm mb-2 select-search-input" placeholder="Cari...">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="">-- Semua Desa --</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- 2. Skala Waktu Tren (Hanya Tampil di Tab Tren) -->
+                        <div class="col-md-3 filter-tren d-none">
+                            <select id="filter_scale" class="form-select form-select-sm shadow-none">
+                                <option value="month">Tren Bulanan</option>
+                                <option value="quarter">Tren Kuartalan</option>
+                                <option value="week">Tren Mingguan</option>
+                                <option value="year">Tren Tahunan</option>
+                            </select>
+                        </div>
+
+                        <!-- 3. Rentang Waktu Global (Tampil untuk Wilayah dan Tren) -->
+                        <div class="col-md-4 filter-tanggal">
+                            <div class="input-group input-group-sm">
+                                <span class="input-group-text bg-white border-end-0 text-muted"><i class="bi bi-calendar3"></i></span>
+                                <input type="date" id="filter_date_from" class="form-control border-start-0 shadow-none">
+                                <span class="input-group-text bg-white border-start-0 border-end-0 text-muted">-</span>
+                                <input type="date" id="filter_date_to" class="form-control border-start-0 shadow-none">
+                            </div>
+                        </div>
+
+                        <!-- 4. Filter Komparasi (Hanya Tampil di Tab Komparasi) -->
+                        <div class="col-md-3 filter-komparasi d-none">
+                            <select id="compare_mode" class="form-select form-select-sm shadow-none">
+                                <option value="period">Bandingkan Periode Waktu</option>
+                                <option value="criteria">Bandingkan Kriteria KPM</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Sub-Opsi Periode Komparasi -->
+                        <div class="col-md-9 filter-komparasi-period d-none">
+                            <div class="d-flex gap-2 align-items-center">
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text bg-white text-muted">Periode A</span>
+                                    <input type="date" id="compare_a_start" class="form-control shadow-none">
+                                    <input type="date" id="compare_a_end" class="form-control shadow-none">
+                                </div>
+                                <div class="input-group input-group-sm">
+                                    <span class="input-group-text bg-white text-muted">Periode B</span>
+                                    <input type="date" id="compare_b_start" class="form-control shadow-none">
+                                    <input type="date" id="compare_b_end" class="form-control shadow-none">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Sub-Opsi Kriteria Komparasi -->
+                        <div class="col-md-3 filter-komparasi-criteria d-none">
+                            <select id="compare_criteria_type" class="form-select form-select-sm shadow-none">
+                                <option value="penghasilan">Kriteria: Penghasilan</option>
+                                <option value="pekerjaan">Kriteria: Pekerjaan</option>
+                                <option value="kepemilikan_aset">Kriteria: Kepemilikan Aset</option>
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <!-- Canvas Grafik Utama -->
+                    <div id="chartContainer" style="position: relative; width: 100%; height: 380px;">
+                        <canvas id="mainChart"></canvas>
+                        <!-- Placeholder jika data kosong -->
+                        <div id="chartPlaceholder" class="d-none text-center py-5 text-muted position-absolute top-50 start-50 translate-middle w-100">
+                            <i class="bi bi-inbox" style="font-size: 2.5rem;"></i>
+                            <p class="mt-2 small mb-0">Tidak ada data yang ditemukan untuk filter ini.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Baris Bawah: Hasil Terbaru & Doughnut Chart -->
+    <div class="row g-4 mt-2">
+        <!-- Kiri Bawah: Keputusan Terbaru (Compact Paginasi) -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom border-light d-flex justify-content-between align-items-center py-3">
+                    <h6 class="mb-0 text-dark-emphasis fw-bold"><i class="bi bi-clock-history text-secondary me-2"></i> Keputusan Terbaru (Pelengkap)</h6>
+                    <a href="{{ url_for('calon.daftar_calon') }}" class="btn btn-sm btn-outline-secondary px-3 py-1">Lihat Semua</a>
+                </div>
+                <div class="card-body p-0 d-flex flex-column justify-content-between" style="min-height: 250px;">
                     {% if recent %}
-                    <div class="table-responsive border-0 rounded-0">
-                        <table class="table table-hover mb-0">
+                    <div class="table-responsive border-0">
+                        <table class="table table-hover align-middle mb-0" id="recentTable">
                             <thead>
-                                <tr>
-                                    <th>No</th>
-                                    <th>Nama</th>
-                                    <th>Keputusan</th>
-                                    <th>Confidence</th>
-                                    <th>Tanggal</th>
+                                <tr class="table-light">
+                                    <th class="ps-3 py-2 small text-muted">Nama Calon</th>
+                                    <th class="py-2 small text-muted">Hasil Klasifikasi</th>
+                                    <th class="py-2 small text-muted text-end pe-3">Confidence</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 {% for r in recent %}
-                                <tr>
-                                    <td class="font-monospace text-muted small">{{ loop.index }}</td>
-                                    <td>
-                                        <a href="{{ url_for('calon.daftar_calon') }}" class="text-decoration-none fw-medium text-dark-emphasis">
-                                            {{ r.calon.nama }}
-                                        </a>
+                                <tr class="recent-row" data-page="{{ ((loop.index - 1) // 3) + 1 }}">
+                                    <td class="ps-3 py-2 font-monospace text-dark-emphasis fw-semibold">
+                                        {{ r.calon.nama }}
                                     </td>
-                                    <td>
+                                    <td class="py-2">
                                         {% if r.hasil_prediksi %}
-                                        <span class="badge badge-layak"><i class="bi bi-check"></i> Layak</span>
+                                        <span class="badge badge-layak px-2 py-1"><i class="bi bi-check-circle"></i> Layak</span>
                                         {% else %}
-                                        <span class="badge badge-tidak-layak"><i class="bi bi-x"></i> Tidak Layak</span>
+                                        <span class="badge badge-tidak-layak px-2 py-1"><i class="bi bi-x-circle"></i> Tidak Layak</span>
                                         {% endif %}
                                     </td>
-                                    <td class="font-monospace fw-medium">{{ "%.1f"|format(r.probabilitas * 100) }}%</td>
-                                    <td><small class="text-muted font-monospace">{{ r.tanggal_prediksi.strftime('%d/%m/%Y %H:%M') }}</small></td>
+                                    <td class="py-2 text-end pe-3 font-monospace fw-semibold text-secondary">
+                                        {{ "%.1f"|format(r.probabilitas * 100) }}%
+                                    </td>
                                 </tr>
                                 {% endfor %}
                             </tbody>
                         </table>
                     </div>
+                    <!-- Paginasi Client-Side -->
+                    <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top border-light">
+                        <span class="text-muted small" id="paginator-info">Halaman 1 dari 3</span>
+                        <div class="btn-group btn-group-sm">
+                            <button class="btn btn-outline-secondary" id="btn-prev-page" type="button"><i class="bi bi-chevron-left"></i></button>
+                            <button class="btn btn-outline-secondary" id="btn-next-page" type="button"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
                     {% else %}
-                    <div class="text-center py-5 text-muted">
+                    <div class="text-center py-5 text-muted flex-grow-1 d-flex flex-column justify-content-center">
                         <i class="bi bi-inbox" style="font-size: 2rem;"></i>
-                        <p class="mt-2 small">Belum ada data keputusan.</p>
-                        <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-primary btn-sm">Tambah Data Calon</a>
+                        <p class="mt-2 small">Belum ada keputusan tersimpan.</p>
+                        <div>
+                            <a href="{{ url_for('calon.tambah_calon') }}" class="btn btn-primary btn-sm px-3">Tambah Calon</a>
+                        </div>
                     </div>
                     {% endif %}
                 </div>
             </div>
         </div>
 
-        <!-- Visualisasi Data (Chart.js) -->
-        <div class="col-lg-5">
-            <!-- Chart 1: Kelayakan -->
-            <div class="card mb-4">
-                <div class="card-header">
-                    <h6 class="mb-0"><i class="bi bi-pie-chart"></i> Persentase Kelayakan Bantuan</h6>
+        <!-- Kanan Bawah: Doughnut Chart Kelayakan Global -->
+        <div class="col-lg-6">
+            <div class="card shadow-sm border-0 h-100">
+                <div class="card-header bg-white border-bottom border-light py-3">
+                    <h6 class="mb-0 text-dark-emphasis fw-bold"><i class="bi bi-pie-chart-fill text-secondary me-2"></i> Proporsi Kelayakan Calon Penerima</h6>
                 </div>
-                <div class="card-body" style="height: 220px; position: relative;">
+                <div class="card-body d-flex align-items-center justify-content-center" style="min-height: 250px; position: relative;">
                     {% if total_calon > 0 %}
-                    <canvas id="chartKelayakan" data-layak="{{ total_layak }}" data-tidak="{{ total_tidak }}"></canvas>
+                    <div style="width: 100%; max-width: 250px; height: 100%; max-height: 220px;">
+                        <canvas id="chartKelayakan" data-layak="{{ total_layak }}" data-tidak="{{ total_tidak }}"></canvas>
+                    </div>
                     {% else %}
                     <div class="text-center py-5 text-muted">
                         <i class="bi bi-bar-chart" style="font-size: 2rem;"></i>
-                        <p class="mt-2 small">Data belum tersedia untuk diagram.</p>
-                    </div>
-                    {% endif %}
-                </div>
-            </div>
-
-            <!-- Chart 2: Sebaran Desa -->
-            <div class="card">
-                <div class="card-header">
-                    <h6 class="mb-0"><i class="bi bi-geo-alt"></i> Distribusi Calon per Desa</h6>
-                </div>
-                <div class="card-body" style="height: 220px; position: relative;">
-                    {% if total_calon > 0 %}
-                    <canvas id="chartDesa" 
-                            data-labels='{{ desa_stats.keys() | list | tojson }}'
-                            data-values='{{ desa_stats.values() | list | tojson }}'></canvas>
-                    {% else %}
-                    <div class="text-center py-5 text-muted">
-                        <i class="bi bi-geo-alt" style="font-size: 2rem;"></i>
-                        <p class="mt-2 small">Data belum tersedia untuk diagram.</p>
+                        <p class="mt-2 small">Data kelayakan belum tersedia.</p>
                     </div>
                     {% endif %}
                 </div>

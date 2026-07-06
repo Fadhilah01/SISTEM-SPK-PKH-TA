@@ -801,3 +801,71 @@ a {
     outline: none;
 }
 
+/* Minimalist Monochrome Form Controls */
+.form-select, .form-control {
+    background-color: var(--bg-surface) !important;
+    color: var(--color-text) !important;
+    border: 1px solid var(--color-border) !important;
+    border-radius: var(--radius-sm) !important;
+    padding: 0.45rem 0.75rem !important;
+    font-size: 0.875rem !important;
+    font-family: var(--font-sans) !important;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast) !important;
+}
+
+.form-select:hover, .form-control:hover {
+    border-color: var(--color-border-hover) !important;
+}
+
+.form-select:focus, .form-control:focus {
+    border-color: var(--color-border-focus) !important;
+    background-color: var(--bg-surface) !important;
+    color: var(--color-text) !important;
+    box-shadow: var(--focus-ring) !important;
+    outline: none !important;
+}
+
+.form-select:disabled, .form-control:disabled {
+    background-color: var(--bg-app) !important;
+    color: var(--color-text-light) !important;
+    border-color: var(--color-border) !important;
+    opacity: 0.6 !important;
+}
+
+/* Custom Select Dropdown Styling (Minimalist Monochrome) */
+.custom-select .dropdown-menu {
+    border-radius: var(--radius-sm);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
+    background-color: var(--bg-surface) !important;
+    border: 1px solid var(--color-border) !important;
+}
+
+.custom-select .dropdown-item {
+    color: var(--color-text) !important;
+    font-size: 0.8rem !important;
+    font-family: var(--font-sans) !important;
+    transition: background-color var(--transition-fast) !important;
+}
+
+.custom-select .dropdown-item:hover,
+.custom-select .dropdown-item:focus,
+.custom-select .dropdown-item.active {
+    background-color: var(--bg-surface-hover) !important;
+    color: var(--color-text) !important;
+    outline: none !important;
+}
+
+/* Scrollbar styling for custom dropdowns */
+.select-items-list::-webkit-scrollbar {
+    width: 6px;
+}
+.select-items-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+.select-items-list::-webkit-scrollbar-thumb {
+    background-color: var(--color-border);
+    border-radius: 3px;
+}
+.select-items-list::-webkit-scrollbar-thumb:hover {
+    background-color: var(--color-border-hover);
+}
