@@ -49,11 +49,19 @@
                 <!-- Hasil Filter -->
                 <div class="col-md-2">
                     <label class="form-label small text-muted mb-1">Hasil Keputusan</label>
-                    <select name="hasil_filter" class="form-select form-select-sm">
-                        <option value="">Semua</option>
-                        <option value="layak" {% if hasil_filter == 'layak' %}selected{% endif %}>Layak</option>
-                        <option value="tidak_layak" {% if hasil_filter == 'tidak_layak' %}selected{% endif %}>Tidak Layak</option>
-                    </select>
+                    <div class="dropdown custom-select" id="select_hasil_filter">
+                        <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {% if hasil_filter == 'layak' %}Layak{% elif hasil_filter == 'tidak_layak' %}Tidak Layak{% else %}Semua{% endif %}
+                        </button>
+                        <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                            <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                <button class="dropdown-item py-1 px-2 small select-item {% if not hasil_filter %}active{% endif %}" type="button" data-value="">Semua</button>
+                                <button class="dropdown-item py-1 px-2 small select-item {% if hasil_filter == 'layak' %}active{% endif %}" type="button" data-value="layak">Layak</button>
+                                <button class="dropdown-item py-1 px-2 small select-item {% if hasil_filter == 'tidak_layak' %}active{% endif %}" type="button" data-value="tidak_layak">Tidak Layak</button>
+                            </div>
+                        </div>
+                        <input type="hidden" name="hasil_filter" value="{{ hasil_filter or '' }}">
+                    </div>
                 </div>
 
                 <!-- Buttons -->

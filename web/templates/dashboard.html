@@ -136,12 +136,20 @@
 
                         <!-- 2. Skala Waktu Tren (Hanya Tampil di Tab Tren) -->
                         <div class="col-md-3 filter-tren d-none">
-                            <select id="filter_scale" class="form-select form-select-sm shadow-none">
-                                <option value="month">Tren Bulanan</option>
-                                <option value="quarter">Tren Kuartalan</option>
-                                <option value="week">Tren Mingguan</option>
-                                <option value="year">Tren Tahunan</option>
-                            </select>
+                            <div class="dropdown custom-select" id="select_filter_scale">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Tren Bulanan
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="month">Tren Bulanan</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="quarter">Tren Kuartalan</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="week">Tren Mingguan</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="year">Tren Tahunan</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="filter_scale" value="month">
+                            </div>
                         </div>
 
                         <!-- 3. Rentang Waktu Global (Tampil untuk Wilayah dan Tren) -->
@@ -156,10 +164,18 @@
 
                         <!-- 4. Filter Komparasi (Hanya Tampil di Tab Komparasi) -->
                         <div class="col-md-3 filter-komparasi d-none">
-                            <select id="compare_mode" class="form-select form-select-sm shadow-none">
-                                <option value="period">Bandingkan Periode Waktu</option>
-                                <option value="criteria">Bandingkan Kriteria KPM</option>
-                            </select>
+                            <div class="dropdown custom-select" id="select_compare_mode">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Bandingkan Periode Waktu
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="period">Bandingkan Periode Waktu</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="criteria">Bandingkan Kriteria KPM</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="compare_mode" value="period">
+                            </div>
                         </div>
                         
                         <!-- Sub-Opsi Periode Komparasi -->
@@ -180,11 +196,19 @@
 
                         <!-- Sub-Opsi Kriteria Komparasi -->
                         <div class="col-md-3 filter-komparasi-criteria d-none">
-                            <select id="compare_criteria_type" class="form-select form-select-sm shadow-none">
-                                <option value="penghasilan">Kriteria: Penghasilan</option>
-                                <option value="pekerjaan">Kriteria: Pekerjaan</option>
-                                <option value="kepemilikan_aset">Kriteria: Kepemilikan Aset</option>
-                            </select>
+                            <div class="dropdown custom-select" id="select_compare_criteria_type">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Kriteria: Penghasilan
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="penghasilan">Kriteria: Penghasilan</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="pekerjaan">Kriteria: Pekerjaan</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="kepemilikan_aset">Kriteria: Kepemilikan Aset</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" id="compare_criteria_type" value="penghasilan">
+                            </div>
                         </div>
 
                     </div>

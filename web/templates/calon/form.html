@@ -65,37 +65,58 @@
                         <!-- Penghasilan -->
                         <div class="col-md-4">
                             <label class="form-label">Penghasilan per Bulan <span class="text-danger">*</span></label>
-                            <select name="penghasilan" class="form-select" required>
-                                <option value="">-- Pilih --</option>
-                                {% for p in penghasilan_list %}
-                                <option value="{{ p }}" {% if calon and calon.penghasilan==p %}selected{% endif %}>{{ p
-                                    }}</option>
-                                {% endfor %}
-                            </select>
+                            <div class="dropdown custom-select" id="select_penghasilan">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if calon and calon.penghasilan %}{{ calon.penghasilan }}{% else %}-- Pilih --{% endif %}
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if not calon or not calon.penghasilan %}active{% endif %}" type="button" data-value="">-- Pilih --</button>
+                                        {% for p in penghasilan_list %}
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if calon and calon.penghasilan == p %}active{% endif %}" type="button" data-value="{{ p }}">{{ p }}</button>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <input type="hidden" name="penghasilan" value="{{ calon.penghasilan if calon else '' }}" required>
+                            </div>
                         </div>
 
                         <!-- Pekerjaan -->
                         <div class="col-md-4">
                             <label class="form-label">Pekerjaan <span class="text-danger">*</span></label>
-                            <select name="pekerjaan" class="form-select" required>
-                                <option value="">-- Pilih --</option>
-                                {% for p in pekerjaan_list %}
-                                <option value="{{ p }}" {% if calon and calon.pekerjaan==p %}selected{% endif %}>{{ p }}
-                                </option>
-                                {% endfor %}
-                            </select>
+                            <div class="dropdown custom-select" id="select_pekerjaan">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if calon and calon.pekerjaan %}{{ calon.pekerjaan }}{% else %}-- Pilih --{% endif %}
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if not calon or not calon.pekerjaan %}active{% endif %}" type="button" data-value="">-- Pilih --</button>
+                                        {% for p in pekerjaan_list %}
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if calon and calon.pekerjaan == p %}active{% endif %}" type="button" data-value="{{ p }}">{{ p }}</button>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <input type="hidden" name="pekerjaan" value="{{ calon.pekerjaan if calon else '' }}" required>
+                            </div>
                         </div>
 
                         <!-- Kepemilikan Aset -->
                         <div class="col-md-4">
                             <label class="form-label">Kepemilikan Aset <span class="text-danger">*</span></label>
-                            <select name="kepemilikan_aset" class="form-select" required>
-                                <option value="">-- Pilih --</option>
-                                {% for a in aset_list %}
-                                <option value="{{ a }}" {% if calon and calon.kepemilikan_aset==a %}selected{% endif %}>
-                                    {{ a }}</option>
-                                {% endfor %}
-                            </select>
+                            <div class="dropdown custom-select" id="select_kepemilikan_aset">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    {% if calon and calon.kepemilikan_aset %}{{ calon.kepemilikan_aset }}{% else %}-- Pilih --{% endif %}
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if not calon or not calon.kepemilikan_aset %}active{% endif %}" type="button" data-value="">-- Pilih --</button>
+                                        {% for a in aset_list %}
+                                        <button class="dropdown-item py-1 px-2 small select-item {% if calon and calon.kepemilikan_aset == a %}active{% endif %}" type="button" data-value="{{ a }}">{{ a }}</button>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                                <input type="hidden" name="kepemilikan_aset" value="{{ calon.kepemilikan_aset if calon else '' }}" required>
+                            </div>
                         </div>
 
                         <!-- Divider -->

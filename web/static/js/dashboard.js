@@ -2,7 +2,7 @@
  * SPK PKH - Dashboard Dynamic Analytics & Visualization (Chart.js)
  * 
  * Melayani:
- *   1. Custom Select Dropdown UI (dengan Fitur Search) untuk filter spasial bertingkat
+ *   1. Integrasi dengan global custom select dropdown (app.js) untuk filter spasial bertingkat
  *   2. Chart utama analitis dinamis via AJAX /api/analytics
  *   3. Doughnut Chart kelayakan global statis pada inisialisasi (Monokrom)
  *   4. Paginasi client-side hasil keputusan terbaru
@@ -10,125 +10,11 @@
  *   6. Penanganan status data kosong (UI placeholder text overlay)
  */
 
-// 1. Definisikan Kelas CustomSelect untuk Search Dropdown UI Kustom
-class CustomSelect {
-    constructor(elementId, onChange) {
-        this.element = document.getElementById(elementId);
-        if (!this.element) return;
-        this.button = this.element.querySelector(".form-select");
-        this.menu = this.element.querySelector(".dropdown-menu");
-        this.searchInput = this.element.querySelector(".select-search-input");
-        this.listContainer = this.element.querySelector(".select-items-list");
-        this.onChange = onChange;
-        this.value = "";
-        this.kode = "";
-        this.placeholder = this.button.textContent.trim();
-
-        this.init();
-    }
-
-    init() {
-        // Event listener untuk input pencarian kustom
-        if (this.searchInput) {
-            this.searchInput.addEventListener("input", () => {
-                const query = this.searchInput.value.toLowerCase();
-                const items = this.listContainer.querySelectorAll(".select-item");
-                items.forEach(item => {
-                    const text = item.textContent.toLowerCase();
-                    if (text.includes(query)) {
-                        item.classList.remove("d-none");
-                    } else {
-                        item.classList.add("d-none");
-                    }
-                });
-            });
-
-            // Cegah penutupan menu dropdown saat kolom input search diklik
-            this.searchInput.addEventListener("click", (e) => {
-                e.stopPropagation();
-            });
-        }
-    }
-
-    setItems(items, activeVal = "") {
-        const defaultText = this.placeholder;
-        // Reset list item, sisakan opsi default "Semua ..."
-        this.listContainer.innerHTML = `<button class="dropdown-item py-1 px-2 small select-item select-default-item active" type="button" data-value="">${defaultText}</button>`;
-        
-        items.forEach(item => {
-            const btn = document.createElement("button");
-            btn.className = "dropdown-item py-1 px-2 small select-item text-truncate";
-            btn.type = "button";
-            btn.dataset.value = item.nama;
-            btn.dataset.kode = item.kode;
-            
-            // Bersihkan prefix kabupaten/kota agar UI dropdown rapi dan minimalis
-            let displayText = item.nama;
-            if (this.element.id === 'select_kabupaten') {
-                displayText = item.nama.replace("KABUPATEN ", "").replace("KOTA ", "");
-            }
-            btn.textContent = displayText;
-            this.listContainer.appendChild(btn);
-        });
-
-        // Pasang event listener klik untuk item yang baru dibuat
-        const selectItems = this.listContainer.querySelectorAll(".select-item");
-        selectItems.forEach(item => {
-            item.addEventListener("click", () => {
-                this.selectItem(item);
-            });
-        });
-
-        // Reset kolom pencarian
-        if (this.searchInput) {
-            this.searchInput.value = "";
-        }
-        
-        if (activeVal) {
-            const activeItem = Array.from(selectItems).find(x => x.dataset.value === activeVal);
-            if (activeItem) {
-                this.selectItem(activeItem, false);
-            }
-        } else {
-            const defaultItem = this.listContainer.querySelector(".select-default-item");
-            this.selectItem(defaultItem, false);
-        }
-    }
-
-    selectItem(itemEl, triggerChange = true) {
-        if (!itemEl) return;
-        
-        // Bersihkan tanda aktif dari item lainnya
-        this.listContainer.querySelectorAll(".select-item").forEach(x => x.classList.remove("active"));
-        itemEl.classList.add("active");
-        
-        this.value = itemEl.dataset.value || "";
-        this.kode = itemEl.dataset.kode || "";
-        
-        // Update teks visual tombol dropdown
-        this.button.textContent = itemEl.textContent;
-        
-        if (triggerChange && this.onChange) {
-            this.onChange(this.value, this.kode);
-        }
-    }
-
-    disable(disabled) {
-        this.button.disabled = disabled;
-        if (disabled) {
-            this.value = "";
-            this.kode = "";
-            this.button.textContent = this.placeholder;
-            this.listContainer.innerHTML = `<button class="dropdown-item py-1 px-2 small select-item select-default-item active" type="button" data-value="">${this.placeholder}</button>`;
-        }
-    }
-}
-
 document.addEventListener('DOMContentLoaded', function () {
     // Inisialisasi Doughnut Chart Kelayakan Global
     initKelayakanChart();
 
-    // Inisialisasi Analitik & Filter Interaktif (dengan CustomSelect)
+    // Inisialisasi Analitik & Filter Interaktif
     initInteractiveAnalytics();
 
     // Inisialisasi Paginasi Client-Side
@@ -191,14 +77,12 @@ function initKelayakanChart() {
 }
 
 function initInteractiveAnalytics() {
-    // Definisikan objek CustomSelect untuk dropdown daerah kustom
-    let provSelect = null;
-    let kabSelect = null;
-    let kecSelect = null;
-    let desaSelect = null;
+    const selectProv = document.getElementById("select_provinsi");
+    const selectKab = document.getElementById("select_kabupaten");
+    const selectKec = document.getElementById("select_kecamatan");
+    const selectDesa = document.getElementById("select_desa");
 
-    const selectProvEl = document.getElementById("select_provinsi");
-    if (!selectProvEl) return;
+    if (!selectProv) return;
 
     // Set Default Dates untuk Komparasi Periode
     const today = new Date();
@@ -247,10 +131,10 @@ function initInteractiveAnalytics() {
         if (!activeTab) return;
         const chartType = activeTab.dataset.type; // wilayah, tren, komparasi
 
-        const provVal = provSelect ? provSelect.value : "";
-        const kabVal = kabSelect ? kabSelect.value : "";
-        const kecVal = kecSelect ? kecSelect.value : "";
-        const desaVal = desaSelect ? desaSelect.value : "";
+        const provVal = selectProv ? selectProv.value : "";
+        const kabVal = selectKab ? selectKab.value : "";
+        const kecVal = selectKec ? selectKec.value : "";
+        const desaVal = selectDesa ? selectDesa.value : "";
         
         const dateFrom = document.getElementById("filter_date_from").value;
         const dateTo = document.getElementById("filter_date_to").value;
@@ -438,11 +322,14 @@ function initInteractiveAnalytics() {
         mainChartInstance = new Chart(ctx, chartConfig);
     }
 
-    // Pemuatan awal instansi dropdown bertingkat kustom
-    provSelect = new CustomSelect("select_provinsi", (val, kode) => {
-        kabSelect.disable(true);
-        kecSelect.disable(true);
-        desaSelect.disable(true);
+    // Pemuatan instansi dropdown bertingkat kustom menggunakan event listener global
+    selectProv.addEventListener("change", function(e) {
+        const val = e.detail.value;
+        const kode = e.detail.kode;
+
+        selectKab.disable(true);
+        selectKec.disable(true);
+        selectDesa.disable(true);
         
         if (!kode) {
             updateCharts();
@@ -452,15 +339,18 @@ function initInteractiveAnalytics() {
         fetch(`/api/daerah?level=kabupaten&parent=${kode}`)
             .then(res => res.json())
             .then(data => {
-                kabSelect.disable(false);
-                kabSelect.setItems(data);
+                selectKab.disable(false);
+                selectKab.setItems(data);
                 updateCharts();
             });
     });
 
-    kabSelect = new CustomSelect("select_kabupaten", (val, kode) => {
-        kecSelect.disable(true);
-        desaSelect.disable(true);
+    selectKab.addEventListener("change", function(e) {
+        const val = e.detail.value;
+        const kode = e.detail.kode;
+
+        selectKec.disable(true);
+        selectDesa.disable(true);
         
         if (!kode) {
             updateCharts();
@@ -470,14 +360,17 @@ function initInteractiveAnalytics() {
         fetch(`/api/daerah?level=kecamatan&parent=${kode}`)
             .then(res => res.json())
             .then(data => {
-                kecSelect.disable(false);
-                kecSelect.setItems(data);
+                selectKec.disable(false);
+                selectKec.setItems(data);
                 updateCharts();
             });
     });
 
-    kecSelect = new CustomSelect("select_kecamatan", (val, kode) => {
-        desaSelect.disable(true);
+    selectKec.addEventListener("change", function(e) {
+        const val = e.detail.value;
+        const kode = e.detail.kode;
+
+        selectDesa.disable(true);
         
         if (!kode) {
             updateCharts();
@@ -487,21 +380,19 @@ function initInteractiveAnalytics() {
         fetch(`/api/daerah?level=desa&parent=${kode}`)
             .then(res => res.json())
             .then(data => {
-                desaSelect.disable(false);
-                desaSelect.setItems(data);
+                selectDesa.disable(false);
+                selectDesa.setItems(data);
                 updateCharts();
             });
     });
 
-    desaSelect = new CustomSelect("select_desa", (val, kode) => {
-        updateCharts();
-    });
+    selectDesa.addEventListener("change", updateCharts);
 
     // Ambil data provinsi untuk inisialisasi dropdown pertama
     fetch("/api/daerah?level=provinsi")
         .then(res => res.json())
         .then(data => {
-            provSelect.setItems(data);
+            selectProv.setItems(data);
             
             // Atur visibilitas filter kontrol awal
             adjustFilterVisibility('wilayah');

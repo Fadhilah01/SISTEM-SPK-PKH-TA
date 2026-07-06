@@ -43,10 +43,18 @@
                         <!-- Role -->
                         <div class="mb-4">
                             <label for="role" class="form-label">Hak Akses (Role)</label>
-                            <select name="role" id="role" class="form-select" required>
-                                <option value="admin" selected>Admin (Pendamping Biasa)</option>
-                                <option value="superadmin">Superadmin (Administrator Utama)</option>
-                            </select>
+                            <div class="dropdown custom-select" id="select_role">
+                                <button class="btn btn-sm form-select w-100 text-start shadow-none" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Admin (Pendamping Biasa)
+                                </button>
+                                <div class="dropdown-menu p-2 shadow-sm border border-light-subtle w-100">
+                                    <div class="select-items-list" style="max-height: 200px; overflow-y: auto;">
+                                        <button class="dropdown-item py-1 px-2 small select-item active" type="button" data-value="admin">Admin (Pendamping Biasa)</button>
+                                        <button class="dropdown-item py-1 px-2 small select-item" type="button" data-value="superadmin">Superadmin (Administrator Utama)</button>
+                                    </div>
+                                </div>
+                                <input type="hidden" name="role" value="admin" required>
+                            </div>
                         </div>
 
                         <!-- Aksi Form -->
