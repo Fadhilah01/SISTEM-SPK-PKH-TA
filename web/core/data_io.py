@@ -333,7 +333,7 @@ def export_data(format_type='excel', filters=None):
     elif hasil_filter == 'tidak_layak':
         query = query.filter(HasilKeputusan.hasil_prediksi == False)
 
-    query = query.order_by(CalonPenerima.created_at.desc())
+    query = query.order_by(CalonPenerima.id.asc())
     rows = query.all()
 
     # ── Build DataFrame ──

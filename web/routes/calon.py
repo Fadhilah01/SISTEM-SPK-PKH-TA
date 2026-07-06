@@ -25,7 +25,7 @@ def daftar_calon():
         )
 
     pagination = query.order_by(
-        CalonPenerima.created_at.desc()
+        CalonPenerima.id.asc()
     ).paginate(page=page, per_page=10, error_out=False)
     calon_list = pagination.items
 
