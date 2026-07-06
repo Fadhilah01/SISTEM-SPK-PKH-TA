@@ -11,6 +11,7 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
     nama_lengkap = db.Column(db.String(100), nullable=False)
+    role = db.Column(db.String(20), nullable=False, default='admin')  # 'superadmin' atau 'admin'
     created_at = db.Column(db.DateTime, default=lambda: datetime.now(timezone.utc))
 
     def __repr__(self):

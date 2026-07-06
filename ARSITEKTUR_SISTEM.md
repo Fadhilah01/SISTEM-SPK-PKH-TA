@@ -229,6 +229,7 @@ pipeline = {
 │    (string)            │
 │    nama_lengkap        │
 │    (string)            │
+│    role (string)       │
 │    created_at          │
 │    (datetime)          │
 └────────────────────────┘

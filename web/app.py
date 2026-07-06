@@ -37,15 +37,31 @@ def init_db():
     app = create_app()
     with app.app_context():
         db.create_all()
+        
+        # Seed akun Superadmin
         if User.query.filter_by(username='admin').first() is None:
-            admin_user = User(
+            superadmin = User(
                 username='admin',
                 password_hash=generate_password_hash('admin123'),
-                nama_lengkap='Administrator Dinsos',
+                nama_lengkap='Administrator Dinsos (Super)',
+                role='superadmin'
             )
-            db.session.add(admin_user)
+            db.session.add(superadmin)
             db.session.commit()
-            print("[OK] Admin user default berhasil dibuat: admin / admin123")
+            print("[OK] Superadmin default berhasil dibuat: admin / admin123")
+            
+        # Seed akun Admin biasa
+        if User.query.filter_by(username='user1').first() is None:
+            normal_admin = User(
+                username='user1',
+                password_hash=generate_password_hash('user1123'),
+                nama_lengkap='Pendamping PKH (Admin)',
+                role='admin'
+            )
+            db.session.add(normal_admin)
+            db.session.commit()
+            print("[OK] Admin default berhasil dibuat: user1 / user1123")
+
         print("[OK] Database siap.")
 
 

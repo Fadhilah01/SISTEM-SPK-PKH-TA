@@ -24,6 +24,21 @@ def login_required(f):
     return decorated_function
 
 
+def superadmin_required(f):
+    """Dekorator — hanya izinkan user dengan role 'superadmin'."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            flash('Silakan login terlebih dahulu untuk mengakses sistem.', 'warning')
+            return redirect(url_for('auth.login'))
+        user = User.query.get(session['user_id'])
+        if not user or user.role != 'superadmin':
+            flash('Anda tidak memiliki hak akses untuk halaman ini.', 'danger')
+            return redirect(url_for('dashboard.index'))
+        return f(*args, **kwargs)
+    return decorated_function
+
+
 def inject_user():
     """Context processor — sediakan current_user di semua template."""
     if 'user_id' in session:

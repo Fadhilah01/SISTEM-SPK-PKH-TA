@@ -85,6 +85,9 @@
 - [x] Refaktorisasi modular dengan Flask Blueprints (auth, dashboard, calon, tentang)
 - [x] Implementasi sistem proteksi serangan CSRF kustom
 - [x] Pembuatan penangan error terpusat (403, 404, 500)
+- [x] Fitur mandiri ganti password admin
+- [x] Otorisasi hak akses multi-role (Superadmin/Admin) berbasis RBAC
+- [x] Modul CRUD manajemen pengguna admin (Superadmin only)
 
 #### 4.3 Verifikasi (⏳ Menunggu Model Final)
 - [ ] Tes 5-10 kasus prediksi manual dengan model final
