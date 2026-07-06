@@ -80,6 +80,67 @@ Struktur data riil yang diperoleh harus memiliki atribut dasar yang sama dengan 
 
 ---
 
+## ✅ Lampiran: Hasil Real Training (7 Juli 2026)
+
+Alur kerja di atas telah selesai dijalankan pada 7 Juli 2026. Berikut hasil aktualnya:
+
+### Dataset
+- **Sumber:** Pendamping PKH 3 desa Kecamatan Kasimbar
+- **File:** `dataset real/POSONA.csv` (165), `KASIMBAR-PALAPI.csv` (112), `POSONA-ATAS.csv` (41)
+- **Total:** 318 data (Layak=196, Tidak Layak=122)
+
+### Preprocessing
+| Komponen | Rencana | Realisasi |
+|----------|---------|-----------|
+| Encoding | Ordinal manual 1-5 | ✅ Mapping dictionary sesuai dokumen PKH |
+| Normalisasi | MinMaxScaler | ✅ feature_range=(0,1) |
+| Split | 80/20 stratified | ✅ 254 train + 64 test |
+
+### Performa 4 Kernel
+
+| Kernel | Akurasi | Presisi | Recall | F1 |
+|--------|---------|---------|--------|-----|
+| RBF | **0.9844** | **0.9750** | **1.0000** | **0.9873** |
+| Linear | 0.9844 | 0.9750 | 1.0000 | 0.9873 |
+| Poly | 0.9844 | 0.9750 | 1.0000 | 0.9873 |
+| Sigmoid | 0.5938 | 0.6667 | 0.6667 | 0.6667 |
+
+### Parameter Terbaik (GridSearchCV)
+- **Kernel:** RBF | **C:** 10 | **Gamma:** 0.01 | **class_weight:** balanced
+- **CV Score:** 0.9882 | **AUC:** 0.9954
+
+### Confusion Matrix (Test Set)
+| | Pred Layak | Pred Tidak Layak |
+|--|-----------|-----------------|
+| Aktual Layak | 39 (TP) | 0 (FN) |
+| Aktual Tidak Layak | 1 (FP) | 24 (TN) |
+
+### Peningkatan dari Prototype
+
+| Metrik | Prototype (Sintetis) | Final (Real) | Delta |
+|--------|---------------------|-------------|-------|
+| Akurasi | 89% | **98.44%** | +9.44% |
+| Presisi | 90% | **97.50%** | +7.50% |
+| Recall | 88% | **100%** | +12% |
+| F1 | 0.89 | **0.9873** | +0.0973 |
+| AUC | — | **0.9954** | — |
+
+### Komponen Nilai Tambah untuk Sidang
+
+| Peningkatan | Status | Catatan |
+|-------------|--------|---------|
+| **ROC Curve + AUC** | ✅ Terpasang | AUC = 0.9954 — hampir sempurna |
+| **Confusion Matrix** | ✅ Terpasang | 39 TP, 24 TN, 1 FP, 0 FN |
+| **class_weight=balanced** | ✅ Terpasang | Menangani imbalance (61.6% vs 38.4%) |
+| **Learning Curve** | ⏳ Dilewati | Data 318 sudah cukup representatif, overfitting minimal (CV=0.9882 vs test=0.9844) |
+| **Permutation Feature Importance** | ⏳ Dilewati | 8 fitur sudah jelas kontribusinya dari bobot resmi, tidak perlu analisis tambahan |
+
+**Notebook final:** `svm-pkh-ta.ipynb`
+**Model:** `web/models/svm_pkh_pipeline.pkl` (dictionary format, MinMaxScaler, SVM RBF C=10 gamma=0.01)
+```
+
+---
+
 ## Retrospektif (Ditambahkan 3 Juli 2026)
 
 Setelah audit codebase pada 3 Juli 2026, strategi retraining model perlu diperbarui karena beberapa rancangan awal ternyata **tidak sesuai** dengan kriteria resmi dan **perlu direvisi**:

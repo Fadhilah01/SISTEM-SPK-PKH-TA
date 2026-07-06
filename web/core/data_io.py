@@ -47,6 +47,59 @@ TEMPLATE_COLUMNS = OrderedDict([
 
 REQUIRED_COLUMNS = {'nama', 'alamat', 'penghasilan', 'pekerjaan', 'kepemilikan_aset'}
 
+# ─── Column name aliases (CSV raw dari lapangan → canonical) ───
+COLUMN_ALIASES = {
+    'kepala_keluarga': 'nama',
+    'aset': 'kepemilikan_aset',
+    'hamil': 'ibu_hamil',
+    'aud': 'anak_usia_dini',
+    'jenis_kelamin': None,  # diabaikan
+    'nik': None,
+    'status': None,
+}
+
+# ─── Value aliases (label singkat dari dataset real → canonical constants) ───
+PENGHASILAN_ALIASES = {
+    'desil 1': 'Desil 1 (< Rp.500.000)',
+    'desil 2': 'Desil 2 (Rp.600.000 - Rp.700.000)',
+    'desil 3': 'Desil 3 (Rp.800.000 - Rp.900.000)',
+    'desil 4': 'Desil 4 (Rp.1.000.000 - Rp.1.200.000)',
+    'desil 5': 'Desil 5 (Rp.1.300.000 - Rp.1.500.000)',
+}
+
+ASET_ALIASES = {
+    'tidak memiliki aset': 'Tidak Memiliki Aset',
+    'memiliki motor dengan harga jual rendah': 'Memiliki Motor (harga jual rendah)',
+    'memiliki motor dengan harga jual tinggi': 'Memiliki Motor (harga jual tinggi)',
+    'memiliki mobil atau tanah/kebun': 'Memiliki Mobil atau Tanah/Kebun',
+    'memiliki mobil dan tanah/kebun': 'Memiliki Mobil dan Tanah/Kebun',
+}
+
+
+def normalize_import_values(df):
+    """
+    Normalisasikan nilai kategorikal di DataFrame agar cocok dengan constants.
+
+    Menangani CSV dari lapangan yang pakai label pendek (cth 'Desil 1')
+    tanpa rentang harga atau dengan format huruf kapital berbeda.
+    """
+    # Normalisasi penghasilan
+    if 'penghasilan' in df.columns:
+        raw_vals = df['penghasilan'].astype(str).str.strip()
+        for raw_key, canonical in PENGHASILAN_ALIASES.items():
+            mask = raw_vals.str.lower().str.strip() == raw_key
+            df.loc[mask, 'penghasilan'] = canonical
+
+    # Normalisasi kepemilikan aset
+    if 'kepemilikan_aset' in df.columns:
+        raw_vals = df['kepemilikan_aset'].astype(str).str.strip()
+        for raw_key, canonical in ASET_ALIASES.items():
+            mask = raw_vals.str.lower().str.strip() == raw_key
+            df.loc[mask, 'kepemilikan_aset'] = canonical
+
+    return df
+
+
 # Mapping teks YA/TIDAK ke boolean
 _BOOL_MAP = {
     'ya': True, 'y': True, '1': True, 'yes': True, 'true': True, 'ada': True, '✔': True,
@@ -213,14 +266,24 @@ def import_from_file(file_storage, predictor):
     else:
         df = pd.read_excel(file_storage, engine='openpyxl')
 
-    # Normalize column names
+    # Normalize column names (lowercase, underscore)
     col_map = {}
     for col in df.columns:
         col_clean = col.strip().lower().replace(' ', '_').replace('-', '_')
         col_map[col] = col_clean
     df = df.rename(columns=col_map)
 
-    # Track columns found vs required (Hanya yang benar-benar wajib)
+    # Apply column aliases (CSV raw dari lapangan → canonical)
+    for alias, canonical in COLUMN_ALIASES.items():
+        if alias in df.columns and canonical:
+            df = df.rename(columns={alias: canonical})
+        elif alias in df.columns and canonical is None:
+            df = df.drop(columns=[alias])  # drop kolom yang tidak diperlukan
+
+    # Normalize categorical values (Desil 1 → Desil 1 (< Rp...), dll)
+    df = normalize_import_values(df)
+
+    # Track columns found vs required
     required = REQUIRED_COLUMNS
     found = set(df.columns)
     missing = required - found

@@ -8,3 +8,5 @@ Revisi Pak Yazdi Pusadan.pdf
 memory/
 .env
 dataset-real
+__pycache__/
+*.pyc
