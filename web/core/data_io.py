@@ -30,6 +30,7 @@ from core.scoring import compute_scores, predict_single, create_hasil_keputusan
 
 TEMPLATE_COLUMNS = OrderedDict([
     ('nama', 'Nama Kepala Keluarga (wajib)'),
+    ('nik', 'NIK (16 digit, wajib, unik)'),
     ('alamat', 'Alamat Lengkap / Detail (wajib)'),
     ('provinsi', 'Provinsi (opsional)'),
     ('kabupaten', 'Kabupaten (opsional)'),
@@ -45,7 +46,7 @@ TEMPLATE_COLUMNS = OrderedDict([
     ('lansia', 'Lansia? (YA/TIDAK atau 1/0)'),
 ])
 
-REQUIRED_COLUMNS = {'nama', 'alamat', 'penghasilan', 'pekerjaan', 'kepemilikan_aset'}
+REQUIRED_COLUMNS = {'nama', 'nik', 'alamat', 'penghasilan', 'pekerjaan', 'kepemilikan_aset'}
 
 # ─── Column name aliases (CSV raw dari lapangan → canonical) ───
 COLUMN_ALIASES = {
@@ -54,7 +55,7 @@ COLUMN_ALIASES = {
     'hamil': 'ibu_hamil',
     'aud': 'anak_usia_dini',
     'jenis_kelamin': None,  # diabaikan
-    'nik': None,
+    'nik': 'nik',
     'status': None,
 }
 
@@ -118,7 +119,7 @@ def parse_bool(val):
     return False
 
 
-def validate_row(row_dict, row_num):
+def validate_row(row_dict, row_num, processed_niks=None):
     """
     Validasi satu baris data dari file.
 
@@ -131,6 +132,24 @@ def validate_row(row_dict, row_num):
     nama = str(row_dict.get('nama', '') or '').strip()
     if not nama:
         errors.append(f"Baris {row_num}: Nama tidak boleh kosong")
+
+    # Wajib & Unik: NIK
+    nik = str(row_dict.get('nik', '') or '').strip()
+    if not nik:
+        errors.append(f"Baris {row_num}: NIK tidak boleh kosong")
+    else:
+        import re
+        if not re.match(r'^\d{16}$', nik):
+            errors.append(f"Baris {row_num}: NIK '{nik}' tidak valid. Harus 16 digit angka.")
+        else:
+            # Pengecekan duplikat di DB
+            db_match = CalonPenerima.query.filter_by(nik=nik).first()
+            if db_match:
+                errors.append(f"Baris {row_num}: NIK '{nik}' sudah terdaftar di database (Nama: {db_match.nama})")
+            
+            # Pengecekan duplikat di file import (batch)
+            if processed_niks is not None and nik in processed_niks:
+                errors.append(f"Baris {row_num}: NIK '{nik}' duplikat di dalam file ini")
 
     # Wajib: alamat
     alamat = str(row_dict.get('alamat', '') or '').strip()
@@ -174,6 +193,7 @@ def row_to_calon_data(row_dict, predictor):
         atau None jika gagal
     """
     nama = str(row_dict.get('nama', '') or '').strip()
+    nik = str(row_dict.get('nik', '') or '').strip()
     alamat = str(row_dict.get('alamat', '') or '').strip()
     
     # Pengambilan opsional kolom wilayah
@@ -202,6 +222,7 @@ def row_to_calon_data(row_dict, predictor):
 
     calon_dict = {
         'nama': nama,
+        'nik': nik,
         'alamat': alamat,
         'provinsi': provinsi,
         'kabupaten': kabupaten,
@@ -306,15 +327,33 @@ def import_from_file(file_storage, predictor):
         'imported_ids': [],
     }
 
+    processed_niks = set()
+
     for idx, row in df.iterrows():
         row_num = idx + 2  # +1 untuk header, +1 untuk 0-index
         row_dict = row.to_dict()
 
-        is_valid, errs = validate_row(row_dict, row_num)
+        # Bersihkan format NIK (konversi float dari Pandas/Excel jika dibaca sebagai angka)
+        raw_nik = row_dict.get('nik', '')
+        if isinstance(raw_nik, float):
+            import math
+            if math.isnan(raw_nik):
+                clean_nik = ""
+            else:
+                clean_nik = f"{int(raw_nik)}"
+        else:
+            clean_nik = str(raw_nik or '').strip()
+            if clean_nik.endswith('.0'):
+                clean_nik = clean_nik[:-2]
+        row_dict['nik'] = clean_nik
+
+        is_valid, errs = validate_row(row_dict, row_num, processed_niks)
         if not is_valid:
             hasil['failed'] += 1
             hasil['errors'].extend(errs)
             continue
+
+        processed_niks.add(clean_nik)
 
         try:
             data = row_to_calon_data(row_dict, predictor)
@@ -376,13 +415,14 @@ def export_data(format_type='excel', filters=None):
         .outerjoin(HasilKeputusan, CalonPenerima.id == HasilKeputusan.id_calon)
     )
 
-    # Filter nama/alamat
+    # Filter nama/alamat/nik
     if filters.get('q'):
         q = filters['q']
         query = query.filter(
             or_(
                 CalonPenerima.nama.like(f'%{q}%'),
                 CalonPenerima.alamat.like(f'%{q}%'),
+                CalonPenerima.nik.like(f'%{q}%'),
             )
         )
 
@@ -420,6 +460,7 @@ def export_data(format_type='excel', filters=None):
     all_columns = [
         ('ID', lambda c, h: c.id),
         ('Nama', lambda c, h: c.nama),
+        ('NIK', lambda c, h: c.nik),
         ('Alamat', lambda c, h: c.alamat),
         ('Provinsi', lambda c, h: c.provinsi or ''),
         ('Kabupaten', lambda c, h: c.kabupaten or ''),
@@ -453,7 +494,7 @@ def export_data(format_type='excel', filters=None):
     if selected_cols:
         # Map column keys to display names
         col_key_map = {
-            'id': 'ID', 'nama': 'Nama', 'alamat': 'Alamat',
+            'id': 'ID', 'nama': 'Nama', 'nik': 'NIK', 'alamat': 'Alamat',
             'provinsi': 'Provinsi', 'kabupaten': 'Kabupaten',
             'kecamatan': 'Kecamatan', 'desa_kelurahan': 'Desa',
             'penghasilan': 'Penghasilan', 'pekerjaan': 'Pekerjaan',
@@ -513,6 +554,7 @@ def get_column_options():
     return [
         {'key': 'id', 'label': 'ID'},
         {'key': 'nama', 'label': 'Nama'},
+        {'key': 'nik', 'label': 'NIK'},
         {'key': 'alamat', 'label': 'Alamat'},
         {'key': 'provinsi', 'label': 'Provinsi'},
         {'key': 'kabupaten', 'label': 'Kabupaten'},
@@ -578,6 +620,7 @@ def generate_template():
     # ── Row 2: contoh data ──
     sample = [
         'Ahmad Syahputra',      # nama
+        '7201020304050001',     # nik
         'Jalan Sis Aljufri No. 12', # alamat
         'SULAWESI TENGAH',      # provinsi
         'KOTA PALU',            # kabupaten
@@ -652,7 +695,8 @@ def generate_template():
         '',
         '2. ATURAN PENGISIAN',
         '   - Nama: Nama kepala keluarga (max 100 karakter)',
-        '   - Alamat: Nama desa/kelurahan (max 255 karakter)',
+        '   - NIK: Nomor Induk Kependudukan (16 digit angka, wajib, unik)',
+        '   - Alamat: RT/RW, Dusun, atau Jalan (max 255 karakter)',
         '   - Penghasilan: Pilih salah satu dari 5 kategori Desil',
         '   - Pekerjaan: Pilih salah satu dari 5 kategori',
         '   - Kepemilikan Aset: Pilih salah satu dari 5 kategori',

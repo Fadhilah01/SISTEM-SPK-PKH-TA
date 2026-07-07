@@ -45,8 +45,8 @@
 
                         <!-- Filter Pencarian -->
                         <div class="col-md-6">
-                            <label class="form-label">Cari Nama/Alamat</label>
-                            <input type="text" name="q" class="form-control" placeholder="Ketik nama atau desa..."
+                            <label class="form-label">Cari Nama/Alamat/NIK</label>
+                            <input type="text" name="q" class="form-control" placeholder="Ketik nama, desa, atau NIK..."
                                    value="{{ request.args.get('q', '') }}">
                         </div>
 
@@ -172,7 +172,7 @@
                 <div class="card-body small text-muted">
                     <ul class="list-unstyled mb-0">
                         <li class="mb-2"><i class="bi bi-clock text-secondary me-2"></i> <strong>Waktu:</strong> Filter berdasarkan tanggal input data (hari, minggu, bulan, tahun)</li>
-                        <li class="mb-2"><i class="bi bi-search text-secondary me-2"></i> <strong>Pencarian:</strong> Filter berdasarkan nama atau alamat</li>
+                        <li class="mb-2"><i class="bi bi-search text-secondary me-2"></i> <strong>Pencarian:</strong> Filter berdasarkan nama, alamat, atau NIK</li>
                         <li class="mb-2"><i class="bi bi-check2-circle text-secondary me-2"></i> <strong>Hasil:</strong> Export khusus data Layak, Tidak Layak, atau semua</li>
                         <li class="mb-2"><i class="bi bi-list-check text-secondary me-2"></i> <strong>Kolom:</strong> Pilih kolom spesifik yang ingin di-export</li>
                         <li><i class="bi bi-file-earmark text-secondary me-2"></i> <strong>Format:</strong> Excel (.xlsx) atau CSV (.csv)</li>

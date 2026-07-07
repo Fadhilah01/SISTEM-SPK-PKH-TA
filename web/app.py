@@ -77,6 +77,35 @@ def init_db():
                 logger.info("[MIGRASI] Kolom 'must_change_password' berhasil ditambahkan ke tabel users.")
         except Exception as e:
             logger.warning(f"[MIGRASI] Gagal migrasi (mungkin sudah ada): {e}")
+
+        # ─── Migrasi: Tambah kolom nik ke calon_penerima jika belum ada ───
+        try:
+            import sqlalchemy as sa
+            inspector = sa.inspect(db.engine)
+            columns = [c['name'] for c in inspector.get_columns('calon_penerima')]
+            if 'nik' not in columns:
+                db.session.execute(sa.text(
+                    "ALTER TABLE calon_penerima ADD COLUMN nik VARCHAR(16)"
+                ))
+                db.session.commit()
+                logger.info("[MIGRASI] Kolom 'nik' berhasil ditambahkan ke tabel calon_penerima.")
+
+                # Backfill existing data with unique mock NIKs (e.g. 1234567890123 + 3-digit ID)
+                from models_db import CalonPenerima
+                all_calon = CalonPenerima.query.all()
+                for c in all_calon:
+                    c.nik = f"1234567890123{c.id:03d}"
+                db.session.commit()
+                logger.info(f"[MIGRASI] Berhasil mengisi NIK unik untuk {len(all_calon)} data calon penerima lama.")
+
+                # Create unique index
+                db.session.execute(sa.text(
+                    "CREATE UNIQUE INDEX IF NOT EXISTS idx_calon_penerima_nik ON calon_penerima (nik)"
+                ))
+                db.session.commit()
+                logger.info("[MIGRASI] Berhasil membuat index unik idx_calon_penerima_nik.")
+        except Exception as e:
+            logger.warning(f"[MIGRASI] Gagal migrasi NIK calon_penerima: {e}")
         
         # Seed akun Superadmin
         if User.query.filter_by(username='admin').first() is None:

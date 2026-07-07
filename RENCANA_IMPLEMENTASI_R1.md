@@ -74,13 +74,14 @@
 - [x] Blueprints modular (auth, dashboard, calon, about, admin)
 - [x] CSRF protection + error handlers (403, 404, 500)
 - [x] Ganti password + RBAC multi-role
-- [x] Import Excel/CSV + validasi per baris + batch prediksi
-- [x] Export Excel/CSV dengan filter dinamis (24 kolom)
-- [x] Template Excel untuk panduan import
+- [x] Import Excel/CSV + validasi per baris + batch prediksi + duplikasi NIK check
+- [x] Export Excel/CSV dengan filter dinamis (25 kolom termasuk NIK)
+- [x] Template Excel untuk panduan import (dilengkapi kolom NIK)
 - [x] Autocomplete wilayah (database 89k+)
 - [x] Grafik dashboard interaktif (Chart.js)
 - [x] Security hardening 10 lapisan
-- [x] **Alias kolom CSV** — dukungan import CSV raw dari lapangan (ASET→kepemilikan_aset, HAMIL→ibu_hamil, AUD→anak_usia_dini, dll)
+- [x] **Alias kolom CSV** — dukungan import CSV raw dari lapangan (ASET→kepemilikan_aset, HAMIL→ibu_hamil, AUD→anak_usia_dini, dsb)
+- [x] **Integrasi Kolom NIK** — Penambahan kolom `nik` ke database, auto-migrasi data lama, validasi NIK 16 digit, pencegahan duplikat NIK, pencarian listing calon berdasarkan NIK, dan pembuatan file test data baru yang dilengkapi NIK.
 
 #### 4.3 Verifikasi ✅
 - [x] **Tes prediksi end-to-end** — Layak/Tidak Layak berfungsi benar

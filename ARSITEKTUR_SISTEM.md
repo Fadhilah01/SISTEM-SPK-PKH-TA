@@ -254,6 +254,7 @@ pipeline = {
 │     Calon Penerima     │
 ├────────────────────────┤
 │ PK id (int)            │──────────┐
+│    nik (string, unique)│          │
 │    nama (string)       │          │
 │    alamat (text)       │          │
 │    provinsi (string)   │          │

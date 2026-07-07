@@ -87,6 +87,7 @@
                         <tr>
                             <th>#</th>
                             <th>Nama</th>
+                            <th>NIK</th>
                             <th>Wilayah</th>
                             <th>Alamat Detail</th>
                             <th>Penghasilan</th>
@@ -101,6 +102,7 @@
                         <tr>
                             <td class="font-monospace text-muted small">{{ c.id }}</td>
                             <td><strong class="text-dark-emphasis">{{ c.nama }}</strong></td>
+                            <td><span class="font-monospace text-muted small">{{ c.nik }}</span></td>
                             <td>
                                 {% if c.desa_kelurahan or c.kecamatan or c.kabupaten %}
                                 <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 small" title="{{ c.desa_kelurahan or '-' }}, {{ c.kecamatan or '-' }}, {{ c.kabupaten or '-' }}, {{ c.provinsi or '-' }}">

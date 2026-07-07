@@ -250,8 +250,9 @@
                             <tbody>
                                 {% for r in recent %}
                                 <tr class="recent-row" data-page="{{ ((loop.index - 1) // 3) + 1 }}">
-                                    <td class="ps-3 py-2 font-monospace text-dark-emphasis fw-semibold">
+                                    <td class="ps-3 py-2 text-dark-emphasis fw-semibold">
                                         {{ r.calon.nama }}
+                                        <div class="text-muted font-monospace" style="font-size: 0.7rem;">NIK: {{ r.calon.nik }}</div>
                                     </td>
                                     <td class="py-2">
                                         {% if r.hasil_prediksi %}

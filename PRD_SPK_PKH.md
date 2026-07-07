@@ -20,13 +20,13 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 ### 3.1 Fitur Wajib (MVP)
 | Fitur | Deskripsi | Prioritas | Status |
 |-------|-----------|-----------|--------|
-| Manajemen Data Calon Penerima | CRUD data calon penerima bantuan | P0 | ✅ Selesai |
+| Manajemen Data Calon Penerima | CRUD data calon penerima bantuan (dengan validasi & unik NIK) | P0 | ✅ Selesai |
 | Klasifikasi SVM | Prediksi layak/tidak layak berdasarkan model SVM | P0 | ⚠️ Perlu retrain (lihat Bab 10) |
 | Dashboard SPK | Ringkasan data + visualisasi diagram interaktif (Chart.js) | P0 | ✅ Selesai (6 Juli 2026) |
 | Riwayat Keputusan | History prediksi + detail input | P0 | ✅ Selesai |
-| Pencarian & Paginasi | Menyaring dan membatasi data calon penerima di tabel | P1 | ✅ Selesai (6 Juli 2026) |
-| Import Data (Excel/CSV) | Import massal data calon dari file Excel/CSV dengan validasi otomatis dan batch prediksi SVM | P1 | ✅ Selesai (6 Juli 2026) |
-| Export Laporan (Excel/CSV) | Export data dengan filter dinamis (waktu, hasil, kolom, format) ke Excel/CSV | P1 | ✅ Selesai (6 Juli 2026) |
+| Pencarian & Paginasi | Menyaring dan membatasi data calon penerima di tabel (mendukung pencarian NIK) | P1 | ✅ Selesai (6 Juli 2026) |
+| Import Data (Excel/CSV) | Import massal data calon dari file Excel/CSV dengan validasi otomatis (termasuk NIK), pencegahan duplikasi NIK, dan batch prediksi SVM | P1 | ✅ Selesai (6 Juli 2026) |
+| Export Laporan (Excel/CSV) | Export data dengan filter dinamis (waktu, hasil, kolom termasuk NIK, format) ke Excel/CSV | P1 | ✅ Selesai (6 Juli 2026) |
 
 ### 3.2 Fitur Tambahan
 | Fitur | Deskripsi | Prioritas | Status |

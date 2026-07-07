@@ -251,7 +251,7 @@ Form filter terdiri dari:
 
 | Filter | Tipe | Deskripsi |
 |--------|------|-----------|
-| **Cari Nama/Alamat** | Text input | Cari berdasarkan nama atau alamat (partial match) |
+| **Cari Nama/Alamat/NIK** | Text input | Cari berdasarkan nama, alamat, atau 16-digit NIK (partial match) |
 | **Dari Tanggal** | Date picker | Awal rentang tanggal input data |
 | **Sampai Tanggal** | Date picker | Akhir rentang tanggal input data |
 | **Hasil Keputusan** | Dropdown kustom | Semua / Layak / Tidak Layak |
@@ -266,6 +266,7 @@ Form filter terdiri dari:
 |-------|-----|
 | **#** | Nomor ID (monospace, abu-abu) |
 | **Nama** | Nama lengkap (bold) |
+| **NIK** | Nomor Induk Kependudukan (16 digit, monospace, abu-abu) |
 | **Wilayah** | Nama desa (badge) + kecamatan, kabupaten di bawahnya (jika ada). Jika kosong: badge "Fallback" |
 | **Alamat Detail** | Maks 25 karakter, jika lebih panjang akan dipotong dengan "..." |
 | **Penghasilan** | Badge dengan ikon uang 💰, warna berdasarkan severity (1-5) |
@@ -316,6 +317,7 @@ Ketika mengklik tombol 🗑️ Hapus:
 | Field | Tipe | Wajib | Keterangan |
 |-------|------|-------|------------|
 | **Nama Kepala Keluarga** | Text input | ✅ | Maks 100 karakter |
+| **NIK** | Text input | ✅ | 16 digit angka, harus unik |
 | **Pilih Wilayah** | Autocomplete search | ❌ | Cari desa/kecamatan/kabupaten (min 2 huruf) |
 | **Alamat Detail** | Text input | ✅ | RT/RW, Jalan, atau Dusun (maks 255 karakter) |
 | **Penghasilan per Bulan** | Dropdown kustom | ✅ | 5 pilihan Desil |
@@ -403,6 +405,7 @@ Proses:
 | Kolom | Status | Keterangan |
 |-------|--------|------------|
 | `nama` | ✅ **Wajib** | Nama Kepala Keluarga |
+| `nik` | ✅ **Wajib** | NIK (16 digit angka, unik) |
 | `alamat` | ✅ **Wajib** | Alamat lengkap |
 | `provinsi` | ❌ Opsional | Provinsi |
 | `kabupaten` | ❌ Opsional | Kabupaten |
@@ -427,7 +430,7 @@ Sistem secara otomatis mengenali kolom alternatif:
 | `hamil` | `ibu_hamil` |
 | `aud` | `anak_usia_dini` |
 | `jenis_kelamin` | ⛔ Diabaikan |
-| `nik` | ⛔ Diabaikan |
+| `nik` | `nik` |
 | `status` | ⛔ Diabaikan |
 
 ### 6.4 Nilai Boolean yang Diterima

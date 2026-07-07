@@ -23,6 +23,7 @@ class CalonPenerima(db.Model):
     __tablename__ = 'calon_penerima'
 
     id = db.Column(db.Integer, primary_key=True)
+    nik = db.Column(db.String(16), unique=True, nullable=False)
     nama = db.Column(db.String(100), nullable=False)
     alamat = db.Column(db.Text, nullable=False)
     
@@ -61,6 +62,7 @@ class CalonPenerima(db.Model):
     def to_dict(self):
         return {
             'id': self.id,
+            'nik': self.nik,
             'nama': self.nama,
             'alamat': self.alamat,
             'provinsi': self.provinsi,

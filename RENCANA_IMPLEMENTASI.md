@@ -88,9 +88,9 @@
 - [x] Fitur mandiri ganti password admin
 - [x] Otorisasi hak akses multi-role (Superadmin/Admin) berbasis RBAC
 - [x] Modul CRUD manajemen pengguna admin (Superadmin only)
-- [x] Import data massal dari file Excel/CSV dengan validasi per baris + batch prediksi SVM
-- [x] Export data ke Excel/CSV dengan filter dinamis (waktu, hasil keputusan, kolom, format)
-- [x] Template Excel untuk panduan import lengkap dengan daftar kategori valid
+- [x] Import data massal dari file Excel/CSV dengan validasi per baris + batch prediksi SVM + duplikasi NIK check
+- [x] Export data ke Excel/CSV dengan filter dinamis (waktu, hasil keputusan, 25 pilihan kolom termasuk NIK, format)
+- [x] Template Excel untuk panduan import lengkap dengan daftar kategori valid dan kolom NIK
 - [x] Navigasi import dari halaman Tambah Calon (banner info)
 - [x] Modal konfirmasi Bootstrap untuk semua aksi destruktif (hapus, import)
 - [x] Integrasi pilihan wilayah administratif bertingkat (Sulteng) via API internal dengan lazy-loading & cache 89k+ data
@@ -100,6 +100,7 @@
 - [x] Restrukturisasi layout beranda (dashboard) dengan membatasi tabel keputusan terbaru ke 3 baris terpaginasi client-side
 - [x] Implementasi pusat analisis tab visualisasi (Wilayah, Tren, Komparasi Periode & Kriteria) berbasis AJAX /api/analytics
 - [x] Seeding data historis calon penerima acak (1 tahun terakhir) untuk demonstrasi visualisasi tren
+- [x] Integrasi Kolom NIK — Penambahan kolom `nik` ke database, auto-migrasi data dummy lama, validasi NIK 16 digit, pencegahan duplikat NIK, pencarian listing calon berdasarkan NIK, dan pembuatan file test data baru.
 
 
 

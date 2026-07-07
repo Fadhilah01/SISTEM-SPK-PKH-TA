@@ -90,11 +90,11 @@
 
 | Fitur | Status | Catatan |
 |-------|--------|---------|
-| CRUD Calon Penerima | ✅ | Form dropdown kategori resmi |
+| CRUD Calon Penerima | ✅ | Form dropdown kategori resmi & input NIK |
 | Prediksi SVM otomatis | ✅ | Saat input/import/edit |
 | Dashboard + Grafik | ✅ | Wilayah, Tren, Komparasi |
-| Import Excel/CSV | ✅ | Validasi + batch prediksi |
-| Export Excel/CSV | ✅ | Filter dinamis 24 kolom |
+| Import Excel/CSV | ✅ | Validasi + batch prediksi + duplikasi NIK check |
+| Export Excel/CSV | ✅ | Filter dinamis 25 kolom (termasuk NIK) |
 | Login & RBAC | ✅ | Superadmin/Admin |
 | Security Hardening | ✅ | 10 lapisan proteksi |
 | Autocomplete Wilayah | ✅ | Database 89k+ wilayah |

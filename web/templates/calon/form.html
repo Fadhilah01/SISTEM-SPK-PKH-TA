@@ -32,9 +32,17 @@
                         <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
                         <!-- Nama -->
                         <div class="col-md-6">
-                            <label class="form-label">Nama Kepala Keluarga <span class="text-danger">*</span></label>
+                            <label class="form-label text-dark-emphasis fw-semibold">Nama Kepala Keluarga <span class="text-danger">*</span></label>
                             <input type="text" name="nama" class="form-control" required
                                 value="{{ calon.nama if calon else '' }}" placeholder="Nama lengkap">
+                        </div>
+
+                        <!-- NIK -->
+                        <div class="col-md-6">
+                            <label class="form-label text-dark-emphasis fw-semibold">NIK (Nomor Induk Kependudukan) <span class="text-danger">*</span></label>
+                            <input type="text" name="nik" class="form-control" required
+                                value="{{ calon.nik if calon else '' }}" placeholder="16 digit NIK"
+                                pattern="[0-9]{16}" maxlength="16" minlength="16" inputmode="numeric">
                         </div>
 
                         <!-- Wilayah Autocomplete -->

@@ -24,11 +24,12 @@ def daftar_calon():
 
     query = CalonPenerima.query
 
-    # Filter pencarian nama/alamat
+    # Filter pencarian nama/alamat/nik
     if q:
         query = query.filter(
             (CalonPenerima.nama.like(f"%{q}%"))
             | (CalonPenerima.alamat.like(f"%{q}%"))
+            | (CalonPenerima.nik.like(f"%{q}%"))
         )
 
     # Filter tanggal input
@@ -86,8 +87,21 @@ def tambah_calon():
     """Tambah calon penerima baru + langsung prediksi."""
     if request.method == 'POST':
         try:
+            nik = sanitize_html(request.form['nik'].strip())
             nama = sanitize_html(request.form['nama'].strip())
             alamat = sanitize_html(request.form['alamat'].strip())
+
+            # Validasi NIK (16 digit angka)
+            import re
+            if not re.match(r'^\d{16}$', nik):
+                flash("Error: NIK harus berupa 16 digit angka.", 'danger')
+                return redirect(url_for('calon.tambah_calon'))
+
+            # Cegah duplikasi NIK
+            existing = CalonPenerima.query.filter_by(nik=nik).first()
+            if existing:
+                flash(f"Error: Calon dengan NIK {nik} sudah terdaftar (Nama: {existing.nama}).", 'danger')
+                return redirect(url_for('calon.tambah_calon'))
 
             # Validasi panjang input
             valid, msg = validate_text_length(nama, 'Nama', 100)
@@ -114,6 +128,7 @@ def tambah_calon():
             )
 
             calon = CalonPenerima(
+                nik=nik,
                 nama=nama,
                 alamat=alamat,
                 provinsi=request.form.get('provinsi') or None,
@@ -179,8 +194,21 @@ def edit_calon(id):
             aset_val = request.form['kepemilikan_aset']
 
             # Sanitasi input teks
+            nik = sanitize_html(request.form['nik'].strip())
             nama = sanitize_html(request.form['nama'].strip())
             alamat = sanitize_html(request.form['alamat'].strip())
+
+            # Validasi NIK (16 digit angka)
+            import re
+            if not re.match(r'^\d{16}$', nik):
+                flash("Error: NIK harus berupa 16 digit angka.", 'danger')
+                return redirect(url_for('calon.edit_calon', id=id))
+
+            # Cegah duplikasi NIK (kecuali data calon ini sendiri)
+            existing = CalonPenerima.query.filter(CalonPenerima.nik == nik, CalonPenerima.id != id).first()
+            if existing:
+                flash(f"Error: Calon dengan NIK {nik} sudah terdaftar (Nama: {existing.nama}).", 'danger')
+                return redirect(url_for('calon.edit_calon', id=id))
 
             # Validasi panjang input
             valid, msg = validate_text_length(nama, 'Nama', 100)
@@ -193,6 +221,7 @@ def edit_calon(id):
                 return redirect(url_for('calon.edit_calon', id=id))
 
             # Update field teks
+            calon.nik = nik
             calon.nama = nama
             calon.alamat = alamat
             calon.provinsi = request.form.get('provinsi') or None
@@ -341,7 +370,7 @@ def export_calon():
         # Kirim semua kolom jika tidak ada yang dipilih
         if not selected_columns:
             selected_columns = [
-                'id', 'nama', 'alamat', 'penghasilan', 'pekerjaan',
+                'id', 'nama', 'nik', 'alamat', 'penghasilan', 'pekerjaan',
                 'kepemilikan_aset', 'ibu_hamil', 'anak_usia_dini',
                 'anak_sekolah', 'disabilitas', 'lansia',
                 'skor_penghasilan', 'skor_pekerjaan', 'skor_kepemilikan_aset',

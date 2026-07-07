@@ -52,7 +52,7 @@
                                             <li>Baris yang valid akan langsung disimpan ke database.</li>
                                             <li>Setiap data yang berhasil di-import akan otomatis diprediksi kelayakannya oleh model SVM.</li>
                                             <li>Baris yang gagal validasi akan dilewati dan ditampilkan daftar errornya.</li>
-                                            <li>Import akan menambah data baru — tidak ada pengecekan duplikat.</li>
+                                            <li>Import akan menambah data baru — duplikasi dicegah secara otomatis berdasarkan NIK.</li>
                                         </ol>
                                     </div>
                                 </div>
@@ -81,7 +81,7 @@
                     <p class="fw-medium text-dark-emphasis">Persyaratan File:</p>
                     <ul class="list-unstyled mb-4">
                         <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Baris pertama HARUS header (nama kolom)</li>
-                        <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Kolom wajib: nama, alamat, penghasilan, pekerjaan, kepemilikan_aset</li>
+                        <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Kolom wajib: nama, nik, alamat, penghasilan, pekerjaan, kepemilikan_aset</li>
                         <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Kolom opsional wilayah: provinsi, kabupaten, kecamatan, desa_kelurahan</li>
                         <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Kolom boolean diisi: YA/TIDAK, 1/0, Ada/Tidak</li>
                         <li class="mb-2"><i class="bi bi-check2 text-secondary me-2"></i> Kategori harus sesuai dengan yang didaftarkan sistem</li>
