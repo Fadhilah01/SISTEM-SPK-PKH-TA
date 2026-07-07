@@ -80,20 +80,16 @@ document.addEventListener("DOMContentLoaded", function () {
                             hiddenKecamatan.value = "";
                             hiddenDesa.value = "";
 
-                            let provCode = parts[0];
-                            let kabCode = parts.slice(0, 2).join('.');
-                            let kecCode = parts.slice(0, 3).join('.');
-                            let desaCode = parts.join('.');
+                            const provCode = parts[0];
+                            const kabCode = parts.length >= 2 ? parts.slice(0, 2).join('.') : null;
+                            const kecCode = parts.length >= 3 ? parts.slice(0, 3).join('.') : null;
 
                             // Fetch informasi lengkap silsilah untuk mengisi 4 hidden field
-                            // Kita panggil satu kali API mencari kode-kode ini secara bertingkat
-                            // Atau fetch parent info. Tapi untuk performance, kita bisa bypass 
-                            // dengan query API internal untuk masing-masing kode.
                             const fetchPromises = [];
 
                             if (provCode) {
                                 fetchPromises.push(
-                                    fetch(`/api/daerah?parent=None&q=&level=provinsi`)
+                                    fetch(`/api/daerah?level=provinsi`)
                                         .then(r => r.json())
                                         .then(list => {
                                             const match = list.find(x => x.kode === provCode);
@@ -101,7 +97,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         })
                                 );
                             }
-                            if (kabCode) {
+                            if (kabCode && parts.length >= 2) {
                                 fetchPromises.push(
                                     fetch(`/api/daerah?parent=${provCode}&level=kabupaten`)
                                         .then(r => r.json())
@@ -111,7 +107,7 @@ document.addEventListener("DOMContentLoaded", function () {
                                         })
                                 );
                             }
-                            if (kecCode) {
+                            if (kecCode && parts.length >= 3) {
                                 fetchPromises.push(
                                     fetch(`/api/daerah?parent=${kabCode}&level=kecamatan`)
                                         .then(r => r.json())
@@ -121,12 +117,15 @@ document.addEventListener("DOMContentLoaded", function () {
                                         })
                                 );
                             }
+
                             if (item.level === 'desa') {
                                 hiddenDesa.value = item.nama;
                             } else if (item.level === 'kecamatan') {
                                 hiddenKecamatan.value = item.nama;
                             } else if (item.level === 'kabupaten') {
                                 hiddenKabupaten.value = item.nama;
+                            } else if (item.level === 'provinsi') {
+                                hiddenProvinsi.value = item.nama;
                             }
 
                             Promise.all(fetchPromises).then(() => {

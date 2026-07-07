@@ -189,7 +189,7 @@ a {
     border-radius: var(--radius-md);
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.02);
     transition: transform var(--transition-normal), border-color var(--transition-normal), box-shadow var(--transition-normal);
-    overflow: hidden;
+    /* overflow:hidden sengaja dihapus agar dropdown Bootstrap tidak terpotong */
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -908,6 +908,15 @@ a {
 }
 
 /* Custom Select Dropdown Styling (Minimalist Monochrome) */
+.custom-select {
+    position: relative;
+    z-index: 2;
+}
+
+.custom-select.show {
+    z-index: 1050;
+}
+
 .custom-select .dropdown-menu {
     border-radius: var(--radius-sm);
     box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.02) !important;
