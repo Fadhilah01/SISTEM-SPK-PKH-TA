@@ -18,7 +18,14 @@ class Config:
         )
 
     # ─── Database ───
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'spk_pkh.db')
+    SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or os.environ.get('SQLALCHEMY_DATABASE_URI')
+    if not SQLALCHEMY_DATABASE_URI:
+        SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(BASE_DIR, 'spk_pkh.db')
+    
+    # Fix for Heroku/Supabase where URI might start with postgres:// instead of postgresql://
+    if SQLALCHEMY_DATABASE_URI.startswith('postgres://'):
+        SQLALCHEMY_DATABASE_URI = SQLALCHEMY_DATABASE_URI.replace('postgres://', 'postgresql://', 1)
+
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     # ─── Model Path ───

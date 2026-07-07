@@ -16,13 +16,17 @@ from core.limiter import limiter
 
 
 # ─── Konfigurasi Logging ───
+log_handlers = [logging.StreamHandler()]
+if os.environ.get('VERCEL') != '1':
+    try:
+        log_handlers.append(logging.FileHandler(os.path.join(os.path.dirname(__file__), 'app.log')))
+    except Exception:
+        pass
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=[
-        logging.FileHandler(os.path.join(os.path.dirname(__file__), 'app.log')),
-        logging.StreamHandler()
-    ]
+    handlers=log_handlers
 )
 
 
@@ -137,7 +141,8 @@ def init_db():
         print("[OK] Database siap.")
 
 
+app = create_app()
+
 if __name__ == '__main__':
     init_db()
-    app = create_app()
     app.run(host='0.0.0.0', port=5000)  # debug=False via Config di create_app()
