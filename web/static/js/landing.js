@@ -3,10 +3,32 @@
  */
 
 document.addEventListener('DOMContentLoaded', () => {
-    initTheme();
-    initLoaderAndCursor();
-    initSmoothScrollAndPinning();
-    initSVMSimulator();
+    try {
+        initTheme();
+    } catch(e) {
+        console.error('initTheme error:', e);
+    }
+    
+    try {
+        initLoaderAndCursor();
+    } catch(e) {
+        console.error('initLoaderAndCursor error:', e);
+        // Failsafe: hide loader immediately
+        const loader = document.getElementById('loader');
+        if (loader) loader.style.display = 'none';
+    }
+    
+    try {
+        initSmoothScrollAndPinning();
+    } catch(e) {
+        console.error('initSmoothScrollAndPinning error:', e);
+    }
+    
+    try {
+        initSVMSimulator();
+    } catch(e) {
+        console.error('initSVMSimulator error:', e);
+    }
 });
 
 /* ─── 1. Tema Warna (Light/Dark) ─── */
@@ -70,7 +92,7 @@ function initLoaderAndCursor() {
         animateCursor();
         
         // Hover effects pada elemen interaktif
-        const interactiveElements = document.querySelectorAll('a, button, input, [role="button"], .toggle-pill, .download-card, .card-premium');
+        const interactiveElements = document.querySelectorAll('a, button, input, [role="button"], .toggle-pill, .download-card, .segmented-item');
         interactiveElements.forEach(el => {
             el.addEventListener('mouseenter', () => {
                 cursor.classList.add('cursor-hovered');
@@ -81,25 +103,41 @@ function initLoaderAndCursor() {
         });
     }
     
-    // GSAP Loader & Hero Intro Timeline
+    // GSAP Loader & Hero Intro Timeline (Rejouice-style staggered words animation)
     const tl = gsap.timeline();
     
-    // Animasi loader
-    tl.to('#loader h1', {
-        filter: 'blur(0px)',
-        opacity: 1,
-        duration: 1,
-        y: 0,
+    // 1. Teks muncul dari kanan/bawah ke kiri dengan stagger dan blur-reveal
+    tl.from('#loader h3', {
+        x: 40,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 0.8,
+        stagger: 0.12,
         ease: 'power3.out'
     });
     
+    // 2. Teks keluar bergeser ke kiri dan memudar stagger
+    tl.to('#loader h3', {
+        x: -40,
+        opacity: 0,
+        filter: 'blur(10px)',
+        duration: 0.6,
+        stagger: 0.08,
+        delay: 0.5,
+        ease: 'power3.in'
+    });
+    
+    // 3. Loader menghilang
     tl.to('#loader', {
         opacity: 0,
-        duration: 0.8,
-        delay: 1.2,
+        duration: 0.5,
         ease: 'power3.inOut',
         onComplete: () => {
-            document.getElementById('loader').style.display = 'none';
+            const lEl = document.getElementById('loader');
+            if (lEl) {
+                lEl.style.display = 'none';
+                lEl.style.pointerEvents = 'none';
+            }
         }
     });
     
@@ -199,10 +237,10 @@ function initSmoothScrollAndPinning() {
 
 /* ─── 4. SVM Real-Time Simulator ─── */
 function initSVMSimulator() {
-    const sliders = ['penghasilan', 'pekerjaan', 'aset'];
+    const controls = ['penghasilan', 'pekerjaan', 'aset'];
     const toggles = ['ibu_hamil', 'anak_usia_dini', 'anak_sekolah', 'disabilitas', 'lansia'];
     
-    const sliderLabels = {
+    const controlLabels = {
         'penghasilan': {
             5: 'Desil 1 (< Rp.500.000)',
             4: 'Desil 2 (Rp.600.000 - 700.000)',
@@ -238,17 +276,28 @@ function initSVMSimulator() {
         lansia: false
     };
     
-    // Hubungkan slider UI ke state
-    sliders.forEach(id => {
-        const sliderEl = document.getElementById(id);
-        const labelEl = document.getElementById(id + 'Val');
+    // Hubungkan segmented controls ke state
+    controls.forEach(id => {
+        const controlEl = document.getElementById(id + 'Control');
+        const descEl = document.getElementById(id + 'Desc');
         
-        if (sliderEl && labelEl) {
-            sliderEl.addEventListener('input', (e) => {
-                const val = parseInt(e.target.value);
-                state[id] = val;
-                labelEl.textContent = sliderLabels[id][val];
-                triggerPrediction();
+        if (controlEl) {
+            const items = controlEl.querySelectorAll('.segmented-item');
+            items.forEach(item => {
+                item.addEventListener('click', () => {
+                    // Hapus kelas aktif
+                    items.forEach(x => x.classList.remove('active'));
+                    // Tambah kelas aktif ke item yang di-klik
+                    item.classList.add('active');
+                    
+                    const val = parseInt(item.getAttribute('data-val'));
+                    state[id] = val;
+                    
+                    // Update keterangan di bawahnya
+                    if (descEl) {
+                        descEl.textContent = `Keterangan: ${controlLabels[id][val]}`;
+                    }
+                });
             });
         }
     });
@@ -265,22 +314,16 @@ function initSVMSimulator() {
                 } else {
                     toggleEl.classList.remove('active');
                 }
-                triggerPrediction();
             });
         }
     });
     
-    // Jalankan prediksi awal
-    triggerPrediction();
-    
-    // Fungsi memanggil API
-    let predictTimeout;
-    function triggerPrediction() {
-        // Debounce API calls to prevent flooding
-        clearTimeout(predictTimeout);
-        predictTimeout = setTimeout(() => {
+    // Hubungkan tombol prediksi
+    const btnPredict = document.getElementById('btnPredict');
+    if (btnPredict) {
+        btnPredict.addEventListener('click', () => {
             runPrediction();
-        }, 150);
+        });
     }
     
     function runPrediction() {
@@ -291,6 +334,17 @@ function initSVMSimulator() {
         
         if (!gaugeFill) return;
         
+        // Loading state untuk tombol
+        if (btnPredict) {
+            btnPredict.disabled = true;
+            btnPredict.textContent = 'Menganalisis...';
+        }
+        
+        // Reset label & gauge saat mulai analisis
+        resultLabel.textContent = "MENGANALISIS...";
+        resultLabel.style.color = "var(--text-muted)";
+        resultProb.textContent = "Menghubungkan ke model SVM RBF...";
+        
         fetch('/api/public-predict', {
             method: 'POST',
             headers: {
@@ -300,10 +354,17 @@ function initSVMSimulator() {
         })
         .then(res => res.json())
         .then(data => {
+            // Restore button
+            if (btnPredict) {
+                btnPredict.disabled = false;
+                btnPredict.textContent = 'Analisis Kelayakan (SVM RBF)';
+            }
+            
             if (data.error) {
                 console.error(data.error);
-                resultLabel.textContent = "Error";
+                resultLabel.textContent = "ERROR MODEL";
                 resultLabel.style.color = "#ff4d4d";
+                resultProb.textContent = data.error;
                 return;
             }
             
@@ -330,9 +391,15 @@ function initSVMSimulator() {
             }
         })
         .catch(err => {
+            // Restore button
+            if (btnPredict) {
+                btnPredict.disabled = false;
+                btnPredict.textContent = 'Analisis Kelayakan (SVM RBF)';
+            }
             console.error('Fetch error:', err);
-            resultLabel.textContent = "Koneksi Bermasalah";
+            resultLabel.textContent = "KONEKSI ERROR";
             resultLabel.style.color = "#ff4d4d";
+            resultProb.textContent = "Gagal menghubungi API server lokal.";
         });
     }
 }

@@ -19,11 +19,12 @@
     <!-- Custom magnet cursor -->
     <div id="cursor"></div>
 
-    <!-- Intro Text Blur Loader -->
+    <!-- Intro Text Loader -->
     <div id="loader">
-        <h1 style="filter: blur(10px); opacity: 0; transform: translateY(20px);">Tomorrow's Decision, Today.</h1>
-        <div class="loader-bar">
-            <div class="loader-bar-fill"></div>
+        <div class="loader-content">
+            <h3>Sistem Pendukung Keputusan</h3>
+            <h3>Kelayakan Bantuan PKH</h3>
+            <h3>Kecamatan Kasimbar<sup>&reg;</sup></h3>
         </div>
     </div>
 
@@ -72,37 +73,55 @@
         <section class="section" id="simulator">
             <h2 class="section-title text-center">SVM Decision Playground</h2>
             <p class="section-subtitle text-center mx-auto">
-                Geser nilai indikator dan aktifkan komponen keluarga untuk melakukan prediksi kelayakan calon penerima PKH secara real-time via model SVM.
+                Pilih kategori indikator dan aktifkan komponen keluarga untuk melakukan prediksi kelayakan calon penerima PKH secara real-time via model SVM.
             </p>
             
             <div class="simulator-layout">
-                <!-- Inputs -->
+                <!-- Inputs (Segmented Controls) -->
                 <div class="card-premium">
                     <!-- Kriteria 1: Penghasilan -->
                     <div class="slider-group">
                         <div class="slider-header">
-                            <span class="slider-label">1. Penghasilan</span>
-                            <span class="slider-val-label" id="penghasilanVal">Desil 3 (Rp.800.000 - 900.000)</span>
+                            <span class="slider-label">1. Penghasilan per Bulan</span>
                         </div>
-                        <input type="range" class="slider-premium" id="penghasilan" min="1" max="5" step="1" value="3">
+                        <div class="segmented-control" id="penghasilanControl">
+                            <div class="segmented-item" data-val="5">Desil 1</div>
+                            <div class="segmented-item" data-val="4">Desil 2</div>
+                            <div class="segmented-item active" data-val="3">Desil 3</div>
+                            <div class="segmented-item" data-val="2">Desil 4</div>
+                            <div class="segmented-item" data-val="1">Desil 5</div>
+                        </div>
+                        <div class="segmented-desc" id="penghasilanDesc">Keterangan: Desil 3 (Rp.800.000 - 900.000)</div>
                     </div>
                     
                     <!-- Kriteria 2: Pekerjaan -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span class="slider-label">2. Pekerjaan Kepala Keluarga</span>
-                            <span class="slider-val-label" id="pekerjaanVal">Petani/Nelayan</span>
                         </div>
-                        <input type="range" class="slider-premium" id="pekerjaan" min="1" max="5" step="1" value="3">
+                        <div class="segmented-control" id="pekerjaanControl">
+                            <div class="segmented-item" data-val="5">Tdk Kerja</div>
+                            <div class="segmented-item" data-val="4">Bebas</div>
+                            <div class="segmented-item active" data-val="3">Petani</div>
+                            <div class="segmented-item" data-val="2">Swasta</div>
+                            <div class="segmented-item" data-val="1">PNS</div>
+                        </div>
+                        <div class="segmented-desc" id="pekerjaanDesc">Keterangan: Petani/Nelayan</div>
                     </div>
                     
                     <!-- Kriteria 3: Aset -->
                     <div class="slider-group">
                         <div class="slider-header">
                             <span class="slider-label">3. Kepemilikan Aset</span>
-                            <span class="slider-val-label" id="asetVal">Motor (Harga Jual Tinggi)</span>
                         </div>
-                        <input type="range" class="slider-premium" id="aset" min="1" max="5" step="1" value="3">
+                        <div class="segmented-control" id="asetControl">
+                            <div class="segmented-item" data-val="5">Tdk Punya</div>
+                            <div class="segmented-item" data-val="4">Mtr Rndh</div>
+                            <div class="segmented-item active" data-val="3">Mtr Tggi</div>
+                            <div class="segmented-item" data-val="2">Mbl/Tnh</div>
+                            <div class="segmented-item" data-val="1">Mbl+Tnh</div>
+                        </div>
+                        <div class="segmented-desc" id="asetDesc">Keterangan: Motor (Harga Jual Tinggi)</div>
                     </div>
                     
                     <!-- Komponen Sosial Switches -->
@@ -128,6 +147,13 @@
                             <div class="form-switch-premium"></div>
                         </div>
                     </div>
+
+                    <!-- Submit Button -->
+                    <div class="mt-4 pt-2">
+                        <button type="button" class="btn-primary-premium w-100 py-3 text-uppercase font-monospace" id="btnPredict" style="font-size: 0.85rem; letter-spacing: 0.1em; border: none !important;">
+                            Analisis Kelayakan (SVM RBF)
+                        </button>
+                    </div>
                 </div>
                 
                 <!-- Output / Gauge -->
@@ -140,8 +166,8 @@
                         </svg>
                         <div class="gauge-value" id="gaugeValue">0%</div>
                     </div>
-                    <div class="result-label" id="resultLabel">-</div>
-                    <div class="result-prob" id="resultProb">Menghitung probabilitas...</div>
+                    <div class="result-label" id="resultLabel">SIAP ANALISIS</div>
+                    <div class="result-prob" id="resultProb">Tentukan kriteria di kiri, lalu klik tombol Analisis</div>
                 </div>
             </div>
         </section>
@@ -222,7 +248,7 @@
             </div>
         </section>
 
-        <!-- 4. STACKING CARDS SECTION (Criteria, Architecture, GridSearchCV) -->
+        <!-- 5. STACKING CARDS SECTION (Criteria, Architecture, GridSearchCV) -->
         <section class="pin-section" id="kriteria">
             <!-- Card 1: Kriteria Penilaian Resmi -->
             <div class="pin-card">
@@ -381,51 +407,51 @@
         <section class="section" id="dokumen">
             <h2 class="section-title text-center">Pusat Berkas & Dokumen Skripsi</h2>
             <p class="section-subtitle text-center mx-auto">
-                Unduh dokumen referensi, aturan keputusan kriteria resmi, dan berkas revisi dosen penguji tugas akhir.
+                Buka dan tinjau berkas regulasi resmi, skema kriteria, dan dokumen pendukung skripsi lainnya.
             </p>
             
             <div class="download-grid">
                 <!-- Doc 1: Kriteria -->
-                <a href="{{ url_for('static', filename='docs/Penentuan_Kriteria.pdf') }}" class="download-card" download>
+                <a href="{{ url_for('static', filename='docs/Penentuan_Kriteria.pdf') }}" class="download-card" target="_blank">
                     <div class="download-info">
                         <span class="download-title">Penentuan Kriteria Resmi.pdf</span>
-                        <span class="download-meta">Bobot kriteria resmi dari SDM PKH (1.0 MB)</span>
+                        <span class="download-meta">Tinjau aturan bobot kriteria resmi dari SDM PKH (PDF)</span>
                     </div>
-                    <i class="bi bi-file-earmark-pdf download-icon"></i>
+                    <i class="bi bi-eye download-icon"></i>
                 </a>
                 
                 <!-- Doc 2: Indikator -->
-                <a href="{{ url_for('static', filename='docs/Penentuan_Indikator_Kriteria.pdf') }}" class="download-card" download>
+                <a href="{{ url_for('static', filename='docs/Penentuan_Indikator_Kriteria.pdf') }}" class="download-card" target="_blank">
                     <div class="download-info">
                         <span class="download-title">Indikator Kriteria Ordinal.pdf</span>
-                        <span class="download-meta">Panduan skor kriteria desil & biner (1.6 MB)</span>
+                        <span class="download-meta">Tinjau panduan skor kriteria desil & biner (PDF)</span>
                     </div>
-                    <i class="bi bi-file-earmark-pdf download-icon"></i>
+                    <i class="bi bi-eye download-icon"></i>
                 </a>
                 
                 <!-- Doc 3: Laporan TA -->
-                <a href="{{ url_for('static', filename='docs/Revisi_Laporan_TA.pdf') }}" class="download-card" download>
+                <a href="{{ url_for('static', filename='docs/Revisi_Laporan_TA.pdf') }}" class="download-card" target="_blank">
                     <div class="download-info">
                         <span class="download-title">Laporan Skripsi Akhir.pdf</span>
-                        <span class="download-meta">Naskah lengkap skripsi ter-revisi (2.1 MB)</span>
+                        <span class="download-meta">Baca naskah lengkap skripsi ter-revisi (PDF)</span>
                     </div>
-                    <i class="bi bi-file-earmark-pdf download-icon"></i>
+                    <i class="bi bi-eye download-icon"></i>
                 </a>
                 
                 <!-- Doc 4: Revisi Penguji -->
-                <a href="{{ url_for('static', filename='docs/Revisi_Pak_Yazdi.pdf') }}" class="download-card" download>
+                <a href="{{ url_for('static', filename='docs/Revisi_Pak_Yazdi.pdf') }}" class="download-card" target="_blank">
                     <div class="download-info">
                         <span class="download-title">Revisi Dosen Penguji.pdf</span>
-                        <span class="download-meta">Lembar koreksi & revisi Pak Yazdi Pusadan (0.2 MB)</span>
+                        <span class="download-meta">Tinjau lembar koreksi & revisi Pak Yazdi Pusadan (PDF)</span>
                     </div>
-                    <i class="bi bi-file-earmark-pdf download-icon"></i>
+                    <i class="bi bi-eye download-icon"></i>
                 </a>
                 
                 <!-- Notebook link -->
                 <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/svm-pkh-ta.ipynb" target="_blank" class="download-card">
                     <div class="download-info">
                         <span class="download-title">Kaggle Training Notebook (.ipynb)</span>
-                        <span class="download-meta">Script training model SVM RBF via GitHub (Online)</span>
+                        <span class="download-meta">Tinjau script training model SVM RBF via GitHub</span>
                     </div>
                     <i class="bi bi-code-slash download-icon"></i>
                 </a>
@@ -434,7 +460,7 @@
                 <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/web/PANDUAN_PENGGUNA.md" target="_blank" class="download-card">
                     <div class="download-info">
                         <span class="download-title">Buku Panduan Penggunaan (.md)</span>
-                        <span class="download-meta">Panduan operasional sistem untuk Admin (Online)</span>
+                        <span class="download-meta">Baca panduan operasional sistem untuk Admin</span>
                     </div>
                     <i class="bi bi-book download-icon"></i>
                 </a>
@@ -457,6 +483,20 @@
             <a href="tel:+62852XXXXXXXX" class="floating-dock-btn" title="Telepon"><i class="bi bi-telephone"></i></a>
         </div>
     </div>
+
+    <!-- Failsafe script to remove loader if JS crashes -->
+    <script>
+        setTimeout(function() {
+            var loader = document.getElementById('loader');
+            if (loader && loader.style.display !== 'none') {
+                loader.style.opacity = '0';
+                loader.style.pointerEvents = 'none';
+                setTimeout(function() {
+                    loader.style.display = 'none';
+                }, 800);
+            }
+        }, 1800); // 1.8s Failsafe (Matched to Rejouice speed)
+    </script>
 
     <!-- Lenis Smooth Scroll Script -->
     <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
