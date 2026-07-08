@@ -65,7 +65,9 @@
             </p>
             <div class="hero-ctas">
                 <a href="#simulator" class="btn-primary-premium">Coba Simulator</a>
-                <a href="#performa" class="btn-secondary-premium">Lihat Performa</a>
+                <a href="{{ url_for('static', filename='docs/Buku_Panduan_SPK_PKH.pdf') }}" class="btn-secondary-premium" target="_blank">
+                    <i class="bi bi-file-earmark-pdf me-2"></i>Buku Panduan
+                </a>
             </div>
         </header>
 
@@ -429,24 +431,6 @@
                     <i class="bi bi-eye download-icon"></i>
                 </a>
                 
-                <!-- Doc 3: Laporan TA -->
-                <a href="{{ url_for('static', filename='docs/Revisi_Laporan_TA.pdf') }}" class="download-card" target="_blank">
-                    <div class="download-info">
-                        <span class="download-title">Laporan Skripsi Akhir.pdf</span>
-                        <span class="download-meta">Baca naskah lengkap skripsi ter-revisi (PDF)</span>
-                    </div>
-                    <i class="bi bi-eye download-icon"></i>
-                </a>
-                
-                <!-- Doc 4: Revisi Penguji -->
-                <a href="{{ url_for('static', filename='docs/Revisi_Pak_Yazdi.pdf') }}" class="download-card" target="_blank">
-                    <div class="download-info">
-                        <span class="download-title">Revisi Dosen Penguji.pdf</span>
-                        <span class="download-meta">Tinjau lembar koreksi & revisi Pak Yazdi Pusadan (PDF)</span>
-                    </div>
-                    <i class="bi bi-eye download-icon"></i>
-                </a>
-                
                 <!-- Notebook link -->
                 <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/svm-pkh-ta.ipynb" target="_blank" class="download-card">
                     <div class="download-info">
@@ -454,15 +438,6 @@
                         <span class="download-meta">Tinjau script training model SVM RBF via GitHub</span>
                     </div>
                     <i class="bi bi-code-slash download-icon"></i>
-                </a>
-                
-                <!-- User Guide -->
-                <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/web/PANDUAN_PENGGUNA.md" target="_blank" class="download-card">
-                    <div class="download-info">
-                        <span class="download-title">Buku Panduan Penggunaan (.md)</span>
-                        <span class="download-meta">Baca panduan operasional sistem untuk Admin</span>
-                    </div>
-                    <i class="bi bi-book download-icon"></i>
                 </a>
             </div>
         </section>
