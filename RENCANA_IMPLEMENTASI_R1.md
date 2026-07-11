@@ -43,7 +43,7 @@
 - ✅ Flask app lengkap dengan Blueprints
 - ✅ Database SQLite (3 tabel: User, CalonPenerima, HasilKeputusan)
 - ✅ CRUD lengkap + prediksi otomatis
-- ✅ Dashboard dengan statistik + grafik Chart.js
+- ✅ Dashboard dengan statistik + Pie/Doughnut Chart kelayakan (Chart.js)
 - ✅ Halaman About (penjelasan model untuk sidang)
 
 ### Fase 3: Audit & Gap Analisis ✅
@@ -78,7 +78,7 @@
 - [x] Export Excel/CSV dengan filter dinamis (25 kolom termasuk NIK)
 - [x] Template Excel untuk panduan import (dilengkapi kolom NIK)
 - [x] Autocomplete wilayah (database 89k+)
-- [x] Grafik dashboard interaktif (Chart.js)
+- [x] Grafik dashboard Pie/Doughnut kelayakan (Chart.js) (Grafik interaktif wilayah/tren/komparasi dihapus atas permintaan klien)
 - [x] Security hardening 10 lapisan
 - [x] **Alias kolom CSV** — dukungan import CSV raw dari lapangan (ASET→kepemilikan_aset, HAMIL→ibu_hamil, AUD→anak_usia_dini, dsb)
 - [x] **Integrasi Kolom NIK** — Penambahan kolom `nik` ke database, auto-migrasi data lama, validasi NIK 16 digit, pencegahan duplikat NIK, pencarian listing calon berdasarkan NIK, dan pembuatan file test data baru yang dilengkapi NIK.
@@ -88,7 +88,7 @@
 - [x] **Model real vs label asli** — 98.44% akurasi pada test set
 - [x] **Import CSV raw** — file asli dari pendamping (POSONA.csv, dll) bisa di-upload
 - [x] **Export** — Excel/CSV dengan seluruh filter berfungsi
-- [x] **Dashboard** — semua grafik render dengan data real
+- [x] **Dashboard** — render data real untuk proporsi kelayakan (grafik wilayah/tren/komparasi dihapus)
 
 ### Fase 5: Dokumentasi Skripsi ✅
 - [x] Kompilasi Bab IV (Hasil & Pembahasan) dari docs/

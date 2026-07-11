@@ -92,7 +92,7 @@
 |-------|--------|---------|
 | CRUD Calon Penerima | ✅ | Form dropdown kategori resmi & input NIK |
 | Prediksi SVM otomatis | ✅ | Saat input/import/edit |
-| Dashboard + Grafik | ✅ | Wilayah, Tren, Komparasi |
+| Dashboard + Grafik | ✅ | Ringkasan statistik & Pie/Doughnut Chart proporsi kelayakan (Grafik besar wilayah, tren, komparasi dihapus atas permintaan klien) |
 | Import Excel/CSV | ✅ | Validasi + batch prediksi + duplikasi NIK check |
 | Export Excel/CSV | ✅ | Filter dinamis 25 kolom (termasuk NIK) |
 | Login & RBAC | ✅ | Superadmin/Admin |

@@ -95,10 +95,10 @@
 - [x] Modal konfirmasi Bootstrap untuk semua aksi destruktif (hapus, import)
 - [x] Integrasi pilihan wilayah administratif bertingkat (Sulteng) via API internal dengan lazy-loading & cache 89k+ data
 - [x] Autocomplete wilayah di form input dengan tampilan nama lengkap terstruktur (fullname) untuk menghindari duplikasi
-- [x] Visualisasi diagram batang sebaran desa secara dinamis tanpa hardcode nama desa di dashboard
+- [x] Visualisasi diagram batang sebaran desa secara dinamis tanpa hardcode nama desa di dashboard (Dihapus pada revisi 11 Juli 2026)
 - [x] Toleransi impor edge case berkas excel kuno tanpa kolom wilayah
 - [x] Restrukturisasi layout beranda (dashboard) dengan membatasi tabel keputusan terbaru ke 3 baris terpaginasi client-side
-- [x] Implementasi pusat analisis tab visualisasi (Wilayah, Tren, Komparasi Periode & Kriteria) berbasis AJAX /api/analytics
+- [x] Implementasi pusat analisis tab visualisasi (Wilayah, Tren, Komparasi Periode & Kriteria) berbasis AJAX /api/analytics (Dihapus pada revisi 11 Juli 2026)
 - [x] Seeding data historis calon penerima acak (1 tahun terakhir) untuk demonstrasi visualisasi tren
 - [x] Integrasi Kolom NIK — Penambahan kolom `nik` ke database, auto-migrasi data dummy lama, validasi NIK 16 digit, pencegahan duplikat NIK, pencarian listing calon berdasarkan NIK, dan pembuatan file test data baru.
 

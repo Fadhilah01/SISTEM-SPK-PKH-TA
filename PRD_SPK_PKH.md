@@ -22,7 +22,7 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 |-------|-----------|-----------|--------|
 | Manajemen Data Calon Penerima | CRUD data calon penerima bantuan (dengan validasi & unik NIK) | P0 | ✅ Selesai |
 | Klasifikasi SVM | Prediksi layak/tidak layak berdasarkan model SVM | P0 | ⚠️ Perlu retrain (lihat Bab 10) |
-| Dashboard SPK | Ringkasan data + visualisasi diagram interaktif (Chart.js) | P0 | ✅ Selesai (6 Juli 2026) |
+| Dashboard SPK | Ringkasan data + Pie/Doughnut Chart proporsi kelayakan (Chart.js) | P0 | ✅ Selesai (6 Juli 2026) |
 | Riwayat Keputusan | History prediksi + detail input | P0 | ✅ Selesai |
 | Pencarian & Paginasi | Menyaring dan membatasi data calon penerima di tabel (mendukung pencarian NIK) | P1 | ✅ Selesai (6 Juli 2026) |
 | Import Data (Excel/CSV) | Import massal data calon dari file Excel/CSV dengan validasi otomatis (termasuk NIK), pencegahan duplikasi NIK, dan batch prediksi SVM | P1 | ✅ Selesai (6 Juli 2026) |
@@ -34,7 +34,7 @@ Sistem Pendukung Keputusan (SPK) berbasis web yang mengimplementasikan algoritma
 | Manajemen Pengguna | Login terproteksi session, Sidebar, Ganti Password mandiri, dan multi-role (Superadmin/Admin) via RBAC | P1 | ✅ Selesai (6 Juli 2026) |
 | **Keamanan Sistem** | Proteksi CSRF, Rate Limit Login (5/menit), Auto-lock 10 gagal login, Force Password Change, Security Headers (CSP, XFO DENY, HSTS, nosniff, Permissions-Policy), XSS Prevention (sanitasi input + escape output), Session Security (HTTPOnly, SameSite, 4 jam timeout), Validasi File Upload (ekstensi + MIME + magic bytes), Password Policy (min 8 + huruf + angka) | P1 | ✅ Selesai (7 Juli 2026) |
 | Autocomplete Wilayah | Pencarian dan autocomplete wilayah bertingkat (Provinsi s.d. Desa) dari data referensi geospasial | P1 | ✅ Selesai (7 Juli 2026) |
-| Grafiks Dinamis Dashboard | Visualisasi analitik interaktif dengan Chart.js: sebaran wilayah, tren waktu, komparasi periode | P1 | ✅ Selesai (7 Juli 2026) |
+| Grafiks Dinamis Dashboard | Visualisasi analitik interaktif dengan Chart.js: sebaran wilayah, tren waktu, komparasi periode | P1 | ❌ Dihapus atas permintaan klien (11 Juli 2026) |
 | Re-training Model | Update model jika dataset baru tersedia | P2 | ✅ Selesai (Dataset real 318 data, akurasi 98.44%) |
 
 ## 4. Pengguna Sistem

@@ -40,7 +40,7 @@ Parameter terbaik dari GridSearchCV: kernel RBF, C=10, gamma=0.01, class_weight=
 
 - **Manajemen Data Calon:** CRUD data calon penerima dengan form dropdown kategori resmi & input NIK (16 digit, unik)
 - **Klasifikasi SVM:** Prediksi otomatis saat input, edit, atau import data
-- **Dashboard:** Visualisasi interaktif (Chart.js) -- sebaran wilayah, tren waktu, komparasi periode
+- **Dashboard:** Ringkasan statistik (total data calon, layak, tidak layak), tabel keputusan terbaru (paginasi), dan visualisasi doughnut/pie chart proporsi kelayakan
 - **Import/Export:** Import massal Excel/CSV dengan validasi per baris & duplikasi NIK check, export dengan filter dinamis (25 kolom termasuk NIK)
 - **Autentikasi:** Login dengan session, RBAC multi-role (Superadmin/Admin), ganti password, force password change
 - **Wilayah:** Autocomplete wilayah bertingkat (Provinsi hingga Desa) dengan database 89k+ data
