@@ -100,7 +100,7 @@
                     <tbody>
                         {% for c in calon_list %}
                         <tr>
-                            <td class="font-monospace text-muted small">{{ c.id }}</td>
+                            <td class="font-monospace text-muted small">{{ (pagination.page - 1) * pagination.per_page + loop.index }}</td>
                             <td><strong class="text-dark-emphasis">{{ c.nama }}</strong></td>
                             <td><span class="font-monospace text-muted small">{{ c.nik }}</span></td>
                             <td>
