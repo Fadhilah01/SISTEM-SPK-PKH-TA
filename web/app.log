@@ -4,3 +4,216 @@
 2026-07-07 07:11:52,358 [INFO]  * Debugger PIN: 125-081-558
 2026-07-07 07:12:10,446 [INFO]  * Detected change in 'D:\\JOKI\\web\\routes\\calon.py', reloading
 2026-07-07 07:12:10,526 [INFO]  * Detected change in 'D:\\JOKI\\web\\app.py', reloading
+2026-07-09 16:56:54,023 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 16:56:54,023 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 16:57:16,589 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:16] "GET / HTTP/1.1" 200 -
+2026-07-09 16:57:16,707 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:16] "GET /static/css/landing.css HTTP/1.1" 200 -
+2026-07-09 16:57:16,747 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:16] "GET /static/img/image.png HTTP/1.1" 200 -
+2026-07-09 16:57:16,753 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:16] "GET /static/js/landing.js HTTP/1.1" 200 -
+2026-07-09 16:57:17,816 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:17] "GET /static/img/image.ico HTTP/1.1" 200 -
+2026-07-09 16:57:30,824 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:30] "GET / HTTP/1.1" 200 -
+2026-07-09 16:57:30,925 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:30] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 16:57:30,948 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:30] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 16:57:30,955 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:30] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 16:57:42,804 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:42] "GET / HTTP/1.1" 200 -
+2026-07-09 16:57:42,864 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:42] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 16:57:42,896 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:42] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 16:57:42,902 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:42] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 16:57:42,969 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:42] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 16:57:50,961 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:50] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 16:57:51,085 [INFO] 127.0.0.1 - - [09/Jul/2026 16:57:51] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-09 17:01:34,033 [INFO] 127.0.0.1 - - [09/Jul/2026 17:01:34] "GET / HTTP/1.1" 200 -
+2026-07-09 17:01:34,110 [INFO] 127.0.0.1 - - [09/Jul/2026 17:01:34] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:01:34,118 [INFO] 127.0.0.1 - - [09/Jul/2026 17:01:34] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:01:34,124 [INFO] 127.0.0.1 - - [09/Jul/2026 17:01:34] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:01:34,317 [INFO] 127.0.0.1 - - [09/Jul/2026 17:01:34] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 17:03:02,966 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:03:02,967 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 17:03:15,299 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:15] "GET / HTTP/1.1" 200 -
+2026-07-09 17:03:15,356 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:15] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:03:15,366 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:15] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:03:15,370 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:15] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:03:15,408 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:15] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 17:03:24,368 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:24] "GET / HTTP/1.1" 200 -
+2026-07-09 17:03:24,429 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:24] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:03:24,454 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:24] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:03:24,464 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:24] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:03:34,721 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:34] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:03:34,773 [INFO] 127.0.0.1 - - [09/Jul/2026 17:03:34] "[33mGET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1[0m" 404 -
+2026-07-09 17:04:16,396 [INFO] 127.0.0.1 - - [09/Jul/2026 17:04:16] "GET / HTTP/1.1" 200 -
+2026-07-09 17:04:50,729 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:04:50,730 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 17:05:04,051 [INFO] 127.0.0.1 - - [09/Jul/2026 17:05:04] "GET / HTTP/1.1" 200 -
+2026-07-09 17:05:30,317 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:05:30,318 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 17:05:51,971 [INFO] 127.0.0.1 - - [09/Jul/2026 17:05:51] "GET / HTTP/1.1" 200 -
+2026-07-09 17:05:52,065 [INFO] 127.0.0.1 - - [09/Jul/2026 17:05:52] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:05:52,079 [INFO] 127.0.0.1 - - [09/Jul/2026 17:05:52] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:05:52,083 [INFO] 127.0.0.1 - - [09/Jul/2026 17:05:52] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:06:40,725 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:06:40,726 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 17:06:49,109 [INFO] 127.0.0.1 - - [09/Jul/2026 17:06:49] "GET / HTTP/1.1" 200 -
+2026-07-09 17:06:49,197 [INFO] 127.0.0.1 - - [09/Jul/2026 17:06:49] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:06:49,229 [INFO] 127.0.0.1 - - [09/Jul/2026 17:06:49] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:06:49,236 [INFO] 127.0.0.1 - - [09/Jul/2026 17:06:49] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:07:00,241 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:00] "GET / HTTP/1.1" 200 -
+2026-07-09 17:07:00,317 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:00] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:07:00,338 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:00] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:07:00,344 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:00] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:07:00,628 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:00] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 17:07:52,849 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:07:52,849 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-09 17:07:57,012 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:57] "GET / HTTP/1.1" 200 -
+2026-07-09 17:07:57,112 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:57] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:07:57,154 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:57] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:07:57,164 [INFO] 127.0.0.1 - - [09/Jul/2026 17:07:57] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:08:06,143 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:06] "GET / HTTP/1.1" 200 -
+2026-07-09 17:08:06,207 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:06] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:08:06,214 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:06] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:08:06,223 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:06] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:08:06,422 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:06] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 17:08:20,621 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:20] "GET / HTTP/1.1" 200 -
+2026-07-09 17:08:20,708 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:20] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-09 17:08:20,748 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:20] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:08:20,753 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:20] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-09 17:08:28,574 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:28] "GET /login HTTP/1.1" 200 -
+2026-07-09 17:08:28,611 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:28] "GET /static/css/style.css HTTP/1.1" 200 -
+2026-07-09 17:08:28,635 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:28] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:08:28,637 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:28] "GET /static/js/app.js HTTP/1.1" 200 -
+2026-07-09 17:08:34,482 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:34] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-07-09 17:08:37,557 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:37] "GET /dashboard HTTP/1.1" 200 -
+2026-07-09 17:08:37,634 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:37] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:08:37,668 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:37] "GET /static/js/dashboard.js HTTP/1.1" 200 -
+2026-07-09 17:08:37,670 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:37] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:08:37,673 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:37] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:08:38,679 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:38] "GET /api/daerah?level=provinsi HTTP/1.1" 200 -
+2026-07-09 17:08:39,397 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:39] "GET /api/analytics?type=wilayah&provinsi=&kabupaten=&kecamatan=&desa_kelurahan=&date_from=&date_to= HTTP/1.1" 200 -
+2026-07-09 17:08:42,667 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:42] "GET /calon HTTP/1.1" 200 -
+2026-07-09 17:08:42,715 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:42] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:08:42,729 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:42] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:08:42,734 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:42] "GET /static/js/calon.js HTTP/1.1" 200 -
+2026-07-09 17:08:42,737 [INFO] 127.0.0.1 - - [09/Jul/2026 17:08:42] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:11:34,192 [INFO] 127.0.0.1 - - [09/Jul/2026 17:11:34] "GET /calon/import HTTP/1.1" 200 -
+2026-07-09 17:11:34,277 [INFO] 127.0.0.1 - - [09/Jul/2026 17:11:34] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:11:34,289 [INFO] 127.0.0.1 - - [09/Jul/2026 17:11:34] "GET /static/js/import.js HTTP/1.1" 200 -
+2026-07-09 17:11:34,294 [INFO] 127.0.0.1 - - [09/Jul/2026 17:11:34] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:11:34,296 [INFO] 127.0.0.1 - - [09/Jul/2026 17:11:34] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:12:03,579 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:03] "[32mPOST /calon/import HTTP/1.1[0m" 302 -
+2026-07-09 17:12:04,612 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:04] "GET /calon HTTP/1.1" 200 -
+2026-07-09 17:12:04,709 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:12:04,737 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:04] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:12:04,744 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:04] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:12:04,752 [INFO] 127.0.0.1 - - [09/Jul/2026 17:12:04] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:04,608 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "GET /calon HTTP/1.1" 200 -
+2026-07-09 17:13:04,657 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:04,675 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:04,681 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:04,687 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:04,867 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:04] "[36mGET /static/img/image.ico HTTP/1.1[0m" 304 -
+2026-07-09 17:13:12,169 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:12] "GET /calon/import HTTP/1.1" 200 -
+2026-07-09 17:13:12,235 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:12] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:12,252 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:12] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:12,259 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:12] "[36mGET /static/js/import.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:12,260 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:12] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:31,105 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:31] "[32mPOST /calon/import HTTP/1.1[0m" 302 -
+2026-07-09 17:13:32,564 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:32] "GET /calon HTTP/1.1" 200 -
+2026-07-09 17:13:32,639 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:32] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:32,658 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:32] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:32,665 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:32] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:32,673 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:32] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:40,575 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:40] "GET /calon?page=2&q=&date_from=&date_to=&hasil_filter= HTTP/1.1" 200 -
+2026-07-09 17:13:40,635 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:40] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:40,670 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:40] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:40,676 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:40] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:40,684 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:40] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:46,692 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:46] "GET /calon/tambah HTTP/1.1" 200 -
+2026-07-09 17:13:46,765 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:46] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:46,798 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:46] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:46,800 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:46] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:46,806 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:46] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:54,148 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:54] "GET /calon/export HTTP/1.1" 200 -
+2026-07-09 17:13:54,210 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:54] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:54,229 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:54] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:54,233 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:54] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:54,234 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:54] "GET /static/js/export.js HTTP/1.1" 200 -
+2026-07-09 17:13:56,066 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:56] "GET /admin/users HTTP/1.1" 200 -
+2026-07-09 17:13:56,140 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:56] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:56,151 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:56] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:56,154 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:56] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:58,273 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:58] "GET /calon/tambah HTTP/1.1" 200 -
+2026-07-09 17:13:58,332 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:58] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:13:58,348 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:58] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:13:58,351 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:58] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:13:58,354 [INFO] 127.0.0.1 - - [09/Jul/2026 17:13:58] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:14:00,620 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:00] "GET /calon HTTP/1.1" 200 -
+2026-07-09 17:14:00,678 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:00] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:14:00,704 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:00] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:14:00,705 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:00] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:14:00,709 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:00] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:14:07,298 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:07] "GET /calon?page=2&q=&date_from=&date_to=&hasil_filter= HTTP/1.1" 200 -
+2026-07-09 17:14:07,362 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:07] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-09 17:14:07,380 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:07] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-09 17:14:07,387 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:07] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-09 17:14:07,387 [INFO] 127.0.0.1 - - [09/Jul/2026 17:14:07] "[36mGET /static/js/calon.js HTTP/1.1[0m" 304 -
+2026-07-09 17:16:09,591 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://10.30.3.169:5000
+2026-07-09 17:16:09,591 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-10 00:02:22,783 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.5:5000
+2026-07-10 00:02:22,785 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-10 00:02:43,546 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:43] "GET / HTTP/1.1" 200 -
+2026-07-10 00:02:43,693 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:43] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-10 00:02:43,700 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:43] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-10 00:02:43,724 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:43] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-10 00:02:52,391 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:52] "GET /login HTTP/1.1" 200 -
+2026-07-10 00:02:52,463 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:52] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-10 00:02:52,502 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:52] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-10 00:02:52,570 [INFO] 127.0.0.1 - - [10/Jul/2026 00:02:52] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-10 00:03:03,273 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:03] "[32mPOST /login HTTP/1.1[0m" 302 -
+2026-07-10 00:03:06,244 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:06] "GET /dashboard HTTP/1.1" 200 -
+2026-07-10 00:03:06,329 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:06] "[36mGET /static/css/style.css HTTP/1.1[0m" 304 -
+2026-07-10 00:03:06,337 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:06] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-10 00:03:06,344 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:06] "[36mGET /static/js/app.js HTTP/1.1[0m" 304 -
+2026-07-10 00:03:06,411 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:06] "[36mGET /static/js/dashboard.js HTTP/1.1[0m" 304 -
+2026-07-10 00:03:07,417 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:07] "GET /api/daerah?level=provinsi HTTP/1.1" 200 -
+2026-07-10 00:03:07,940 [INFO] 127.0.0.1 - - [10/Jul/2026 00:03:07] "GET /api/analytics?type=wilayah&provinsi=&kabupaten=&kecamatan=&desa_kelurahan=&date_from=&date_to= HTTP/1.1" 200 -
+2026-07-10 20:59:05,524 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.5:5000
+2026-07-10 20:59:05,525 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-10 20:59:14,409 [INFO] 127.0.0.1 - - [10/Jul/2026 20:59:14] "GET / HTTP/1.1" 200 -
+2026-07-10 20:59:14,543 [INFO] 127.0.0.1 - - [10/Jul/2026 20:59:14] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-10 20:59:14,558 [INFO] 127.0.0.1 - - [10/Jul/2026 20:59:14] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-10 20:59:14,593 [INFO] 127.0.0.1 - - [10/Jul/2026 20:59:14] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -
+2026-07-11 11:38:14,122 [INFO] [31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on all addresses (0.0.0.0)
+ * Running on http://127.0.0.1:5000
+ * Running on http://192.168.100.5:5000
+2026-07-11 11:38:14,126 [INFO] [33mPress CTRL+C to quit[0m
+2026-07-11 11:38:26,934 [INFO] 127.0.0.1 - - [11/Jul/2026 11:38:26] "GET / HTTP/1.1" 200 -
+2026-07-11 11:38:27,032 [INFO] 127.0.0.1 - - [11/Jul/2026 11:38:27] "[36mGET /static/css/landing.css HTTP/1.1[0m" 304 -
+2026-07-11 11:38:27,057 [INFO] 127.0.0.1 - - [11/Jul/2026 11:38:27] "[36mGET /static/img/image.png HTTP/1.1[0m" 304 -
+2026-07-11 11:38:27,092 [INFO] 127.0.0.1 - - [11/Jul/2026 11:38:27] "[36mGET /static/js/landing.js HTTP/1.1[0m" 304 -

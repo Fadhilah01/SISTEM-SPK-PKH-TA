@@ -27,19 +27,26 @@ Panduan ini dibuat khusus untuk mempermudah setup aplikasi dari kondisi laptop *
 
 ### 3. Membuat & Mengaktifkan Virtual Environment (Venv)
 Virtual Environment digunakan agar library Python yang diinstall khusus untuk proyek ini tidak mengganggu program lainnya.
-1. Di jendela CMD yang sudah terbuka, ketik perintah berikut lalu tekan **Enter**:
+1. Di jendela Command Prompt (CMD) atau PowerShell yang sudah terbuka, ketik perintah berikut lalu tekan **Enter**:
    ```bash
-   python -m venv venv
+   py -m venv venv
    ```
-   *Tunggu sekitar 10-15 detik hingga CMD kembali menampilkan baris perintah baru. Ini menandakan folder `venv` telah berhasil dibuat.*
-2. Aktifkan virtual environment dengan mengetik perintah berikut lalu tekan **Enter**:
-   ```bash
-   venv\Scripts\activate
-   ```
-   *Jika berhasil, Anda akan melihat tanda `(venv)` muncul di sebelah paling kiri baris perintah CMD Anda, contohnya:*
-   ```text
-   (venv) D:\JOKI>
-   ```
+   *(Atau gunakan `python -m venv venv` jika python sudah masuk PATH).*
+   *Tunggu sekitar 10-15 detik hingga kembali menampilkan baris perintah baru. Ini menandakan folder `venv` telah berhasil dibuat.*
+2. Aktifkan virtual environment dengan mengetik perintah berikut sesuai dengan terminal Anda:
+   * **Jika menggunakan Command Prompt (CMD):**
+     ```cmd
+     venv\Scripts\activate
+     ```
+   * **Jika menggunakan PowerShell:**
+     ```powershell
+     .\venv\Scripts\Activate.ps1
+     ```
+   * **Jika menggunakan Git Bash (MINGW64 / Bash):**
+     ```bash
+     source venv/Scripts/activate
+     ```
+   *Jika berhasil, Anda akan melihat tanda `(venv)` muncul di sebelah paling kiri baris perintah terminal Anda.*
 
 ---
 
@@ -62,6 +69,17 @@ Virtual Environment digunakan agar library Python yang diinstall khusus untuk pr
    ```bash
    python app.py
    ```
+   *⚠️ **PENTING:** Pastikan Anda mengetik **`python app.py`**, bukan `py app.py`. Windows Launcher (`py`) akan mengabaikan virtual environment yang aktif dan menjalankan Python global yang tidak memiliki Flask terinstal.*
+
+   *💡 **Alternatif Tanpa Aktivasi (Direct Run):** Jika Anda tidak ingin melakukan aktivasi `venv` terlebih dahulu, Anda bisa langsung menjalankan perintah berikut dari folder `web`:*
+   * *Jika menggunakan CMD/PowerShell:*
+     ```powershell
+     ..\venv\Scripts\python.exe app.py
+     ```
+   * *Jika menggunakan Git Bash:*
+     ```bash
+     ../venv/Scripts/python app.py
+     ```
 3. Jika berhasil dijalankan, server akan memproses database lokal dan memunculkan tulisan seperti ini:
    ```text
    [OK] Database siap.
@@ -69,7 +87,7 @@ Virtual Environment digunakan agar library Python yang diinstall khusus untuk pr
    * Debug mode: off
    * Running on http://127.0.0.1:5000
    ```
-   *⚠️ **Catatan Penting:** Jangan menutup jendela hitam CMD ini selama Anda menggunakan website. Jika CMD ditutup, website akan mati.*
+   *⚠️ **Catatan Penting:** Jangan menutup jendela terminal ini selama Anda menggunakan website. Jika terminal ditutup, website akan mati.*
 
 ---
 
@@ -100,7 +118,7 @@ Aplikasi ini menggunakan **Role-Based Access Control (RBAC)** dengan dua level a
 
 * **Error: "python is not recognized..." atau perintah python tidak dikenal**
   * *Penyebab:* Lupa mencentang "Add python.exe to PATH" saat menginstall Python di **Langkah 1**.
-  * *Solusi:* Buka kembali file installer Python (`python-3.11.9-amd64.exe`), pilih opsi **Modify** atau lakukan **Uninstall** terlebih dahulu lalu jalankan ulang install baru, dan pastikan mencentang kotak **Add python.exe to PATH** sebelum klik install.
+  * *Solusi:* Anda bisa langsung menggunakan perintah **`py`** sebagai pengganti `python` (contoh: `py -m venv venv`), atau buka kembali file installer Python, pilih opsi **Modify**, lalu centang kotak **Add python.exe to PATH**.
 
 * **Error: Proses `pip install` berhenti atau banyak tulisan merah**
   * *Penyebab:* Koneksi internet tidak stabil atau terputus di tengah jalan.

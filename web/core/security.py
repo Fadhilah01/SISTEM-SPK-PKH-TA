@@ -9,16 +9,15 @@ import re
 from flask import g
 
 
-# ─── Content Security Policy ───
-# Mengizinkan CDN Bootstrap, Chart.js, dan Bootstrap Icons
-# 'unsafe-inline' diperlukan untuk Bootstrap dan beberapa inline style
+# Mengizinkan CDN Bootstrap, Chart.js, Bootstrap Icons, Lenis, dan Google Fonts
+# 'unsafe-inline' diperlukan untuk Bootstrap, inline styles, dan inline scripts
 _CSP = (
     "default-src 'self'; "
-    "script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; "
-    "style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; "
+    "script-src 'self' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com https://unpkg.com 'unsafe-inline'; "
+    "style-src 'self' https://cdn.jsdelivr.net https://unpkg.com https://fonts.googleapis.com 'unsafe-inline'; "
     "img-src 'self' data:; "
-    "font-src 'self' https://cdn.jsdelivr.net; "
-    "connect-src 'self'; "
+    "font-src 'self' https://cdn.jsdelivr.net https://fonts.gstatic.com; "
+    "connect-src 'self' https://cdn.jsdelivr.net; "
     "frame-ancestors 'none'; "
     "form-action 'self'"
 )

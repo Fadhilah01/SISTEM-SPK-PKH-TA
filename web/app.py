@@ -6,6 +6,7 @@ Entry point & factory. Routes diorganisir dalam Blueprints
 """
 import os
 import logging
+import mimetypes
 from flask import Flask
 from config import Config
 from models_db import db, User
@@ -13,6 +14,10 @@ from werkzeug.security import generate_password_hash
 from routes import register_blueprints
 from core.auth import inject_user, inject_csrf
 from core.limiter import limiter
+
+# Override Windows registry MIME types to avoid 'text/plain' script block errors
+mimetypes.add_type('application/javascript', '.js')
+mimetypes.add_type('text/css', '.css')
 
 
 # ─── Konfigurasi Logging ───

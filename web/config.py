@@ -4,6 +4,18 @@ from datetime import timedelta
 
 BASE_DIR = os.path.abspath(os.path.dirname(__file__))
 
+# ─── Load .env file automatically if exists ───
+env_file = os.path.join(BASE_DIR, ".env")
+if os.path.exists(env_file):
+    with open(env_file, "r") as f:
+        for line in f:
+            line = line.strip()
+            if line and not line.startswith("#") and "=" in line:
+                key, val = line.split("=", 1)
+                key = key.strip()
+                val = val.strip().strip("'\"")
+                os.environ[key] = val
+
 
 class Config:
     # ─── Secret Key ───
