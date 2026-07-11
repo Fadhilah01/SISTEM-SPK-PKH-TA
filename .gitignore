@@ -10,3 +10,5 @@ memory/
 dataset-real
 __pycache__/
 *.pyc
+web/app.log
+venv/

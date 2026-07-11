@@ -21,17 +21,10 @@ mimetypes.add_type('text/css', '.css')
 
 
 # ─── Konfigurasi Logging ───
-log_handlers = [logging.StreamHandler()]
-if os.environ.get('VERCEL') != '1':
-    try:
-        log_handlers.append(logging.FileHandler(os.path.join(os.path.dirname(__file__), 'app.log')))
-    except Exception:
-        pass
-
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s [%(levelname)s] %(message)s',
-    handlers=log_handlers
+    handlers=[logging.StreamHandler()]
 )
 
 
