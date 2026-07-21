@@ -78,7 +78,7 @@ Kedua komponen terhubung melalui file `.pkl` — model yang sudah dilatih di Kag
 ### Pembagian Modul (Blueprints)
 - **auth_bp** (`routes/auth.py`): Mengatur proses login & logout admin pendamping.
 - **dashboard_bp** (`routes/dashboard.py`): Mengatur ringkasan statistik di beranda (total data calon, jumlah layak & tidak layak), daftar keputusan terbaru, dan visualisasi pie/doughnut chart proporsi kelayakan penerima.
-- **calon_bp** (`routes/calon.py`): Mengatur manajemen CRUD data calon penerima serta pemicuan klasifikasi ulang SVM.
+- **calon_bp** (`routes/calon.py`): Mengatur manajemen CRUD data calon penerima, bulk import/export, pemicuan klasifikasi ulang SVM, serta modul perangkingan Confidence Score.
 - **about_bp** (`routes/about.py`): Mengatur detail metrik evaluasi model SVM, visualisasi confusion matrix, dan modul FAQ.
 
 ### Keamanan Web & Proteksi CSRF

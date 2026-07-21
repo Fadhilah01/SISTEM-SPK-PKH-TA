@@ -39,6 +39,11 @@
                     </a>
                 </li>
                 <li>
+                    <a class="sidebar-link {% if request.endpoint == 'calon.perangkingan' %}active{% endif %}" href="{{ url_for('calon.perangkingan') }}">
+                        <i class="bi bi-sort-numeric-down"></i> Perangkingan
+                    </a>
+                </li>
+                <li>
                     <a class="sidebar-link {% if request.endpoint == 'calon.export_calon' %}active{% endif %}" href="{{ url_for('calon.export_calon') }}">
                         <i class="bi bi-download"></i> Export Data
                     </a>

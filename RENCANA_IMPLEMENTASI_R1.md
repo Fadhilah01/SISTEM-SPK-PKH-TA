@@ -104,6 +104,12 @@
 - [x] Perbaikan minor (column alias CSV raw)
 - [x] Finalisasi semua dokumen
 
+### Fase 7: Perangkingan Confidence Score ✅
+- [x] Rute `@calon_bp.route('/perangkingan')` — Backend sorting descending `HasilKeputusan.probabilitas`
+- [x] Template `templates/calon/ranking.html` — Bento stat cards, badge peringkat medali, progress bar confidence
+- [x] Navigasi Sidebar `base.html` — Menu 'Perangkingan' dengan ikon `bi-trophy`
+- [x] Dokumentasi Sesi 22 Juli 2026 (`sesi-2026-07-22-fitur-perangkingan-confidence.md`)
+
 ---
 
 ## 3. Status Resolusi 5 Gap Kritis (Final)

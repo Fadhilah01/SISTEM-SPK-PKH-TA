@@ -12,3 +12,4 @@ __pycache__/
 *.pyc
 web/app.log
 venv/
+docx/

@@ -514,3 +514,63 @@ def get_daerah():
 
     return jsonify(results)
 
+
+# ─── PERANGKINGAN CONFIDENCE SCORE ───
+
+
+@calon_bp.route('/perangkingan')
+@login_required
+def perangkingan():
+    """Halaman perangkingan calon penerima berdasarkan Confidence Score (SVM Probability)."""
+    status = request.args.get('status', 'layak', type=str)
+    q = request.args.get('q', '', type=str)
+    page = request.args.get('page', 1, type=int)
+
+    # Join CalonPenerima & HasilKeputusan, urutkan berdasarkan probabilitas tertinggi (descending)
+    query = db.session.query(CalonPenerima, HasilKeputusan).join(
+        HasilKeputusan, CalonPenerima.id == HasilKeputusan.id_calon
+    )
+
+    # Filter berdasarkan status keputusannya
+    if status == 'layak':
+        query = query.filter(HasilKeputusan.hasil_prediksi == True)
+    elif status == 'tidak_layak':
+        query = query.filter(HasilKeputusan.hasil_prediksi == False)
+
+    # Filter pencarian nama/NIK/wilayah
+    if q:
+        query = query.filter(
+            (CalonPenerima.nama.like(f"%{q}%"))
+            | (CalonPenerima.alamat.like(f"%{q}%"))
+            | (CalonPenerima.nik.like(f"%{q}%"))
+            | (CalonPenerima.desa_kelurahan.like(f"%{q}%"))
+            | (CalonPenerima.kecamatan.like(f"%{q}%"))
+        )
+
+    # Order by probabilitas terbanyak (Confidence Score tertinggi)
+    query = query.order_by(HasilKeputusan.probabilitas.desc())
+
+    # Paginasi 10 item per halaman
+    pagination = query.paginate(page=page, per_page=10, error_out=False)
+    ranking_items = pagination.items
+
+    # Hitung statistik ringkasan
+    all_filtered = query.all()
+    total_count = len(all_filtered)
+    top_confidence = (all_filtered[0][1].probabilitas * 100) if total_count > 0 else 0.0
+    avg_confidence = (sum(item[1].probabilitas for item in all_filtered) / total_count * 100) if total_count > 0 else 0.0
+
+    return render_template('calon/ranking.html',
+                           ranking_items=ranking_items,
+                           pagination=pagination,
+                           status=status,
+                           q=q,
+                           total_count=total_count,
+                           top_confidence=top_confidence,
+                           avg_confidence=avg_confidence,
+                           penghasilan_skor=PENGHASILAN_MAPPING,
+                           pekerjaan_skor=PEKERJAAN_MAPPING,
+                           aset_skor=ASET_MAPPING,
+                           label_singkat=LABEL_SINGKAT)
+
+

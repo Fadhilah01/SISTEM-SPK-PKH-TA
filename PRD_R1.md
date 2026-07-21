@@ -99,6 +99,7 @@
 | Security Hardening | ✅ | 10 lapisan proteksi |
 | Autocomplete Wilayah | ✅ | Database 89k+ wilayah |
 | Riwayat Keputusan | ✅ | Per calon + riwayat prediksi |
+| Perangkingan Confidence | ✅ | Perangkingan hierarkis terurut probabilitas margin SVM RBF |
 
 ## 10. Catatan untuk Sidang
 

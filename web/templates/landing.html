@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="id" data-bs-theme="light">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SPK Kelayakan PKH - SVM RBF Kecamatan Kasimbar</title>
-    
+    <title>SPK Kelayakan PKH - Kecamatan Kasimbar</title>
+
     <link rel="shortcut icon" href="{{ url_for('static', filename='img/image.ico') }}" type="image/x-icon">
     <!-- Bootstrap 5 CSS via CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -15,6 +16,7 @@
     <!-- Custom Landing Stylesheet (Monochrome, Soft Shadows, No Borders) -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/landing.css') }}">
 </head>
+
 <body>
 
     <!-- Custom magnet cursor -->
@@ -24,7 +26,7 @@
     <div id="loader">
         <div class="loader-content">
             <h3>Sistem Pendukung Keputusan</h3>
-            <h3>Kelayakan Bantuan PKH</h3>
+            <h3>Kelayakan Bantuan Program Keluarga Harapan (PKH)</h3>
             <h3>Kecamatan Kasimbar<sup>&reg;</sup></h3>
         </div>
     </div>
@@ -32,7 +34,8 @@
     <!-- Floating Navigation Bar Capsule -->
     <nav class="nav-capsule">
         <a href="#" class="nav-brand d-flex align-items-center">
-            <img src="{{ url_for('static', filename='img/image.png') }}" alt="Logo" class="brand-logo me-2" style="height: 20px; width: 20px; object-fit: contain;">
+            <img src="{{ url_for('static', filename='img/image.png') }}" alt="Logo" class="brand-logo me-2"
+                style="height: 20px; width: 20px; object-fit: contain;">
             <span>SPK PKH</span>
         </a>
         <div class="nav-links d-none d-md-flex">
@@ -60,16 +63,17 @@
             <div class="hero-tag">Tugas Akhir Teknik Informatika</div>
             <h1>
                 <span>Sistem Pendukung Keputusan</span> <br>
-                <span>Kelayakan Penerima Bantuan PKH</span> <br>
-                <span>Kecamatan Kasimbar - SVM RBF</span>
+                <span>Kelayakan Penerima Bantuan Program Keluarga Harapan (PKH)</span> <br>
+                <span>Kecamatan Kasimbar</span>
             </h1>
             <p>
-                Implementasi algoritma Support Vector Machine (SVM) dengan Radial Basis Function (RBF) kernel 
+                Implementasi algoritma Support Vector Machine (SVM) dengan Radial Basis Function (RBF) kernel
                 untuk akurasi penentuan kelayakan sosial yang berkeadilan di Kecamatan Kasimbar, Sulawesi Tengah.
             </p>
             <div class="hero-ctas">
                 <a href="#simulator" class="btn-primary-premium">Coba Simulator</a>
-                <a href="{{ url_for('static', filename='docs/Buku_Panduan_SPK_PKH.pdf') }}" class="btn-secondary-premium" target="_blank">
+                <a href="{{ url_for('static', filename='docs/Buku_Panduan_SPK_PKH.pdf') }}"
+                    class="btn-secondary-premium" target="_blank">
                     <i class="bi bi-file-earmark-pdf me-2"></i>Buku Panduan
                 </a>
             </div>
@@ -79,9 +83,10 @@
         <section class="section" id="simulator">
             <h2 class="section-title text-center">SVM Decision Playground</h2>
             <p class="section-subtitle text-center mx-auto">
-                Pilih kategori indikator dan aktifkan komponen keluarga untuk melakukan prediksi kelayakan calon penerima PKH secara real-time via model SVM.
+                Pilih kategori indikator dan aktifkan komponen keluarga untuk melakukan prediksi kelayakan calon
+                penerima PKH secara real-time via model SVM.
             </p>
-            
+
             <div class="simulator-layout">
                 <!-- Inputs (Segmented Controls) -->
                 <div class="card-premium">
@@ -97,9 +102,10 @@
                             <div class="segmented-item" data-val="2">Desil 4</div>
                             <div class="segmented-item" data-val="1">Desil 5</div>
                         </div>
-                        <div class="segmented-desc" id="penghasilanDesc">Keterangan: Desil 3 (Rp.800.000 - 900.000)</div>
+                        <div class="segmented-desc" id="penghasilanDesc">Keterangan: Desil 3 (Rp.800.000 - 900.000)
+                        </div>
                     </div>
-                    
+
                     <!-- Kriteria 2: Pekerjaan -->
                     <div class="slider-group">
                         <div class="slider-header">
@@ -114,7 +120,7 @@
                         </div>
                         <div class="segmented-desc" id="pekerjaanDesc">Keterangan: Petani/Nelayan</div>
                     </div>
-                    
+
                     <!-- Kriteria 3: Aset -->
                     <div class="slider-group">
                         <div class="slider-header">
@@ -129,7 +135,7 @@
                         </div>
                         <div class="segmented-desc" id="asetDesc">Keterangan: Motor (Harga Jual Tinggi)</div>
                     </div>
-                    
+
                     <!-- Komponen Sosial Switches -->
                     <div class="toggles-grid">
                         <div class="toggle-pill" id="ibu_hamilToggle">
@@ -156,12 +162,13 @@
 
                     <!-- Submit Button -->
                     <div class="mt-4 pt-2">
-                        <button type="button" class="btn-primary-premium w-100 py-3 text-uppercase font-monospace" id="btnPredict" style="font-size: 0.85rem; letter-spacing: 0.1em; border: none !important;">
+                        <button type="button" class="btn-primary-premium w-100 py-3 text-uppercase font-monospace"
+                            id="btnPredict" style="font-size: 0.85rem; letter-spacing: 0.1em; border: none !important;">
                             Analisis Kelayakan (SVM RBF)
                         </button>
                     </div>
                 </div>
-                
+
                 <!-- Output / Gauge -->
                 <div class="card-premium result-panel">
                     <h3 class="slider-label mb-4">Hasil Analisis Model</h3>
@@ -182,9 +189,10 @@
         <section class="section" id="performa">
             <h2 class="section-title">Performa Model & Statistik Real</h2>
             <p class="section-subtitle">
-                Hasil evaluasi silang (cross-validation) dan parameter optimal GridSearchCV pada dataset 318 sampel riil di Kecamatan Kasimbar.
+                Hasil evaluasi silang (cross-validation) dan parameter optimal GridSearchCV pada dataset 318 sampel riil
+                di Kecamatan Kasimbar.
             </p>
-            
+
             <div class="bento-grid">
                 <!-- Grid 1: Akurasi (Besar) -->
                 <div class="card-premium bento-item bento-item-large">
@@ -193,10 +201,12 @@
                         <div class="bento-num">{{ "%.2f"|format(metrics.accuracy * 100) }}%</div>
                     </div>
                     <div class="bento-desc">
-                        Model SVM dengan kernel RBF yang dituning menggunakan <strong>GridSearchCV</strong> menghasilkan akurasi klasifikasi sebesar <strong>{{ "%.2f"|format(metrics.accuracy * 100) }}%</strong>. Model dapat diandalkan untuk membedakan kelayakan calon penerima tanpa intervensi bias subjektif.
+                        Model SVM dengan kernel RBF yang dituning menggunakan <strong>GridSearchCV</strong> menghasilkan
+                        akurasi klasifikasi sebesar <strong>{{ "%.2f"|format(metrics.accuracy * 100) }}%</strong>. Model
+                        dapat diandalkan untuk membedakan kelayakan calon penerima tanpa intervensi bias subjektif.
                     </div>
                 </div>
-                
+
                 <!-- Grid 2: Recall -->
                 <div class="card-premium bento-item">
                     <div>
@@ -204,10 +214,11 @@
                         <div class="bento-num">{{ "%.1f"|format(metrics.recall * 100) }}%</div>
                     </div>
                     <div class="bento-desc">
-                        Tingkat keberhasilan menjaring calon layak. Recall 100% menjamin <strong>nol salah penolakan (false negative)</strong> pada calon penerima yang berhak.
+                        Tingkat keberhasilan menjaring calon layak. Recall 100% menjamin <strong>nol salah penolakan
+                            (false negative)</strong> pada calon penerima yang berhak.
                     </div>
                 </div>
-                
+
                 <!-- Grid 3: Presisi -->
                 <div class="card-premium bento-item">
                     <div>
@@ -215,10 +226,11 @@
                         <div class="bento-num">{{ "%.1f"|format(metrics.precision * 100) }}%</div>
                     </div>
                     <div class="bento-desc">
-                        Tingkat presisi model mendeteksi kelayakan sebesar <strong>{{ "%.1f"|format(metrics.precision * 100) }}%</strong> untuk efisiensi anggaran bansos.
+                        Tingkat presisi model mendeteksi kelayakan sebesar <strong>{{ "%.1f"|format(metrics.precision *
+                            100) }}%</strong> untuk efisiensi anggaran bansos.
                     </div>
                 </div>
-                
+
                 <!-- Grid 4: Total Calon -->
                 <div class="card-premium bento-item">
                     <div>
@@ -229,18 +241,19 @@
                         Data calon penerima PKH yang dikumpulkan dari 3 desa: Posona, Kasimbar Palapi, dan Posona Atas.
                     </div>
                 </div>
-                
+
                 <!-- Grid 5: Layak -->
                 <div class="card-premium bento-item">
                     <div>
                         <div class="bento-tag">Diprediksi Layak</div>
-                        <div class="bento-num text-success" style="color: var(--text-primary) !important;">{{ total_layak }}</div>
+                        <div class="bento-num text-success" style="color: var(--text-primary) !important;">{{
+                            total_layak }}</div>
                     </div>
                     <div class="bento-desc">
                         Calon penerima yang lolos klasifikasi SVM dan direkomendasikan menerima bantuan PKH.
                     </div>
                 </div>
-                
+
                 <!-- Grid 6: F1 & AUC -->
                 <div class="card-premium bento-item">
                     <div>
@@ -248,7 +261,8 @@
                         <div class="bento-num">{{ "%.4f"|format(metrics.f1) }}</div>
                     </div>
                     <div class="bento-desc">
-                        F1-Score harmonis antara Presisi-Recall: <strong>{{ "%.4f"|format(metrics.f1) }}</strong>. AUC Score: <strong>0.9954</strong> menunjukkan area pemisah klasifikasi yang sangat kuat.
+                        F1-Score harmonis antara Presisi-Recall: <strong>{{ "%.4f"|format(metrics.f1) }}</strong>. AUC
+                        Score: <strong>0.9954</strong> menunjukkan area pemisah klasifikasi yang sangat kuat.
                     </div>
                 </div>
             </div>
@@ -267,25 +281,43 @@
                     <div class="pin-card-body">
                         <div class="pin-card-text">
                             <p class="mb-3">
-                                Penentuan kelayakan didasarkan pada keputusan regulasi resmi <strong>Kementerian Sosial RI / SDM PKH Sulawesi Tengah</strong>:
+                                Penentuan kelayakan didasarkan pada keputusan regulasi resmi <strong>Kementerian Sosial
+                                    RI / SDM PKH Sulawesi Tengah</strong>:
                             </p>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Penghasilan (25%):</strong> Diukur dari kategori Desil Kesejahteraan (Desil 1 s.d Desil 5).</li>
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Pekerjaan (20%):</strong> Prioritas diberikan kepada yang tidak memiliki pekerjaan tetap.</li>
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Kepemilikan Aset (15%):</strong> Mengukur kepemilikan modal atau properti bernilai tinggi.</li>
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Komponen Sosial (40%):</strong> Ibu Hamil (10%), Anak Usia Dini (10%), Anak Sekolah (10%), Disabilitas (5%), Lansia (5%).</li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Penghasilan
+                                        (25%):</strong> Diukur dari kategori Desil Kesejahteraan (Desil 1 s.d Desil 5).
+                                </li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Pekerjaan
+                                        (20%):</strong> Prioritas diberikan kepada yang tidak memiliki pekerjaan tetap.
+                                </li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Kepemilikan Aset
+                                        (15%):</strong> Mengukur kepemilikan modal atau properti bernilai tinggi.</li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Komponen Sosial
+                                        (40%):</strong> Ibu Hamil (10%), Anak Usia Dini (10%), Anak Sekolah (10%),
+                                    Disabilitas (5%), Lansia (5%).</li>
                             </ul>
                         </div>
                         <div class="pin-card-visual">
                             <div class="arch-diagram-box" style="box-shadow: none; background-color: var(--bg-page);">
                                 <h4 class="slider-label mb-3 text-center">Distribusi Bobot Fitur</h4>
-                                <div class="progress mb-2" style="height: 24px; background-color: var(--bg-card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);">
-                                    <div class="progress-bar bg-dark" role="progressbar" style="width: 25%; font-size: 0.75rem;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">Penghasilan 25%</div>
-                                    <div class="progress-bar bg-secondary" role="progressbar" style="width: 20%; font-size: 0.75rem;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100">Kerja 20%</div>
-                                    <div class="progress-bar bg-dark bg-opacity-75" role="progressbar" style="width: 15%; font-size: 0.75rem;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100">Aset 15%</div>
-                                    <div class="progress-bar bg-secondary bg-opacity-50 text-dark" role="progressbar" style="width: 40%; font-size: 0.75rem;" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100">Komponen 40%</div>
+                                <div class="progress mb-2"
+                                    style="height: 24px; background-color: var(--bg-card); border-radius: 8px; overflow: hidden; box-shadow: var(--shadow-sm);">
+                                    <div class="progress-bar bg-dark" role="progressbar"
+                                        style="width: 25%; font-size: 0.75rem;" aria-valuenow="25" aria-valuemin="0"
+                                        aria-valuemax="100">Penghasilan 25%</div>
+                                    <div class="progress-bar bg-secondary" role="progressbar"
+                                        style="width: 20%; font-size: 0.75rem;" aria-valuenow="20" aria-valuemin="0"
+                                        aria-valuemax="100">Kerja 20%</div>
+                                    <div class="progress-bar bg-dark bg-opacity-75" role="progressbar"
+                                        style="width: 15%; font-size: 0.75rem;" aria-valuenow="15" aria-valuemin="0"
+                                        aria-valuemax="100">Aset 15%</div>
+                                    <div class="progress-bar bg-secondary bg-opacity-50 text-dark" role="progressbar"
+                                        style="width: 40%; font-size: 0.75rem;" aria-valuenow="40" aria-valuemin="0"
+                                        aria-valuemax="100">Komponen 40%</div>
                                 </div>
-                                <small class="text-muted d-block text-center mt-2" style="font-size: 0.75rem;">Atribut biner (sosial) memiliki kontribusi akumulasi terbesar (40%).</small>
+                                <small class="text-muted d-block text-center mt-2" style="font-size: 0.75rem;">Atribut
+                                    biner (sosial) memiliki kontribusi akumulasi terbesar (40%).</small>
                             </div>
                         </div>
                     </div>
@@ -303,23 +335,34 @@
                     <div class="pin-card-body">
                         <div class="pin-card-text">
                             <p class="mb-3">
-                                Sistem web dirancang secara modular memisahkan engine inferensi machine learning dengan UI web:
+                                Sistem web dirancang secara modular memisahkan engine inferensi machine learning dengan
+                                UI web:
                             </p>
                             <ul class="list-unstyled">
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Flask Application:</strong> Mengatur routing, middleware, dan session security.</li>
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Inference Module:</strong> Memuat pipa pemroses <code>joblib</code> model hasil training.</li>
-                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>SQLite Database:</strong> Menyimpan riwayat data calon penerima dan keputusan akhir.</li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Flask
+                                        Application:</strong> Mengatur routing, middleware, dan session security.</li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>Inference
+                                        Module:</strong> Memuat pipa pemroses <code>joblib</code> model hasil training.
+                                </li>
+                                <li class="mb-2"><i class="bi bi-circle-fill fs-9 me-2"></i><strong>SQLite
+                                        Database:</strong> Menyimpan riwayat data calon penerima dan keputusan akhir.
+                                </li>
                             </ul>
                         </div>
                         <div class="pin-card-visual">
-                            <div class="arch-diagram-box d-flex flex-column gap-2 text-center" style="box-shadow: none; background-color: var(--bg-page);">
-                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">INPUT FORM / EXCEL</div>
+                            <div class="arch-diagram-box d-flex flex-column gap-2 text-center"
+                                style="box-shadow: none; background-color: var(--bg-page);">
+                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">INPUT
+                                    FORM / EXCEL</div>
                                 <div class="bi bi-arrow-down"></div>
-                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">PREPROCESSING & MINMAX SCALING</div>
+                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">
+                                    PREPROCESSING & MINMAX SCALING</div>
                                 <div class="bi bi-arrow-down"></div>
-                                <div class="p-2 bg-dark text-light rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">INFERENSI SVM (RBF KERNEL)</div>
+                                <div class="p-2 bg-dark text-light rounded shadow-sm fw-semibold"
+                                    style="font-size: 0.8rem;">INFERENSI SVM (RBF KERNEL)</div>
                                 <div class="bi bi-arrow-down"></div>
-                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">OUTPUT REKOMENDASI & DB SAVE</div>
+                                <div class="p-2 bg-body rounded shadow-sm fw-semibold" style="font-size: 0.8rem;">OUTPUT
+                                    REKOMENDASI & DB SAVE</div>
                             </div>
                         </div>
                     </div>
@@ -337,14 +380,27 @@
                     <div class="pin-card-body">
                         <div class="pin-card-text">
                             <p class="mb-3">
-                                Parameter optimal ditemukan menggunakan teknik pencarian komprehensif <strong>GridSearchCV</strong> dengan stratifikasi k-fold:
+                                Parameter optimal ditemukan menggunakan teknik pencarian komprehensif
+                                <strong>GridSearchCV</strong> dengan stratifikasi k-fold:
                             </p>
                             <table class="table table-borderless table-sm mb-0 text-muted" style="font-size: 0.9rem;">
                                 <tbody>
-                                    <tr><td>Kernel trick</td><td><strong>RBF</strong> (Radial Basis Function)</td></tr>
-                                    <tr><td>Regularization parameter (C)</td><td><strong>10</strong> (keseimbangan margin & penalti)</td></tr>
-                                    <tr><td>Kernel coefficient (gamma)</td><td><strong>0.01</strong> (pemetaan sebaran optimal)</td></tr>
-                                    <tr><td>Class Weight</td><td><strong>Balanced</strong> (mengatasi imbalance label)</td></tr>
+                                    <tr>
+                                        <td>Kernel trick</td>
+                                        <td><strong>RBF</strong> (Radial Basis Function)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Regularization parameter (C)</td>
+                                        <td><strong>10</strong> (keseimbangan margin & penalti)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Kernel coefficient (gamma)</td>
+                                        <td><strong>0.01</strong> (pemetaan sebaran optimal)</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Class Weight</td>
+                                        <td><strong>Balanced</strong> (mengatasi imbalance label)</td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -352,8 +408,11 @@
                             <div class="arch-diagram-box" style="box-shadow: none; background-color: var(--bg-page);">
                                 <h4 class="slider-label mb-3 text-center">Fungsi Kernel RBF</h4>
                                 <p class="text-muted" style="font-size: 0.8rem; line-height: 1.5; text-align: justify;">
-                                    Kernel Radial Basis Function (RBF) memetakan fitur ke dimensi lebih tinggi yang tidak terbatas untuk memisahkan data kriteria secara non-linear. Persamaan pemetaan: <br>
-                                    <code class="d-block text-center my-2 text-dark font-monospace" style="font-size: 0.85rem;">K(x, x') = exp(-γ ||x - x'||²)</code>
+                                    Kernel Radial Basis Function (RBF) memetakan fitur ke dimensi lebih tinggi yang
+                                    tidak terbatas untuk memisahkan data kriteria secara non-linear. Persamaan pemetaan:
+                                    <br>
+                                    <code class="d-block text-center my-2 text-dark font-monospace"
+                                        style="font-size: 0.85rem;">K(x, x') = exp(-γ ||x - x'||²)</code>
                                     Di mana <code>γ</code> diset 0.01 hasil optimasi validasi silang.
                                 </p>
                             </div>
@@ -367,9 +426,10 @@
         <section class="section" id="profil">
             <h2 class="section-title text-center">Profil Peneliti & Pengembang</h2>
             <p class="section-subtitle text-center mx-auto">
-                Sistem pendukung keputusan ini dirancang dan dikembangkan sebagai tugas akhir kelulusan Program Sarjana Komputer.
+                Sistem pendukung keputusan ini dirancang dan dikembangkan sebagai tugas akhir kelulusan Program Sarjana
+                Komputer.
             </p>
-            
+
             <div class="card-premium">
                 <div class="profile-layout">
                     <!-- Photo Placeholder -->
@@ -380,7 +440,7 @@
                     <div class="profile-info">
                         <h3>Fadhilah Lamangkona</h3>
                         <h4>NIM. F551 20 013</h4>
-                        
+
                         <div class="profile-details">
                             <div class="profile-detail-item">
                                 <div class="profile-detail-label">Program Studi</div>
@@ -399,7 +459,7 @@
                                 <div class="profile-detail-val">Kecamatan Kasimbar, Sulteng</div>
                             </div>
                         </div>
-                        
+
                         <div>
                             <div class="profile-detail-label">Tanda Tangan Pengembang</div>
                             <div class="signature">Fadhilah Lamangkona</div>
@@ -415,28 +475,31 @@
             <p class="section-subtitle text-center mx-auto">
                 Buka dan tinjau berkas regulasi resmi, skema kriteria, dan dokumen pendukung skripsi lainnya.
             </p>
-            
+
             <div class="download-grid">
                 <!-- Doc 1: Kriteria -->
-                <a href="{{ url_for('static', filename='docs/Penentuan_Kriteria.pdf') }}" class="download-card" target="_blank">
+                <a href="{{ url_for('static', filename='docs/Penentuan_Kriteria.pdf') }}" class="download-card"
+                    target="_blank">
                     <div class="download-info">
                         <span class="download-title">Penentuan Kriteria Resmi.pdf</span>
                         <span class="download-meta">Tinjau aturan bobot kriteria resmi dari SDM PKH (PDF)</span>
                     </div>
                     <i class="bi bi-eye download-icon"></i>
                 </a>
-                
+
                 <!-- Doc 2: Indikator -->
-                <a href="{{ url_for('static', filename='docs/Penentuan_Indikator_Kriteria.pdf') }}" class="download-card" target="_blank">
+                <a href="{{ url_for('static', filename='docs/Penentuan_Indikator_Kriteria.pdf') }}"
+                    class="download-card" target="_blank">
                     <div class="download-info">
                         <span class="download-title">Indikator Kriteria Ordinal.pdf</span>
                         <span class="download-meta">Tinjau panduan skor kriteria desil & biner (PDF)</span>
                     </div>
                     <i class="bi bi-eye download-icon"></i>
                 </a>
-                
+
                 <!-- Notebook link -->
-                <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/svm-pkh-ta.ipynb" target="_blank" class="download-card">
+                <a href="https://github.com/Fadhilah01/SISTEM-SPK-PKH-TA/blob/main/svm-pkh-ta.ipynb" target="_blank"
+                    class="download-card">
                     <div class="download-info">
                         <span class="download-title">Kaggle Training Notebook (.ipynb)</span>
                         <span class="download-meta">Tinjau script training model SVM RBF via GitHub</span>
@@ -447,7 +510,8 @@
         </section>
 
         <!-- FOOTER -->
-        <footer style="padding: 60px 8vw 120px 8vw; background-color: var(--bg-page); text-align: center; color: var(--text-light); font-size: 0.8rem; line-height: 1.6;">
+        <footer
+            style="padding: 60px 8vw 120px 8vw; background-color: var(--bg-page); text-align: center; color: var(--text-light); font-size: 0.8rem; line-height: 1.6;">
             SPK PKH SVM RBF | Hak Cipta &copy; 2026 Fadhilah Lamangkona (F55120013)<br>
             Teknik Informatika - Universitas Tadulako | Palu, Sulawesi Tengah
         </footer>
@@ -458,19 +522,20 @@
     <div class="floating-dock">
         <span class="floating-dock-text">Hubungi Pendamping</span>
         <div class="floating-dock-actions">
-            <a href="mailto:fadhilah.lamangkona@example.com" class="floating-dock-btn" title="Email"><i class="bi bi-envelope"></i></a>
+            <a href="mailto:fadhilah.lamangkona@example.com" class="floating-dock-btn" title="Email"><i
+                    class="bi bi-envelope"></i></a>
             <a href="tel:+62852XXXXXXXX" class="floating-dock-btn" title="Telepon"><i class="bi bi-telephone"></i></a>
         </div>
     </div>
 
     <!-- Failsafe script to remove loader if JS crashes -->
     <script>
-        setTimeout(function() {
+        setTimeout(function () {
             var loader = document.getElementById('loader');
             if (loader && loader.style.display !== 'none') {
                 loader.style.opacity = '0';
                 loader.style.pointerEvents = 'none';
-                setTimeout(function() {
+                setTimeout(function () {
                     loader.style.display = 'none';
                 }, 800);
             }
@@ -485,4 +550,5 @@
     <!-- Custom Landing Page Logic -->
     <script src="{{ url_for('static', filename='js/landing.js') }}"></script>
 </body>
+
 </html>

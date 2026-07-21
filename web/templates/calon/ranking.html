@@ -1,0 +1,249 @@
+{% extends 'base.html' %}
+{% block title %}Perangkingan Confidence Score{% endblock %}
+
+{% block content %}
+<div class="stagger-container">
+    <!-- Header -->
+    <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-4">
+        <div>
+            <h4 class="mb-1"><i class="bi bi-sort-numeric-down text-secondary me-2"></i> Perangkingan Confidence Score</h4>
+            <p class="text-muted small mb-0">Pengurutan hierarkis calon penerima bantuan berdasarkan tingkat kepastian (*probability margin*) model SVM RBF.</p>
+        </div>
+        <div>
+            <a href="{{ url_for('calon.export_calon') }}" class="btn btn-outline-secondary btn-sm d-flex align-items-center gap-1">
+                <i class="bi bi-download"></i> Export Laporan Perangkingan
+            </a>
+        </div>
+    </div>
+
+    <!-- Stat Cards Bento Grid -->
+    <div class="bento-grid mb-4">
+        <div class="card bento-card">
+            <div>
+                <div class="metric-label">Total Terangking</div>
+                <div class="metric-value">{{ total_count }}</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-light border-opacity-10">
+                <span class="text-muted small">Kategori: <strong>{% if status == 'layak' %}Layak{% elif status == 'tidak_layak' %}Tidak Layak{% else %}Semua{% endif %}</strong></span>
+                <i class="bi bi-list-ol text-muted"></i>
+            </div>
+        </div>
+        <div class="card bento-card">
+            <div>
+                <div class="metric-label">Confidence Tertinggi</div>
+                <div class="metric-value">{{ "%.1f"|format(top_confidence) }}%</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-light border-opacity-10">
+                <span class="text-muted small">Skor keyakinan teratas</span>
+                <i class="bi bi-shield-check text-muted"></i>
+            </div>
+        </div>
+        <div class="card bento-card">
+            <div>
+                <div class="metric-label">Rata-Rata Confidence</div>
+                <div class="metric-value">{{ "%.1f"|format(avg_confidence) }}%</div>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mt-3 pt-2 border-top border-light border-opacity-10">
+                <span class="text-muted small">Tingkat akurasi grup</span>
+                <i class="bi bi-calculator text-muted"></i>
+            </div>
+        </div>
+    </div>
+
+    <!-- Nav Pills Filter & Search -->
+    <div class="card mb-3">
+        <div class="card-body py-3">
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+                <!-- Status Tabs -->
+                <ul class="nav nav-pills card-header-pills m-0">
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm py-1 px-3 {% if status == 'layak' %}active{% endif %}" href="{{ url_for('calon.perangkingan', status='layak', q=q) }}">
+                            <i class="bi bi-check-circle me-1"></i> Layak (Prioritas)
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm py-1 px-3 {% if status == 'tidak_layak' %}active{% endif %}" href="{{ url_for('calon.perangkingan', status='tidak_layak', q=q) }}">
+                            <i class="bi bi-x-circle me-1"></i> Tidak Layak
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-sm py-1 px-3 {% if status == 'semua' %}active{% endif %}" href="{{ url_for('calon.perangkingan', status='semua', q=q) }}">
+                            <i class="bi bi-grid me-1"></i> Semua Data
+                        </a>
+                    </li>
+                </ul>
+
+                <!-- Form Search -->
+                <form method="GET" action="{{ url_for('calon.perangkingan') }}" class="d-flex gap-1" style="min-width: 250px;">
+                    <input type="hidden" name="status" value="{{ status }}">
+                    <div class="input-group input-group-sm">
+                        <input type="text" name="q" class="form-control" placeholder="Cari nama, NIK, desa..." value="{{ q or '' }}">
+                        <button type="submit" class="btn btn-outline-secondary">
+                            <i class="bi bi-search"></i>
+                        </button>
+                        {% if q %}
+                        <a href="{{ url_for('calon.perangkingan', status=status) }}" class="btn btn-outline-secondary" title="Hapus pencarian">
+                            <i class="bi bi-x-lg"></i>
+                        </a>
+                        {% endif %}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ranking Table Card -->
+    {% if ranking_items %}
+    <div class="card">
+        <div class="card-body p-0">
+            <div class="table-responsive border-0 rounded-0">
+                <table class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr class="table-light">
+                            <th class="ps-3 py-3 small text-muted" style="width: 130px;">Prioritas</th>
+                            <th class="py-3 small text-muted">Nama & NIK</th>
+                            <th class="py-3 small text-muted">Wilayah</th>
+                            <th class="py-3 small text-muted">Hasil Klasifikasi</th>
+                            <th class="py-3 small text-muted" style="width: 200px;">Confidence Score</th>
+                            <th class="py-3 small text-muted">Ringkasan Kriteria</th>
+                            <th class="py-3 small text-muted text-end pe-3" style="width: 110px;">Aksi</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for c, h in ranking_items %}
+                        {% set absolute_rank = (pagination.page - 1) * pagination.per_page + loop.index %}
+                        <tr>
+                            <td class="ps-3 py-3">
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 font-monospace px-2 py-1" style="font-size: 0.8rem;">
+                                    Prioritas {{ absolute_rank }}
+                                </span>
+                            </td>
+                            <td>
+                                <strong class="text-dark-emphasis d-block">{{ c.nama }}</strong>
+                                <span class="font-monospace text-muted small" style="font-size: 0.75rem;">NIK: {{ c.nik }}</span>
+                            </td>
+                            <td>
+                                {% if c.desa_kelurahan or c.kecamatan %}
+                                <span class="badge bg-secondary bg-opacity-10 text-secondary border border-secondary border-opacity-20 small">
+                                    <i class="bi bi-geo-alt-fill"></i> {{ c.desa_kelurahan or c.kecamatan }}
+                                </span>
+                                {% else %}
+                                <span class="text-muted small">-</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if h.hasil_prediksi %}
+                                <span class="badge badge-layak px-2 py-1"><i class="bi bi-check-circle"></i> Layak</span>
+                                {% else %}
+                                <span class="badge badge-tidak-layak px-2 py-1"><i class="bi bi-x-circle"></i> Tidak Layak</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="progress flex-grow-1" style="height: 6px; background-color: rgba(0,0,0,0.05);">
+                                        <div class="progress-bar bg-dark" role="progressbar" data-width="{{ '%.1f%%'|format(h.probabilitas * 100) }}" aria-valuenow="{{ '%.1f'|format(h.probabilitas * 100) }}" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <span class="font-monospace fw-bold small text-secondary" style="font-size: 0.8rem; min-width: 48px;">
+                                        {{ "%.1f"|format(h.probabilitas * 100) }}%
+                                    </span>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex flex-wrap gap-1">
+                                    <span class="badge badge-cat badge-cat-severity-{{ penghasilan_skor.get(c.penghasilan, 3) }}" style="font-size: 0.7rem;">
+                                        {{ label_singkat.get(c.penghasilan, c.penghasilan) }}
+                                    </span>
+                                    <span class="badge badge-cat badge-cat-severity-{{ pekerjaan_skor.get(c.pekerjaan, 3) }}" style="font-size: 0.7rem;">
+                                        {{ label_singkat.get(c.pekerjaan, c.pekerjaan) }}
+                                    </span>
+                                </div>
+                            </td>
+                            <td class="text-end pe-3">
+                                <div class="btn-group btn-group-sm">
+                                    <a href="{{ url_for('calon.edit_calon', id=c.id) }}" class="btn btn-outline-primary" title="Edit Data">
+                                        <i class="bi bi-pencil"></i>
+                                    </a>
+                                    <form method="POST" action="{{ url_for('calon.prediksi_ulang', id=c.id) }}" class="d-inline">
+                                        <input type="hidden" name="_csrf_token" value="{{ csrf_token }}">
+                                        <button type="submit" class="btn btn-outline-primary" title="Prediksi Ulang">
+                                            <i class="bi bi-arrow-repeat"></i>
+                                        </button>
+                                    </form>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Pagination Footer -->
+        {% if pagination and pagination.pages > 1 %}
+        <div class="card-footer bg-surface border-top border-light border-opacity-10 py-3 px-4 d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2">
+            <div class="text-muted small">
+                Menampilkan peringkat <strong>{{ (pagination.page - 1) * pagination.per_page + 1 }}</strong> - 
+                <strong>{{ [pagination.page * pagination.per_page, pagination.total]|min }}</strong> dari 
+                <strong>{{ pagination.total }}</strong> calon
+            </div>
+            <nav aria-label="Page navigation">
+                <ul class="pagination pagination-sm m-0 gap-1">
+                    <!-- Previous Page -->
+                    <li class="page-item {% if not pagination.has_prev %}disabled{% endif %}">
+                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center"
+                           href="{{ url_for('calon.perangkingan', page=pagination.prev_num, status=status, q=q) if pagination.has_prev else '#' }}"
+                           style="width: 32px; height: 32px;" title="Sebelumnya">
+                            <i class="bi bi-chevron-left"></i>
+                        </a>
+                    </li>
+
+                    <!-- Page Numbers -->
+                    {% for p in pagination.iter_pages(left_edge=1, right_edge=1, left_current=1, right_current=2) %}
+                        {% if p %}
+                            <li class="page-item {% if pagination.page == p %}active{% endif %}">
+                                <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center fw-medium"
+                                   href="{{ url_for('calon.perangkingan', page=p, status=status, q=q) }}"
+                                   style="width: 32px; height: 32px;">{{ p }}</a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <span class="page-link border-0 bg-transparent text-muted px-1">...</span>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+
+                    <!-- Next Page -->
+                    <li class="page-item {% if not pagination.has_next %}disabled{% endif %}">
+                        <a class="page-link border-0 rounded-circle d-flex align-items-center justify-content-center"
+                           href="{{ url_for('calon.perangkingan', page=pagination.next_num, status=status, q=q) if pagination.has_next else '#' }}"
+                           style="width: 32px; height: 32px;" title="Berikutnya">
+                            <i class="bi bi-chevron-right"></i>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        {% endif %}
+    </div>
+    {% else %}
+    <div class="card py-5">
+        <div class="card-body text-center text-muted">
+            <i class="bi bi-sort-numeric-down" style="font-size: 3rem; opacity: 0.3;"></i>
+            <h5 class="mt-3 font-display text-dark-emphasis">Tidak Ada Data Perangkingan</h5>
+            <p class="small text-muted mb-4">Tidak ditemukan data calon dengan kriteria filter tersebut.</p>
+            <a href="{{ url_for('calon.perangkingan') }}" class="btn btn-outline-secondary btn-sm">
+                Reset Filter Perangkingan
+            </a>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        document.querySelectorAll('.progress-bar').forEach(function(bar) {
+            bar.style.width = bar.getAttribute('data-width');
+        });
+    });
+</script>
+{% endblock %}
