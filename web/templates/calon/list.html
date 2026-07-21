@@ -101,7 +101,7 @@
                         {% for c in calon_list %}
                         <tr>
                             <td class="font-monospace text-muted small">{{ (pagination.page - 1) * pagination.per_page + loop.index }}</td>
-                            <td><strong class="text-dark-emphasis">{{ c.nama }}</strong></td>
+                            <td><a href="{{ url_for('calon.detail_calon', id=c.id) }}" class="text-decoration-none text-dark-emphasis fw-bold hover-underline">{{ c.nama }}</a></td>
                             <td><span class="font-monospace text-muted small">{{ c.nik }}</span></td>
                             <td>
                                 {% if c.desa_kelurahan or c.kecamatan or c.kabupaten %}
@@ -158,6 +158,10 @@
                             </td>
                             <td>
                                 <div class="btn-group btn-group-sm">
+                                    <a href="{{ url_for('calon.detail_calon', id=c.id) }}" class="btn btn-outline-primary"
+                                       title="Lihat Detail">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
                                     <a href="{{ url_for('calon.edit_calon', id=c.id) }}" class="btn btn-outline-primary"
                                        title="Edit Data">
                                         <i class="bi bi-pencil"></i>

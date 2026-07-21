@@ -119,7 +119,7 @@
                                 </span>
                             </td>
                             <td>
-                                <strong class="text-dark-emphasis d-block">{{ c.nama }}</strong>
+                                <a href="{{ url_for('calon.detail_calon', id=c.id) }}" class="text-decoration-none text-dark-emphasis fw-bold hover-underline d-block">{{ c.nama }}</a>
                                 <span class="font-monospace text-muted small" style="font-size: 0.75rem;">NIK: {{ c.nik }}</span>
                             </td>
                             <td>
@@ -160,6 +160,9 @@
                             </td>
                             <td class="text-end pe-3">
                                 <div class="btn-group btn-group-sm">
+                                    <a href="{{ url_for('calon.detail_calon', id=c.id) }}" class="btn btn-outline-primary" title="Lihat Detail">
+                                        <i class="bi bi-eye"></i>
+                                    </a>
                                     <a href="{{ url_for('calon.edit_calon', id=c.id) }}" class="btn btn-outline-primary" title="Edit Data">
                                         <i class="bi bi-pencil"></i>
                                     </a>

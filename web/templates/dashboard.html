@@ -74,7 +74,7 @@
                                 {% for r in recent %}
                                 <tr class="recent-row" data-page="{{ ((loop.index - 1) // 3) + 1 }}">
                                     <td class="ps-3 py-2 text-dark-emphasis fw-semibold">
-                                        {{ r.calon.nama }}
+                                        <a href="{{ url_for('calon.detail_calon', id=r.calon.id) }}" class="text-decoration-none text-dark-emphasis fw-bold hover-underline">{{ r.calon.nama }}</a>
                                         <div class="text-muted font-monospace" style="font-size: 0.7rem;">NIK: {{ r.calon.nik }}</div>
                                     </td>
                                     <td class="py-2">

@@ -17,16 +17,15 @@ Dosen penguji meminta agar sistem menyajikan fitur **Perangkingan (Ranking)** un
 ## 2. Perubahan Sistem Web SPK
 
 1. **Menu Navigasi Sidebar:**
-   - Menambahkan menu baru **"Perangkingan"** dengan ikon `bi-trophy` di bawah menu manajemen calon pada seluruh halaman terproteksi.
-2. **Endpoint Backend (`/perangkingan`):**
-   - Menggabungkan data `CalonPenerima` dan `HasilKeputusan` via SQLAlchemy join query.
-   - Melakukan pengurutan menurun (`ORDER BY probabilitas DESC`).
-   - Menyediakan filter cepat berdasarkan grup status kelayakan (*Layak Prioritas*, *Tidak Layak*, dan *Semua Data*).
-   - Menghitung statistik *Top Confidence Score* dan *Average Confidence Score*.
-3. **Antarmuka Pengguna (`templates/calon/ranking.html`):**
+   - Menambahkan menu baru **"Perangkingan"** dengan ikon `bi-sort-numeric-down` di bawah menu manajemen calon pada seluruh halaman terproteksi.
+2. **Endpoint Backend & Detail Calon (`/perangkingan` & `/calon/<id>/detail`):**
+   - Menggabungkan data `CalonPenerima` dan `HasilKeputusan` via SQLAlchemy join query untuk perangkingan (`ORDER BY probabilitas DESC`).
+   - Rute `/calon/<int:id>/detail` menyajikan profil lengkap calon, koordinat wilayah, detail 8 parameter kemiskinan, dan rincian keputusan/probabilitas model SVM.
+   - Mengintegrasikan interaksi klik pada nama calon di daftar calon, dashboard, dan tabel perangkingan untuk memicu penampilan modal/halaman detail secara mulus.
+3. **Antarmuka Pengguna (`templates/calon/ranking.html` & `templates/calon/detail.html`):**
    - Menampilkan *Bento Stat Cards* statistik perangkingan.
-   - Visualisasi peringkat menggunakan medali emas (🥇 #1), perak (🥈 #2), perunggu (🥉 #3), dan badge numerik `#4`, `#5`, dst.
-   - Bilah kemajuan (*progress bar*) visual untuk merepresentasikan persentase *confidence score*.
+   - Desain penomoran peringkat yang formal dan flat (misal `Prioritas 1`, `Prioritas 2`, dst.) menggantikan representasi visual podium/trofi yang terkesan kurang akademis.
+   - Bilah kemajuan (*progress bar*) visual untuk merepresentasikan persentase *confidence score* (keyakinan prediksi).
 
 ---
 

@@ -574,3 +574,19 @@ def perangkingan():
                            label_singkat=LABEL_SINGKAT)
 
 
+@calon_bp.route('/calon/<int:id>/detail')
+@login_required
+def detail_calon(id):
+    """Lihat detail profil calon penerima + kriteria + keputusan SVM."""
+    calon = CalonPenerima.query.get_or_404(id)
+    hasil = HasilKeputusan.query.filter_by(id_calon=id).first()
+    return render_template('calon/detail.html',
+                           calon=calon,
+                           hasil=hasil,
+                           penghasilan_skor=PENGHASILAN_MAPPING,
+                           pekerjaan_skor=PEKERJAAN_MAPPING,
+                           aset_skor=ASET_MAPPING,
+                           label_singkat=LABEL_SINGKAT)
+
+
+
