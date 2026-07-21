@@ -6,7 +6,7 @@
 
 ## 1. Latar Belakang & Kebutuhan
 
-Untuk meningkatkan akurasi pendataan calon penerima bantuan Program Keluarga Harapan (PKH) dan mencegah duplikasi data (double-entry) baik dari input manual maupun bulk import Excel/CSV, ditambahkan kolom **Nomor Induk Kependudukan (NIK)** pada tabel data calon penerima di seluruh subsistem Sipekaha.
+Untuk meningkatkan akurasi pendataan calon penerima bantuan Program Keluarga Harapan (PKH) dan mencegah duplikasi data (double-entry) baik dari input manual maupun bulk import Excel/CSV, ditambahkan kolom **Nomor Induk Kependudukan (NIK)** pada tabel data calon penerima di seluruh subsistem SIPEKAHA.
 
 NIK memiliki karakteristik:
 1. Wajib (Required)

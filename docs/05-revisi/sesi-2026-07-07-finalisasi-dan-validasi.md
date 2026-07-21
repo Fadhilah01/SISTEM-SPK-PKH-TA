@@ -1,5 +1,5 @@
 # Sesi-2026-07-07-finalisasi-dan-validasi
-## Finalisasi & Validasi Akhir Seluruh Sistem Sipekaha
+## Finalisasi & Validasi Akhir Seluruh Sistem SIPEKAHA
 
 ---
 

@@ -2,7 +2,7 @@
 
 ## Yang Dikerjakan
 
-Pada sesi ini saya merapihkan struktur folder `templates/` pada aplikasi web Sipekaha agar lebih konsisten dan mudah dikelola. Sebelumnya, template yang berkaitan dengan modul admin sudah memiliki folder sendiri (`admin/`), namun template untuk modul lainnya masih tersimpan langsung di root folder `templates/` sehingga terlihat tidak rapi dan menyulitkan pencarian file.
+Pada sesi ini saya merapihkan struktur folder `templates/` pada aplikasi web SIPEKAHA agar lebih konsisten dan mudah dikelola. Sebelumnya, template yang berkaitan dengan modul admin sudah memiliki folder sendiri (`admin/`), namun template untuk modul lainnya masih tersimpan langsung di root folder `templates/` sehingga terlihat tidak rapi dan menyulitkan pencarian file.
 
 ### Perubahan Struktur Folder
 
