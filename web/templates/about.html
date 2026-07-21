@@ -18,7 +18,7 @@
                         <tbody>
                             <tr>
                                 <td class="text-muted ps-0">Nama Sistem</td>
-                                <td><strong class="text-dark-emphasis">SPK PKH - SVM</strong></td>
+                                <td><strong class="text-dark-emphasis">Sipekaha - SVM</strong></td>
                             </tr>
                             <tr>
                                 <td class="text-muted ps-0">Algoritma Klasifikasi</td>
@@ -59,37 +59,54 @@
                     <div class="row g-3 mb-4">
                         <div class="col-6">
                             <div class="metric-box">
-                                <small class="text-muted d-block text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Akurasi</small>
+                                <small class="text-muted d-block text-uppercase mb-1"
+                                    style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Akurasi</small>
                                 <span class="metric-num">{{ "%.1f"|format(metrics.accuracy * 100) }}%</span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="metric-box">
-                                <small class="text-muted d-block text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Presisi</small>
+                                <small class="text-muted d-block text-uppercase mb-1"
+                                    style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Presisi</small>
                                 <span class="metric-num">{{ "%.1f"|format(metrics.precision * 100) }}%</span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="metric-box">
-                                <small class="text-muted d-block text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Recall</small>
+                                <small class="text-muted d-block text-uppercase mb-1"
+                                    style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">Recall</small>
                                 <span class="metric-num">{{ "%.1f"|format(metrics.recall * 100) }}%</span>
                             </div>
                         </div>
                         <div class="col-6">
                             <div class="metric-box">
-                                <small class="text-muted d-block text-uppercase mb-1" style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">F1-Score</small>
+                                <small class="text-muted d-block text-uppercase mb-1"
+                                    style="font-size: 0.7rem; letter-spacing: 0.05em; font-weight: 600;">F1-Score</small>
                                 <span class="metric-num">{{ "%.3f"|format(metrics.f1) }}</span>
                             </div>
                         </div>
                     </div>
-                    
-                    <h6 class="font-display fw-semibold mb-2" style="font-size: 0.85rem;">Parameter Terbaik (GridSearchCV)</h6>
+
+                    <h6 class="font-display fw-semibold mb-2" style="font-size: 0.85rem;">Parameter Terbaik
+                        (GridSearchCV)</h6>
                     <div class="table-responsive border border-light border-opacity-10 rounded">
                         <table class="table table-sm mb-0 font-monospace" style="font-size: 0.85rem;">
                             <tbody>
-                                <tr><td class="text-muted border-0">C (Regularisasi)</td><td class="text-end border-0 fw-semibold text-dark-emphasis">{{ metrics.best_params.C }}</td></tr>
-                                <tr><td class="text-muted border-0">Gamma</td><td class="text-end border-0 fw-semibold text-dark-emphasis">{{ metrics.best_params.gamma }}</td></tr>
-                                <tr><td class="text-muted border-0">Kernel</td><td class="text-end border-0 fw-semibold text-dark-emphasis">{{ metrics.best_params.kernel }}</td></tr>
+                                <tr>
+                                    <td class="text-muted border-0">C (Regularisasi)</td>
+                                    <td class="text-end border-0 fw-semibold text-dark-emphasis">{{
+                                        metrics.best_params.C }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted border-0">Gamma</td>
+                                    <td class="text-end border-0 fw-semibold text-dark-emphasis">{{
+                                        metrics.best_params.gamma }}</td>
+                                </tr>
+                                <tr>
+                                    <td class="text-muted border-0">Kernel</td>
+                                    <td class="text-end border-0 fw-semibold text-dark-emphasis">{{
+                                        metrics.best_params.kernel }}</td>
+                                </tr>
                             </tbody>
                         </table>
                     </div>
@@ -111,17 +128,23 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="accordion accordion-flush" id="faqAccordion">
-                        
+
                         <!-- FAQ 1 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq-headingOne">
-                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseOne" aria-expanded="false" aria-controls="faq-collapseOne" style="font-size: 0.9rem;">
-                                    Apa fungsi utama dari Sistem SPK PKH - SVM ini?
+                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq-collapseOne" aria-expanded="false"
+                                    aria-controls="faq-collapseOne" style="font-size: 0.9rem;">
+                                    Apa fungsi utama dari Sistem Sipekaha - SVM ini?
                                 </button>
                             </h2>
-                            <div id="faq-collapseOne" class="accordion-collapse collapse" aria-labelledby="faq-headingOne" data-bs-parent="#faqAccordion">
+                            <div id="faq-collapseOne" class="accordion-collapse collapse"
+                                aria-labelledby="faq-headingOne" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted small lh-base">
-                                    Sistem Pendukung Keputusan (SPK) ini berfungsi untuk membantu pendamping sosial dalam memverifikasi dan menentukan kelayakan keluarga calon penerima bantuan Program Keluarga Harapan (PKH) secara objektif dan terkomputerisasi berdasarkan kriteria yang telah ditetapkan oleh Dinas Sosial.
+                                    Sistem Pendukung Keputusan (SPK) ini berfungsi untuk membantu pendamping sosial
+                                    dalam memverifikasi dan menentukan kelayakan keluarga calon penerima bantuan Program
+                                    Keluarga Harapan (PKH) secara objektif dan terkomputerisasi berdasarkan kriteria
+                                    yang telah ditetapkan oleh Dinas Sosial.
                                 </div>
                             </div>
                         </div>
@@ -129,13 +152,20 @@
                         <!-- FAQ 2 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq-headingTwo">
-                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseTwo" aria-expanded="false" aria-controls="faq-collapseTwo" style="font-size: 0.9rem;">
+                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq-collapseTwo" aria-expanded="false"
+                                    aria-controls="faq-collapseTwo" style="font-size: 0.9rem;">
                                     Bagaimana sistem ini memproses dan menilai data calon penerima?
                                 </button>
                             </h2>
-                            <div id="faq-collapseTwo" class="accordion-collapse collapse" aria-labelledby="faq-headingTwo" data-bs-parent="#faqAccordion">
+                            <div id="faq-collapseTwo" class="accordion-collapse collapse"
+                                aria-labelledby="faq-headingTwo" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted small lh-base">
-                                    Setiap data calon penerima yang dimasukkan melalui formulir akan dipetakan ke nilai skor (skala 1-5 untuk kriteria penghasilan, pekerjaan, dan aset; serta 0 atau 1 untuk komponen sosial). Skor-skor tersebut kemudian dinormalisasi ke rentang 0-1 dan dimasukkan ke dalam model klasifikasi SVM (Support Vector Machine) untuk dihitung status kelayakannya.
+                                    Setiap data calon penerima yang dimasukkan melalui formulir akan dipetakan ke nilai
+                                    skor (skala 1-5 untuk kriteria penghasilan, pekerjaan, dan aset; serta 0 atau 1
+                                    untuk komponen sosial). Skor-skor tersebut kemudian dinormalisasi ke rentang 0-1 dan
+                                    dimasukkan ke dalam model klasifikasi SVM (Support Vector Machine) untuk dihitung
+                                    status kelayakannya.
                                 </div>
                             </div>
                         </div>
@@ -143,13 +173,21 @@
                         <!-- FAQ 3 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq-headingThree">
-                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseThree" aria-expanded="false" aria-controls="faq-collapseThree" style="font-size: 0.9rem;">
-                                    Apa yang dimaksud dengan tingkat kepercayaan (Confidence Score) pada hasil keputusan?
+                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq-collapseThree" aria-expanded="false"
+                                    aria-controls="faq-collapseThree" style="font-size: 0.9rem;">
+                                    Apa yang dimaksud dengan tingkat kepercayaan (Confidence Score) pada hasil
+                                    keputusan?
                                 </button>
                             </h2>
-                            <div id="faq-collapseThree" class="accordion-collapse collapse" aria-labelledby="faq-headingThree" data-bs-parent="#faqAccordion">
+                            <div id="faq-collapseThree" class="accordion-collapse collapse"
+                                aria-labelledby="faq-headingThree" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted small lh-base">
-                                    Confidence Score (Persentase Keyakinan) adalah probabilitas yang dihasilkan oleh model SVM saat memprediksi status kelayakan data baru. Semakin tinggi persentasenya (misal: 95%), maka posisi karakteristik data calon penerima tersebut berada semakin jauh di dalam batas kelayakan/ketidaklayakan (margin hyperplane) yang dipelajari model dari data historis.
+                                    Confidence Score (Persentase Keyakinan) adalah probabilitas yang dihasilkan oleh
+                                    model SVM saat memprediksi status kelayakan data baru. Semakin tinggi persentasenya
+                                    (misal: 95%), maka posisi karakteristik data calon penerima tersebut berada semakin
+                                    jauh di dalam batas kelayakan/ketidaklayakan (margin hyperplane) yang dipelajari
+                                    model dari data historis.
                                 </div>
                             </div>
                         </div>
@@ -157,13 +195,19 @@
                         <!-- FAQ 4 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq-headingFour">
-                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseFour" aria-expanded="false" aria-controls="faq-collapseFour" style="font-size: 0.9rem;">
+                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq-collapseFour" aria-expanded="false"
+                                    aria-controls="faq-collapseFour" style="font-size: 0.9rem;">
                                     Apakah data calon penerima yang diinput dapat diubah kembali?
                                 </button>
                             </h2>
-                            <div id="faq-collapseFour" class="accordion-collapse collapse" aria-labelledby="faq-headingFour" data-bs-parent="#faqAccordion">
+                            <div id="faq-collapseFour" class="accordion-collapse collapse"
+                                aria-labelledby="faq-headingFour" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted small lh-base">
-                                    Ya. Pendamping sosial dapat mengubah (edit) data calon penerima kapan saja. Ketika data diperbarui, sistem akan secara otomatis memicu proses prediksi ulang menggunakan model SVM untuk memperbarui status kelayakan calon tersebut berdasarkan data terbarunya.
+                                    Ya. Pendamping sosial dapat mengubah (edit) data calon penerima kapan saja. Ketika
+                                    data diperbarui, sistem akan secara otomatis memicu proses prediksi ulang
+                                    menggunakan model SVM untuk memperbarui status kelayakan calon tersebut berdasarkan
+                                    data terbarunya.
                                 </div>
                             </div>
                         </div>
@@ -171,13 +215,19 @@
                         <!-- FAQ 5 -->
                         <div class="accordion-item">
                             <h2 class="accordion-header" id="faq-headingFive">
-                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button" data-bs-toggle="collapse" data-bs-target="#faq-collapseFive" aria-expanded="false" aria-controls="faq-collapseFive" style="font-size: 0.9rem;">
+                                <button class="accordion-button collapsed fw-semibold text-dark-emphasis" type="button"
+                                    data-bs-toggle="collapse" data-bs-target="#faq-collapseFive" aria-expanded="false"
+                                    aria-controls="faq-collapseFive" style="font-size: 0.9rem;">
                                     Mengapa terdapat kriteria yang menggunakan pilihan dropdown Desil untuk penghasilan?
                                 </button>
                             </h2>
-                            <div id="faq-collapseFive" class="accordion-collapse collapse" aria-labelledby="faq-headingFive" data-bs-parent="#faqAccordion">
+                            <div id="faq-collapseFive" class="accordion-collapse collapse"
+                                aria-labelledby="faq-headingFive" data-bs-parent="#faqAccordion">
                                 <div class="accordion-body text-muted small lh-base">
-                                    Hal ini disesuaikan dengan Keputusan Dirjen Linjamsos Kementerian Sosial, di mana penghasilan calon penerima dikelompokkan ke dalam kategori desil kesejahteraan ekonomi tingkat kerentanan sosial, bukan sekadar nominal rupiah mentah, agar akurasi dan validitas kualitatif kelayakan bantuan tetap terjaga.
+                                    Hal ini disesuaikan dengan Keputusan Dirjen Linjamsos Kementerian Sosial, di mana
+                                    penghasilan calon penerima dikelompokkan ke dalam kategori desil kesejahteraan
+                                    ekonomi tingkat kerentanan sosial, bukan sekadar nominal rupiah mentah, agar akurasi
+                                    dan validitas kualitatif kelayakan bantuan tetap terjaga.
                                 </div>
                             </div>
                         </div>
@@ -195,8 +245,8 @@
                 </div>
                 <div class="card-body text-center bg-light bg-opacity-10">
                     <div class="image-frame">
-                        <img src="{{ url_for('static', filename='img/confusion_matrix.png') }}"
-                             alt="Confusion Matrix" class="img-fluid" style="max-height: 250px;">
+                        <img src="{{ url_for('static', filename='img/confusion_matrix.png') }}" alt="Confusion Matrix"
+                            class="img-fluid" style="max-height: 250px;">
                     </div>
                 </div>
             </div>
@@ -210,7 +260,7 @@
                 <div class="card-body text-center bg-light bg-opacity-10">
                     <div class="image-frame">
                         <img src="{{ url_for('static', filename='img/eda_visualizations.png') }}"
-                             alt="EDA Visualizations" class="img-fluid" style="max-height: 250px;">
+                            alt="EDA Visualizations" class="img-fluid" style="max-height: 250px;">
                     </div>
                 </div>
             </div>
